@@ -1,5 +1,20 @@
-api:
-    resource: "@ApiBundle/Resources/config/routing.yml"
-    prefix:   /
+api.routing_public:
+    resource: "@ApiBundle/Resources/config/pub_routing.yml"
+    prefix:   /api/pub
 
+api.routing_editor:
+    resource: "@ApiBundle/Resources/config/editor_routing.yml"
+    prefix:   /api/editor
 
+api.routing_admin:
+    resource: "@ApiBundle/Resources/config/admin_routing.yml"
+    prefix:   /api/admin
+
+app.swagger_ui:
+    resource: "@NelmioApiDocBundle/Resources/config/routing/swaggerui.xml"
+    prefix:   /api-doc
+
+app.swagger:
+    path: /api-doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }

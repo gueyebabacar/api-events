@@ -113,8 +113,8 @@ nelmio_api_doc:
             - ^/dev/api/
     documentation:
         info:
-            title: API Opportunities
-            description: The opportunities in API
+            title: API Events
+            description: The Events in API
             version: 1.0.0
 
 monolog:

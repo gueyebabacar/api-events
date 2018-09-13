@@ -1,0 +1,18 @@
+api.public.list_events:
+    path: /events
+    methods: GET
+    defaults: { _controller: ApiBundle:Pub\Event:getEvents }
+
+api.public.get_one_event:
+    path: /events/{id}
+    methods: GET
+    defaults: { _controller: ApiBundle:Pub\Event:getOneEvent }
+    requirements:
+        id: '\d+'
+
+api.public.inscription_to_event:
+    path: /events/{id}/register‐request
+    methods: POST
+    defaults: { _controller: ApiBundle:Pub\Event:inscriptionRequest }
+    requirements:
+        id: '\d+'

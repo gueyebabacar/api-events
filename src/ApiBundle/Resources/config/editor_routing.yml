@@ -1,0 +1,94 @@
+##--------------- Event ------------##
+
+api.editor.list_events:
+    path: /events
+    methods: GET
+    defaults: { _controller: ApiBundle:Editor\Event:getEvents }
+
+api.editor.get_one_event:
+    path: /events/{id}
+    methods: GET
+    defaults: { _controller: ApiBundle:Editor\Event:getOneEvent }
+    requirements:
+        id: '\d+'
+
+api.editor.create_an_event:
+    path: /events
+    methods: POST
+    defaults: { _controller: ApiBundle:Editor\Event:createEvent }
+
+api.editor.update_an_event:
+    path: /events/{id}
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Event:updateEvent }
+    requirements:
+        id: '\d+'
+
+api.editor.delete_an_event:
+    path: /events/{id}
+    methods: DELETE
+    defaults: { _controller: ApiBundle:Editor\Event:deleteEvent }
+    requirements:
+        id: '\d+'
+
+api.editor.request_publish_event:
+    path: /events/{id}/status/publish-request
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Event:publishRequestEvent }
+    requirements:
+        id: '\d+'
+
+api.editor.publish_event:
+    path: /events/{id}/status/publish
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Event:publishEvent }
+    requirements:
+        id: '\d+'
+
+api.editor.archive_event:
+    path: /events/{id}/status/archive
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Event:archiveEvent }
+    requirements:
+        id: '\d+'
+
+api.editor.registration_events:
+    path: /events/{id}/registrations
+    methods: GET
+    defaults: { _controller: ApiBundle:Editor\Event:registrationEvent }
+    requirements:
+        id: '\d+'
+
+##---------------------- Tag ----------------------##
+
+api.editor.list_tags:
+    path: /tags
+    methods: GET
+    defaults: { _controller: ApiBundle:Editor\Tag:getTags }
+
+api.editor.create_tag:
+    path: /tags
+    methods: POST
+    defaults: { _controller: ApiBundle:Editor\Tag:createTag }
+
+api.editor.update_tag:
+    path: /tags/{id}
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Tag:updateTag }
+    requirements:
+        id: '\d+'
+
+api.editor.enable_tag:
+    path: /tags/{id}/enable
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Tag:enableTag }
+    requirements:
+        id: '\d+'
+
+api.editor.disable_tag:
+    path: /tags/{id}/disable
+    methods: PUT
+    defaults: { _controller: ApiBundle:Editor\Tag:disableTag }
+    requirements:
+        id: '\d+'
+
