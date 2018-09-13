@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -69,3 +70,58 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
+# FOSRest Configuration
+fos_rest:
+    routing_loader:
+        include_format: false
+    body_converter:
+        enabled: true
+    zone:
+        - { path: ^/api/* }
+    serializer:
+        serialize_null:  true
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+        templating_formats:
+            html: true
+
+    format_listener:
+        enabled: true
+        rules:
+             -
+               path: ^/api
+               prefer_extension: false
+               priorities:
+                - json
+               path: ^/
+               prefer_extension: true
+               priorities: [html, json]
+    versioning:
+        enabled: true
+    exception:
+        enabled: true
+        exception_controller: 'fos_rest.exception.controller:showAction'
+
+nelmio_api_doc:
+    routes:
+        path_patterns: # an array of regexps
+            - ^/api/
+            - ^/dev/api/
+    documentation:
+        info:
+            title: API Opportunities
+            description: The opportunities in API
+            version: 1.0.0
+
+monolog:
+   channels: ["business"]
+   handlers:
+       business:
+           type: stream
+           path: '%kernel.logs_dir%/opportunities.log'
+           channels: ['business']
+           level: debug
