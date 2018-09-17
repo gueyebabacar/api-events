@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfabd9c8c513233a0b8a538e7d9f48d2",
+    "content-hash": "605b5332500a5fedde41f4d34eef896c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1125,6 +1125,46 @@
                 "rest"
             ],
             "time": "2018-08-21T16:54:14+00:00"
+        },
+        {
+            "name": "fsevestre/boolean-form-type",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fsevestre/BooleanFormType.git",
+                "reference": "aabb0a745aa208c228b61cbc49f249116561bfad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fsevestre/BooleanFormType/zipball/aabb0a745aa208c228b61cbc49f249116561bfad",
+                "reference": "aabb0a745aa208c228b61cbc49f249116561bfad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "symfony/form": "~2.8|~3.0|~4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FSevestre\\BooleanFormType\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florent SEVESTRE"
+                }
+            ],
+            "description": "Boolean form type for Symfony REST APIs",
+            "homepage": "https://github.com/fsevestre/BooleanFormType",
+            "time": "2017-10-04T18:25:58+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

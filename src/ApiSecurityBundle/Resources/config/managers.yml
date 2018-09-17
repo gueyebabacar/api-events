@@ -1,0 +1,18 @@
+services:
+    api.app_manager:
+        class: ApiSecurityBundle\Manager\AppManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - ApiSecurityBundle\Entity\AppClient
+            - %default_limit%
+            - %default_offset%
+
+    api.customer_manager:
+        class: ApiSecurityBundle\Manager\CustomerClientManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - ApiSecurityBundle\Entity\CustomerClient
+            - %default_limit%
+            - %default_offset%
+
+

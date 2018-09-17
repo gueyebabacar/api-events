@@ -1,3 +1,11 @@
+business:
+    resource: "@BusinessBundle/Resources/config/routing.yml"
+    prefix:   /
+
+api_security:
+    resource: "@ApiSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
 api.routing_public:
     resource: "@ApiBundle/Resources/config/pub_routing.yml"
     prefix:   /api/pub
