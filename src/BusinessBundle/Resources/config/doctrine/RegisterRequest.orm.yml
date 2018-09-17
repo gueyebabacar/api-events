@@ -1,0 +1,41 @@
+BusinessBundle\Entity\RegisterRequest:
+    type: entity
+    table: null
+    repositoryClass: BusinessBundle\Repository\RegisterRequestRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        compagnyName:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        phoneNumber:
+            type: string
+            length: 255
+        city:
+            type: string
+            length: 255
+        country:
+            type: string
+            length: 255
+        reasonForAttending:
+            type: string
+            length: '1000'
+        status:
+            type: string
+            length: '30'
+    manyToOne:
+        event:
+            targetEntity: Event
+            inversedBy: requestRegisters
+
+    lifecycleCallbacks: {  }

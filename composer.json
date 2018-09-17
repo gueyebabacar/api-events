@@ -1,10 +1,12 @@
 {
-    "name": "EE/api_events",
+    "name": "EE/api-events",
     "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "ApiBundle\\": "src/ApiBundle"
+            "ApiBundle\\": "src/ApiBundle",
+            "ApiSecurityBundle\\": "src/ApiSecurityBundle",
+            "BusinessBundle\\": "src/BusinessBundle"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -31,6 +33,7 @@
         "doctrine/orm": "^2.5",
         "ee/ee-common": "^1.4",
         "friendsofsymfony/rest-bundle": "^2.4",
+        "fsevestre/boolean-form-type": "^1.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^2.4",
         "nelmio/api-doc-bundle": "^3.3",

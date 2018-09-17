@@ -1,0 +1,25 @@
+ApiSecurityBundle\Entity\AppClient:
+    type: entity
+    table: null
+    repositoryClass: ApiSecurityBundle\Repository\AppClientRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        enable:
+            type: boolean
+            nullable: true
+        login:
+            type: string
+            length: '100'
+            unique: true
+        pwd:
+            type: string
+            length: '100'
+        salt:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

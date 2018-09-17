@@ -26,14 +26,14 @@ api.admin.get_one_app:
 
 api.admin.enable_app:
     path:  /apps/{id}/enable
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Admin\App:enableApp }
     requirements:
         id: '\d+'
 
 api.admin.disable_app:
     path:  /apps/{id}/disable
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Admin\App:disableApp }
     requirements:
         id: '\d+'
@@ -66,14 +66,14 @@ api.admin.get_one_customer:
 
 api.admin.enable_customer:
     path:  /customers/{id}/enable
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Admin\Customer:enableCustomer }
     requirements:
         id: '\d+'
 
 api.admin.disable_customer:
     path:  /customers/{id}/disable
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Admin\Customer:disableCustomer }
     requirements:
         id: '\d+'

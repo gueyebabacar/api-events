@@ -1,0 +1,21 @@
+ApiSecurityBundle\Entity\CustomerClient:
+    type: entity
+    table: null
+    repositoryClass: ApiSecurityBundle\Repository\CustomerClientRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        scopes:
+            type: array
+        enable:
+            type: boolean
+            nullable: true
+        xCustomerRef:
+            type: string
+            length: 255
+            unique: true
+    lifecycleCallbacks: {  }

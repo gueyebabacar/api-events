@@ -1,0 +1,83 @@
+BusinessBundle\Entity\Event:
+    type: entity
+    table: null
+    repositoryClass: BusinessBundle\Repository\EventRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        customerRef:
+            type: string
+            length: 255
+            unique: true
+        name:
+            type: string
+            length: 255
+            unique: true
+        date:
+            type: datetime
+            nullable: true
+        detailedDescription:
+            type: string
+            length: '1000'
+        webSite:
+            type: string
+            length: 255
+        country:
+            type: string
+            length: '3'
+        location:
+            type: string
+            length: 255
+        city:
+            type: string
+            length: 255
+        typeOfEvent:
+            type: string
+            length: 255
+        industry:
+            type: string
+            length: 255
+        thematicTag:
+            type: string
+            length: 255
+        nameOfOrganizer:
+            type: string
+            length: 255
+        contactForm:
+            type: string
+            length: 255
+        attachment:
+            type: string
+            length: 255
+        socialMediaSharing:
+            type: array
+        status:
+            type: string
+            length: '30'
+
+    oneToOne:
+        visuel:
+            targetEntity: Media
+            joinColumn:
+                name: media_id
+                referencedColumnName: id
+                cascade: [remove]
+
+    oneToMany:
+        illustrations:
+            targetEntity: Media
+            mappedBy: event
+            cascade: [remove]
+
+    oneToMany:
+        requestRegisters:
+            targetEntity: RequestRegister
+            mappedBy: event
+            cascade: [remove]
+
+    lifecycleCallbacks: {  }

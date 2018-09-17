@@ -1,0 +1,23 @@
+BusinessBundle\Entity\Media:
+    type: entity
+    table: null
+    repositoryClass: BusinessBundle\Repository\MediaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        type:
+            type: string
+            length: 255
+        uri:
+            type: string
+            length: 255
+
+    manyToOne:
+        event:
+            targetEntity: Event
+            inversedBy: illustrations
+    lifecycleCallbacks: {  }
