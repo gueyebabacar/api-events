@@ -1,0 +1,4 @@
+BusinessBundle\Entity\Event:
+    properties:
+        date:
+            - BusinessBundle\Validator\Constraints\ConstraintsTextToDateTime: ~

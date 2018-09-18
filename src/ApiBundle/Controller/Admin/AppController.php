@@ -6,6 +6,7 @@ use ApiBundle\Form\AppClientType;
 use ApiSecurityBundle\Entity\AppClient;
 use Ee\EeCommonBundle\Exception\BusinessException;
 use Ee\EeCommonBundle\Service\Validation\Form\FormBusinessException;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,7 +87,13 @@ class AppController extends FOSRestController
             $responseCode = Response::HTTP_BAD_REQUEST;
         }
 
-        return $this->view($data, $responseCode);;
+        $context = new Context();
+        $groups = ['app'];
+        $context->setGroups($groups);
+        $view = $this->view($data, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -181,7 +188,13 @@ class AppController extends FOSRestController
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($appClient, $responseCode);
+        $context = new Context();
+        $groups = ['app'];
+        $context->setGroups($groups);
+        $view = $this->view($appClient, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -276,7 +289,13 @@ class AppController extends FOSRestController
             $responseCode = Response::HTTP_BAD_REQUEST;
         }
 
-        return $this->view($appClient, $responseCode);
+        $context = new Context();
+        $groups = ['app'];
+        $context->setGroups($groups);
+        $view = $this->view($appClient, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -332,7 +351,14 @@ class AppController extends FOSRestController
      */
     public function getOneAppAction(AppClient $appClient)
     {
-        return $this->view($appClient);
+        $responseCode = Response::HTTP_OK;
+        $context = new Context();
+        $groups = ['app'];
+        $context->setGroups($groups);
+        $view = $this->view($appClient, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -415,7 +441,13 @@ class AppController extends FOSRestController
             $responseCode = Response::HTTP_BAD_REQUEST;
         }
 
-        return $this->view($appClient, $responseCode);
+        $context = new Context();
+        $groups = ['app'];
+        $context->setGroups($groups);
+        $view = $this->view($appClient, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
 
@@ -499,6 +531,12 @@ class AppController extends FOSRestController
             $responseCode = Response::HTTP_BAD_REQUEST;
         }
 
-        return $this->view($appClient, $responseCode);
+        $context = new Context();
+        $groups = ['app'];
+        $context->setGroups($groups);
+        $view = $this->view($appClient, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 }

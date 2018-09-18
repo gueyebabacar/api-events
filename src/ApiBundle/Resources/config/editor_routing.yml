@@ -3,7 +3,7 @@
 api.editor.list_events:
     path: /events
     methods: GET
-    defaults: { _controller: ApiBundle:Editor\Event:getEvents }
+    defaults: { _controller: ApiBundle:Editor\Event:list }
 
 api.editor.get_one_event:
     path: /events/{id}
@@ -33,21 +33,21 @@ api.editor.delete_an_event:
 
 api.editor.request_publish_event:
     path: /events/{id}/status/publish-request
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Editor\Event:publishRequestEvent }
     requirements:
         id: '\d+'
 
 api.editor.publish_event:
     path: /events/{id}/status/publish
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Editor\Event:publishEvent }
     requirements:
         id: '\d+'
 
 api.editor.archive_event:
     path: /events/{id}/status/archive
-    methods: PUT
+    methods: PATCH
     defaults: { _controller: ApiBundle:Editor\Event:archiveEvent }
     requirements:
         id: '\d+'
@@ -64,31 +64,31 @@ api.editor.registration_events:
 api.editor.list_tags:
     path: /tags
     methods: GET
-    defaults: { _controller: ApiBundle:Editor\Tag:getTags }
+    defaults: { _controller: ApiBundle:Editor\Tag:list }
 
 api.editor.create_tag:
     path: /tags
     methods: POST
-    defaults: { _controller: ApiBundle:Editor\Tag:createTag }
+    defaults: { _controller: ApiBundle:Editor\Tag:create }
 
 api.editor.update_tag:
     path: /tags/{id}
     methods: PUT
-    defaults: { _controller: ApiBundle:Editor\Tag:updateTag }
+    defaults: { _controller: ApiBundle:Editor\Tag:update }
     requirements:
         id: '\d+'
 
 api.editor.enable_tag:
     path: /tags/{id}/enable
-    methods: PUT
-    defaults: { _controller: ApiBundle:Editor\Tag:enableTag }
+    methods: PATCH
+    defaults: { _controller: ApiBundle:Editor\Tag:enable }
     requirements:
         id: '\d+'
 
 api.editor.disable_tag:
     path: /tags/{id}/disable
-    methods: PUT
-    defaults: { _controller: ApiBundle:Editor\Tag:disableTag }
+    methods: PATCH
+    defaults: { _controller: ApiBundle:Editor\Tag:disable }
     requirements:
         id: '\d+'
 

@@ -1,14 +1,16 @@
 <?php
 
-namespace ApiSecurityBundle\Manager;
+namespace BusinessBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use ApiSecurityBundle\Manager\BaseManager as BaseManager;
+use BusinessBundle\Manager\BaseManager as BaseManager;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class TagManager
  */
-class CustomerClientManager extends BaseManager
+class TagManager extends BaseManager
 {
     protected $defaultLimit;
     protected $defaultOffset;
@@ -20,7 +22,7 @@ class CustomerClientManager extends BaseManager
     protected $request;
 
     /**
-     * EventManager constructor.
+     * OpportunityManager constructor.
      * @param EntityManagerInterface $em
      * @param string $className
      * @param int $defaultLimit
@@ -37,15 +39,16 @@ class CustomerClientManager extends BaseManager
      * @param $paramFetcher
      * @return mixed
      */
-    public function getCustomers($paramFetcher)
+    public function getTags($paramFetcher)
     {
-        $customers =  $this->repository->getCustomers([
+        $tags =  $this->repository->getTags([
             'offset'=>$paramFetcher->get('offset'),
             'limit'=>$paramFetcher->get('limit'),
+            'domain'=>$paramFetcher->get('domain'),
             'defaultOffset'=>$this->defaultOffset,
             'defaultLimit'=>$this->defaultLimit
         ]);
 
-        return $customers;
+        return $tags;
     }
 }

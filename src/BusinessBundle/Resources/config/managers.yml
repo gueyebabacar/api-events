@@ -1,0 +1,19 @@
+services:
+    api.event_manager:
+        class: BusinessBundle\Manager\EventManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - BusinessBundle\Entity\Event
+            - %default_limit%
+            - %default_offset%
+
+    api.tag_manager:
+        class: BusinessBundle\Manager\TagManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - BusinessBundle\Entity\Tag
+            - %default_limit%
+            - %default_offset%
+
+
+

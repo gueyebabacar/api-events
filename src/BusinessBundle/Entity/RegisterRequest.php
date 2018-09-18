@@ -2,52 +2,64 @@
 
 namespace BusinessBundle\Entity;
 
+use JMS\Serializer\Annotation as JMS;
+
+
 /**
  * RegisterRequest
  */
 class RegisterRequest
 {
     /**
+     * @JMS\Groups(groups={"event"})
      * @var int
      */
     private $id;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $name;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $compagnyName;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $email;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $phoneNumber;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $city;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $country;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $reasonForAttending;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $status;

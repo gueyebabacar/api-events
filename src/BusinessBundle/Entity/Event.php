@@ -3,6 +3,8 @@
 namespace BusinessBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as JMS;
+
 
 /**
  * Event
@@ -10,105 +12,114 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Event
 {
     /**
+     * @JMS\Groups(groups={"event"})
      * @var int
      */
     private $id;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $customerRef;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $name;
 
     /**
-     * @var \DateTime
+     * @JMS\Groups(groups={"event"})
+     * @var string
      */
     private $date;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $detailedDescription;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
-    private $webSite;
+    private $website;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $country;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $location;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $city;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $typeOfEvent;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $industry;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $thematicTag;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $nameOfOrganizer;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $contactForm;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $attachment;
 
     /**
-     * @var array
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("array<string>")
      */
     private $socialMediaSharing;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $status;
 
-    private $visuel;
-
     /**
-     * @var ArrayCollection
-     */
-    private $illustrations;
-
-    /**
+     * @JMS\Groups(groups={"event"})
      * @var ArrayCollection
      */
     private $requestRegisters;
 
-
     public function __construct() {
-        $this->illustrations = new ArrayCollection();
         $this->requestRegisters = new ArrayCollection();
     }
 
@@ -219,28 +230,23 @@ class Event
     }
 
     /**
-     * Set webSite
-     *
-     * @param string $webSite
-     *
-     * @return Event
+     * @return string
      */
-    public function setWebSite($webSite)
+    public function getWebsite()
     {
-        $this->webSite = $webSite;
-
-        return $this;
+        return $this->website;
     }
 
     /**
-     * Get webSite
-     *
-     * @return string
+     * @param string $website
+     * @return Event
      */
-    public function getWebSite()
+    public function setWebsite($website)
     {
-        return $this->webSite;
+        $this->website = $website;
+        return $this;
     }
+
 
     /**
      * Set country
@@ -504,42 +510,6 @@ class Event
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVisuel()
-    {
-        return $this->visuel;
-    }
-
-    /**
-     * @param mixed $visuel
-     * @return Event
-     */
-    public function setVisuel($visuel)
-    {
-        $this->visuel = $visuel;
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getIllustrations()
-    {
-        return $this->illustrations;
-    }
-
-    /**
-     * @param ArrayCollection $illustrations
-     * @return Event
-     */
-    public function setIllustrations($illustrations)
-    {
-        $this->illustrations = $illustrations;
-        return $this;
     }
 
     /**

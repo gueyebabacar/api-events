@@ -19,12 +19,12 @@ BusinessBundle\Entity\Event:
             length: 255
             unique: true
         date:
-            type: datetime
+            type: string
             nullable: true
         detailedDescription:
             type: string
             length: '1000'
-        webSite:
+        website:
             type: string
             length: 255
         country:
@@ -60,23 +60,9 @@ BusinessBundle\Entity\Event:
             type: string
             length: '30'
 
-    oneToOne:
-        visuel:
-            targetEntity: Media
-            joinColumn:
-                name: media_id
-                referencedColumnName: id
-                cascade: [remove]
-
-    oneToMany:
-        illustrations:
-            targetEntity: Media
-            mappedBy: event
-            cascade: [remove]
-
     oneToMany:
         requestRegisters:
-            targetEntity: RequestRegister
+            targetEntity: RegisterRequest
             mappedBy: event
             cascade: [remove]
 

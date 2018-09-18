@@ -48,32 +48,32 @@ api.admin.get_authorized_customers:
 api.admin.create_customer:
     path:  /customers
     methods: POST
-    defaults: { _controller: ApiBundle:Admin\Customer:createCustomer }
+    defaults: { _controller: ApiBundle:Admin\Customer:create }
 
 api.admin.update_customer:
     path:  /customers/{id}
     methods: PUT
-    defaults: { _controller: ApiBundle:Admin\Customer:updateCustomer }
+    defaults: { _controller: ApiBundle:Admin\Customer:update }
     requirements:
         id: '\d+'
 
 api.admin.get_one_customer:
     path:  /customers/{id}
     methods: GET
-    defaults: { _controller: ApiBundle:Admin\Customer:getOneCustomer }
+    defaults: { _controller: ApiBundle:Admin\Customer:getOne }
     requirements:
         id: '\d+'
 
 api.admin.enable_customer:
     path:  /customers/{id}/enable
     methods: PATCH
-    defaults: { _controller: ApiBundle:Admin\Customer:enableCustomer }
+    defaults: { _controller: ApiBundle:Admin\Customer:enable }
     requirements:
         id: '\d+'
 
 api.admin.disable_customer:
     path:  /customers/{id}/disable
     methods: PATCH
-    defaults: { _controller: ApiBundle:Admin\Customer:disableCustomer }
+    defaults: { _controller: ApiBundle:Admin\Customer:disable }
     requirements:
         id: '\d+'
