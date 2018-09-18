@@ -1,23 +1,17 @@
 <?php
 
-namespace ApiSecurityBundle\Manager;
+namespace BusinessBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use ApiSecurityBundle\Manager\BaseManager as BaseManager;
 
 /**
- * Class TagManager
+ * Class EventManager
  */
-class CustomerClientManager extends BaseManager
+class EventManager extends BaseManager
 {
     protected $defaultLimit;
     protected $defaultOffset;
-    protected $defaultPage;
-
-    /**
-     * @var Request
-     */
-    protected $request;
 
     /**
      * EventManager constructor.
@@ -37,15 +31,15 @@ class CustomerClientManager extends BaseManager
      * @param $paramFetcher
      * @return mixed
      */
-    public function getCustomers($paramFetcher)
+    public function getEvents($paramFetcher)
     {
-        $customers =  $this->repository->getCustomers([
+        $events =  $this->repository->getEvents([
             'offset'=>$paramFetcher->get('offset'),
             'limit'=>$paramFetcher->get('limit'),
             'defaultOffset'=>$this->defaultOffset,
             'defaultLimit'=>$this->defaultLimit
         ]);
 
-        return $customers;
+        return $events;
     }
 }

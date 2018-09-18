@@ -5,6 +5,7 @@ imports:
     - { resource: "@ApiBundle/Resources/config/services.yml" }
     - { resource: "@ApiSecurityBundle/Resources/config/services.yml" }
     - { resource: "@ApiSecurityBundle/Resources/config/managers.yml" }
+    - { resource: "@BusinessBundle/Resources/config/managers.yml" }
     - { resource: "@BusinessBundle/Resources/config/services.yml" }
 
 

@@ -162,7 +162,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function createCustomerAction(Request $request)
+    public function createAction(Request $request)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -259,7 +259,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateCustomerAction(Request $request, CustomerClient $customerClient)
+    public function updateAction(Request $request, CustomerClient $customerClient)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -332,7 +332,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneCustomerAction(CustomerClient $customerClient)
+    public function getOneAction(CustomerClient $customerClient)
     {
         return $this->view($customerClient);
     }
@@ -399,7 +399,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function enableCustomerAction(Request $request, CustomerClient $customerClient)
+    public function enableAction(Request $request, CustomerClient $customerClient)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -482,7 +482,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function disableCustomerAction(Request $request, CustomerClient $customerClient)
+    public function disableAction(Request $request, CustomerClient $customerClient)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');

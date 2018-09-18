@@ -1,0 +1,20 @@
+BusinessBundle\Entity\Tag:
+    type: entity
+    table: null
+    repositoryClass: BusinessBundle\Repository\TagRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        domain:
+            type: string
+            length: '100'
+        value:
+            type: string
+            length: '100'
+        enable:
+            type: boolean
+    lifecycleCallbacks: {  }
