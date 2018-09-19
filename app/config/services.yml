@@ -18,3 +18,6 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    ApiSecurityBundle\:
+        resource: '../../src/ApiSecurityBundle/*'
