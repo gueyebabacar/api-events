@@ -16,3 +16,15 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        api:
+            pattern: ^/api/
+            http_basic: ~
+            guard:
+                authenticators:
+                    - ApiSecurityBundle\Security\ApiAuthenticator
+
+    access_control:
+        - { path: ^/api/admin, roles: ROLE_ADMIN}
+        - { path: ^/api/pub, roles: ROLE_PUBLIC}
+        - { path: ^/api/editor, roles: ROLE_EDITOR}
