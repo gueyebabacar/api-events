@@ -82,9 +82,6 @@ class EventController extends FOSRestController
             $data = $this->get('api.event_manager')->getEvents($paramFetcher);
 
         } catch(BusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $data = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -178,12 +175,11 @@ class EventController extends FOSRestController
      *              "message": "Access Denied"
      *          },
      *     }
-     * )
+     * ),
      * @SWG\Response(
      *     response=500,
-     *     description="Technical error",
-     *
-     * ),
+     *     description="Technical error"
+     * )
      * @SWG\Parameter(
      *     name="body",
      *     description="....",
@@ -255,9 +251,26 @@ class EventController extends FOSRestController
      *           type="string"
      *       ),
      *       @SWG\Property(
-     *           property="status",
-     *           type="string"
-     *      )
+     *          property="visuel",
+     *          type="array",
+     *          example={
+     *                "type": "visuel type",
+     *                "uri": "visuel path"
+     *          },
+     *         @SWG\Items(
+     *           type="object",
+     *           @SWG\Property(property="key", type="string"),
+     *           @SWG\Property(property="value", type="string")
+     *         )
+     *       ),
+     *       @SWG\Property(
+     *          property="illustrations",
+     *          type="array",
+     *          collectionFormat="multi",
+     *          @SWG\Items(
+     *              type="string",
+     *          )
+     *       )
      *    )
      * ),
      * @SWG\Parameter(
@@ -297,12 +310,10 @@ class EventController extends FOSRestController
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
+            $event->setStatus("draft");
             $this->get('api.event_manager')->save($event);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $event = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -449,9 +460,6 @@ class EventController extends FOSRestController
             $this->get('api.event_manager')->save($event);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $event = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -590,9 +598,6 @@ class EventController extends FOSRestController
             $this->get('api.event_manager')->save($event);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $event = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -673,9 +678,6 @@ class EventController extends FOSRestController
             $this->get('api.event_manager')->save($event);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $event = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -762,9 +764,6 @@ class EventController extends FOSRestController
             $this->get('api.event_manager')->save($event);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $event = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;

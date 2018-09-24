@@ -4,3 +4,6 @@ BusinessBundle\Entity\RegisterRequest:
             - Regex:
                 pattern: '/^[\w.-]+@[\w.-]+\.[a-z]{2,6}$/'
                 message: This email is not valid
+
+        status:
+            - BusinessBundle\Validator\Constraints\ConstraintsRegisterRequestStatus: ~

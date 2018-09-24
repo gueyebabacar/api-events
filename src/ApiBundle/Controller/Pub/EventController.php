@@ -68,8 +68,8 @@ class EventController extends FOSRestController
      * )
      * @Rest\QueryParam(name="date", strict=false,  nullable=true)
      * @Rest\QueryParam(name="status", strict=false,  nullable=true)
-     * @Rest\QueryParam(name="limit", strict=false,  nullable=true, description="number of result")
-     * @Rest\QueryParam(name="offset", strict=false,  nullable=true, description="result page start")
+     * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
+     * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
      * @SWG\Tag(name="Public")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
@@ -182,7 +182,6 @@ class EventController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
      *     name="body",
@@ -215,10 +214,6 @@ class EventController extends FOSRestController
      *         ),
      *        @SWG\Property(
      *             property="reasonForAttending",
-     *             type="string"
-     *         ),
-     *         @SWG\Property(
-     *             property="status",
      *             type="string"
      *         )
      *     )
@@ -262,6 +257,7 @@ class EventController extends FOSRestController
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $registerRequest->setEvent($event);
+            $registerRequest->setStatus("request");
             $this->get('api.event_manager')->save($registerRequest);
 
         } catch(FormBusinessException $ex) {

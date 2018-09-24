@@ -5,7 +5,6 @@ namespace BusinessBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as JMS;
 
-
 /**
  * Event
  */
@@ -118,6 +117,19 @@ class Event
      * @var ArrayCollection
      */
     private $requestRegisters;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("array<string>")
+     * @var string
+     */
+    private $visuel;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("array<string>")
+     */
+    private $illustrations;
 
     public function __construct() {
         $this->requestRegisters = new ArrayCollection();
@@ -530,5 +542,40 @@ class Event
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getVisuel()
+    {
+        return $this->visuel;
+    }
+
+    /**
+     * @param string $visuel
+     * @return Event
+     */
+    public function setVisuel($visuel)
+    {
+        $this->visuel = $visuel;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIllustrations()
+    {
+        return $this->illustrations;
+    }
+
+    /**
+     * @param string $illustrations
+     * @return Event
+     */
+    public function setIllustrations($illustrations)
+    {
+        $this->illustrations = $illustrations;
+        return $this;
+    }
 }
 

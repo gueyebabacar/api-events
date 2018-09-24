@@ -7,3 +7,13 @@ services:
         class: BusinessBundle\Validator\Constraints\ConstraintsTextToDateTimeValidator
         tags:
             - { name: validator.constraint_validator, alias: format_date_event_not_valid}
+
+    api.validator.event_status:
+        class: BusinessBundle\Validator\Constraints\ConstraintsEventStatusValidator
+        tags:
+            - { name: validator.constraint_validator, alias: status_event_not_valid}
+
+    api.validator.register_request_status:
+        class: BusinessBundle\Validator\Constraints\ConstraintsRegisterRequestStatusValidator
+        tags:
+            - { name: validator.constraint_validator, alias: status_register_request_not_valid}

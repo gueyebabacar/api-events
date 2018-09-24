@@ -59,6 +59,10 @@ BusinessBundle\Entity\Event:
         status:
             type: string
             length: '30'
+        visuel:
+            type: json_array
+        illustrations:
+            type: array
 
     oneToMany:
         requestRegisters:
