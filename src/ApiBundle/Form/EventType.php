@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use ApiBundle\Form\DataTransformer\TextToDateTimeDataTransformer;
+use ApiBundle\Form\MediaType;
+
 class EventType extends AbstractType
 {
     /**
@@ -32,7 +34,9 @@ class EventType extends AbstractType
             ->add('contactForm', TextType::class)
             ->add('attachment', TextType::class)
             ->add('socialMediaSharing', TextType::class)
-            ->add('status', TextType::class);
+            ->add('status', TextType::class)
+            ->add('visuel', TextType::class)
+            ->add('illustrations', TextType::class);
         $builder->get('date')
            ->addModelTransformer(new TextToDateTimeDataTransformer());
     }

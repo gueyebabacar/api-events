@@ -2,3 +2,5 @@ BusinessBundle\Entity\Event:
     properties:
         date:
             - BusinessBundle\Validator\Constraints\ConstraintsTextToDateTime: ~
+        status:
+            - BusinessBundle\Validator\Constraints\ConstraintsEventStatus: ~
