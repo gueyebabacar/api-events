@@ -1,6 +1,62 @@
 BusinessBundle\Entity\Event:
     properties:
-        date:
-            - BusinessBundle\Validator\Constraints\ConstraintsTextToDateTime: ~
         status:
             - BusinessBundle\Validator\Constraints\ConstraintsEventStatus: ~
+
+        country:
+            - Regex:
+                pattern: '/^[A-Z]|[a-z]/'
+                message: "Only string are permitted"
+            - Length:
+                max: 3
+                maxMessage: "3 characters are permitted for country field"
+
+        customerRef:
+            - Regex:
+                pattern: '/^[A-Z]|[a-z]/'
+                message: "Only string are permitted"
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for customerRef field"
+
+        city:
+            - Regex:
+                pattern: '/^[A-Z]|[a-z]/'
+                message: "Only string are permitted"
+            - Length:
+                max: 255
+                maxMessage: "3 characters are permitted for country field"
+
+        website:
+            - Regex:
+                pattern: '/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/'
+                message: "website url is not valid"
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for website field"
+
+        location:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for location field"
+
+        nameOfOrganizer:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for location field"
+
+        detailedDescription:
+            - Length:
+                max: 1000
+                maxMessage: "1000 characters are permitted for detailed description field"
+
+        contactForm:
+            - Regex:
+                pattern: '/^[\w.-]+@[\w.-]+\.[a-z]{2,6}$/'
+                message: This email is not valid
+
+        attachment:
+            - Regex:
+                pattern: '/.*\.pdf$/'
+                message: Only pdf file are permitted
+

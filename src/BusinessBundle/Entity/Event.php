@@ -10,6 +10,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Event
 {
+    const DELETE_STATUS = "draft";
+
     /**
      * @JMS\Groups(groups={"event"})
      * @var int
@@ -113,7 +115,6 @@ class Event
     private $status;
 
     /**
-     * @JMS\Groups(groups={"event"})
      * @var ArrayCollection
      */
     private $requestRegisters;
@@ -131,6 +132,8 @@ class Event
      */
     private $illustrations;
 
+    private $deletedAt;
+
     public function __construct() {
         $this->requestRegisters = new ArrayCollection();
     }
@@ -144,6 +147,25 @@ class Event
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     * @return Event
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
 
     /**
      * Set customerRef

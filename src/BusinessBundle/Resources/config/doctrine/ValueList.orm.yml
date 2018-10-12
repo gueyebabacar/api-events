@@ -1,7 +1,7 @@
-BusinessBundle\Entity\Tag:
+BusinessBundle\Entity\ValueList:
     type: entity
     table: null
-    repositoryClass: BusinessBundle\Repository\TagRepository
+    repositoryClass: BusinessBundle\Repository\ValueListRepository
     id:
         id:
             type: integer
@@ -12,9 +12,15 @@ BusinessBundle\Entity\Tag:
         domain:
             type: string
             length: '100'
-        value:
+            column: domain_value
+        key:
             type: string
             length: '100'
+            column: key_value
+        value:
+            type: string
+            length: 255
+            column: value_content
         enable:
             type: boolean
     lifecycleCallbacks: {  }

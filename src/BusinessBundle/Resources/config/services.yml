@@ -17,3 +17,15 @@ services:
         class: BusinessBundle\Validator\Constraints\ConstraintsRegisterRequestStatusValidator
         tags:
             - { name: validator.constraint_validator, alias: status_register_request_not_valid}
+
+    api.import_business_data:
+        class: BusinessBundle\Service\ImportBusinessDataService
+        arguments:
+            - "@api.value_list_manager"
+
+    gedmo.listener.softdeleteable:
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]

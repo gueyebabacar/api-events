@@ -16,6 +16,7 @@ use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use FOS\RestBundle\Request\ParamFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class EventController extends FOSRestController
@@ -43,28 +44,28 @@ class EventController extends FOSRestController
      *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @Rest\QueryParam(name="date", strict=false,  nullable=true)
      * @Rest\QueryParam(name="status", strict=false,  nullable=true)
@@ -74,7 +75,7 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getEventsAction(ParamFetcher $paramFetcher)
+    public function listAction(ParamFetcher $paramFetcher)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -118,44 +119,48 @@ class EventController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Public")
-     * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneEventAction(Event $event)
+    public function getOneAction($id)
     {
         $responseCode = Response::HTTP_OK;
-
         $context = new Context();
         $groups = ['event'];
         $context->setGroups($groups);
+
+        $event = $this->get('api.event_manager')->getOneEvent($id);
+
+        if (null == $event){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Event not found or status is draft');
+        }
+
         $view = $this->view($event, $responseCode);
         $view->setContext($context);
 
@@ -219,28 +224,28 @@ class EventController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Public")
      * @ParamConverter("event", converter="doctrine.orm")
@@ -269,6 +274,12 @@ class EventController extends FOSRestController
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($registerRequest, $responseCode);
+        $context = new Context();
+        $groups = ['request_register'];
+        $context->setGroups($groups);
+        $view = $this->view($registerRequest, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 }

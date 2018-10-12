@@ -11,55 +11,53 @@ use JMS\Serializer\Annotation as JMS;
 class RegisterRequest
 {
     /**
-     * @JMS\Groups(groups={"event"})
      * @var int
      */
     private $id;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $name;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $compagnyName;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $email;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $phoneNumber;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $city;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $country;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $reasonForAttending;
 
     /**
-     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $status;

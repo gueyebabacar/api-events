@@ -4,12 +4,11 @@ namespace ApiBundle\Form;
 
 use FSevestre\BooleanFormType\Form\Type\BooleanType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagType extends AbstractType
+class ValueListType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -29,7 +28,7 @@ class TagType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BusinessBundle\Entity\Tag',
+            'data_class' => 'BusinessBundle\Entity\ValueList',
             'csrf_protection' => false,
             'method' => 'PATCH'
         ));

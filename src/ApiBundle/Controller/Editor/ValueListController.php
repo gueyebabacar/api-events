@@ -2,8 +2,9 @@
 
 namespace ApiBundle\Controller\Editor;
 
-use ApiBundle\Form\TagType;
+use ApiBundle\Form\ValueListType;
 use BusinessBundle\Entity\Tag;
+use BusinessBundle\Entity\ValueList;
 use Ee\EeCommonBundle\Exception\BusinessException;
 use Ee\EeCommonBundle\Service\Validation\Form\FormBusinessException;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -16,12 +17,12 @@ use FOS\RestBundle\Request\ParamFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
-class TagController extends FOSRestController
+class ValueListController extends FOSRestController
 {
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Return list of tags"
+     *     description="Return list of value list"
      * ),
      * @SWG\Response(
      *     response=403,
@@ -38,31 +39,30 @@ class TagController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @Rest\QueryParam(name="domain", strict=false,  nullable=true)
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
@@ -77,12 +77,9 @@ class TagController extends FOSRestController
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         try {
-            $data = $this->get('api.tag_manager')->getTags($paramFetcher);
+            $data = $this->get('api.value_list_manager')->getValueLists($paramFetcher);
 
         } catch(BusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $data = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -94,7 +91,7 @@ class TagController extends FOSRestController
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Create a tag"
+     *     description="Create a value list"
      * ),
      * @SWG\Response(
      *     response=403,
@@ -129,28 +126,28 @@ class TagController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @return \FOS\RestBundle\View\View
@@ -160,29 +157,29 @@ class TagController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
-        $tag = new Tag();
+        $valueList = new ValueList();
         try {
-            $form = $this->createForm(TagType::class, $tag, ['method' => $request->getMethod()]);
+            $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.tag_manager')->save($tag);
+            $this->get('api.tag_manager')->save($valueList);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
                 $logger->logInfo($value[0]->getMessage());
             }
             $logger->logError($ex->getMessage(), $ex);
-            $tag = $ex->getPayload();
+            $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($tag, $responseCode);
+        return $this->view($valueList, $responseCode);
     }
 
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Update a tag"
+     *     description="Update a value list"
      * ),
      * @SWG\Response(
      *     response=403,
@@ -199,7 +196,6 @@ class TagController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
      *     name="body",
@@ -221,60 +217,60 @@ class TagController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
-     * @ParamConverter("tag", converter="doctrine.orm")
+     * @ParamConverter("valueList", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateAction(Request $request, Tag $tag)
+    public function updateAction(Request $request, ValueList $valueList)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         try {
-            $form = $this->createForm(TagType::class, $tag, ['method' => $request->getMethod()]);
+            $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.tag_manager')->save($tag);
+            $this->get('api.tag_manager')->save($valueList);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
                 $logger->logInfo($value[0]->getMessage());
             }
             $logger->logError($ex->getMessage(), $ex);
-            $tag = $ex->getPayload();
+            $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($tag, $responseCode);
+        return $this->view($valueList, $responseCode);
     }
 
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Enable a tag"
+     *     description="Enable a value list"
      * ),
      * @SWG\Response(
      *     response=403,
@@ -304,60 +300,60 @@ class TagController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
-     * @ParamConverter("tag", converter="doctrine.orm")
+     * @ParamConverter("valueList", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function enableAction(Request $request, Tag $tag)
+    public function enableAction(Request $request, ValueList $valueList)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         try {
-            $form = $this->createForm(TagType::class, $tag, ['method' => $request->getMethod()]);
+            $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.tag_manager')->save($tag);
+            $this->get('api.tag_manager')->save($valueList);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
                 $logger->logInfo($value[0]->getMessage());
             }
             $logger->logError($ex->getMessage(), $ex);
-            $tag = $ex->getPayload();
+            $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($tag, $responseCode);
+        return $this->view($valueList, $responseCode);
     }
 
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Disable a tag"
+     *     description="Disable a value list"
      * ),
      * @SWG\Response(
      *     response=403,
@@ -387,53 +383,53 @@ class TagController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @ParamConverter("tag", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function disableAction(Request $request, Tag $tag)
+    public function disableAction(Request $request, ValueList $valueList)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         try {
-            $form = $this->createForm(TagType::class, $tag, ['method' => $request->getMethod()]);
+            $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.tag_manager')->save($tag);
+            $this->get('api.tag_manager')->save($valueList);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
                 $logger->logInfo($value[0]->getMessage());
             }
             $logger->logError($ex->getMessage(), $ex);
-            $tag = $ex->getPayload();
+            $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($tag, $responseCode);
+        return $this->view($valueList, $responseCode);
     }
 }

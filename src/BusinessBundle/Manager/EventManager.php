@@ -42,4 +42,16 @@ class EventManager extends BaseManager
 
         return $events;
     }
+
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getOneEvent($id)
+    {
+        $event =  $this->repository->getOneEvent($id);
+
+        return $event;
+    }
 }

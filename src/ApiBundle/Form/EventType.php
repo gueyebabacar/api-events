@@ -4,11 +4,9 @@ namespace ApiBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use ApiBundle\Form\DataTransformer\TextToDateTimeDataTransformer;
 use ApiBundle\Form\MediaType;
 
 class EventType extends AbstractType
@@ -21,7 +19,6 @@ class EventType extends AbstractType
         $builder
             ->add('customerRef', TextType::class)
             ->add('name', TextType::class)
-            ->add('date', TextType::class)
             ->add('detailedDescription', TextType::class)
             ->add('website', TextType::class)
             ->add('country', TextType::class)
@@ -36,9 +33,14 @@ class EventType extends AbstractType
             ->add('socialMediaSharing', TextType::class)
             ->add('status', TextType::class)
             ->add('visuel', TextType::class)
-            ->add('illustrations', TextType::class);
-        $builder->get('date')
-           ->addModelTransformer(new TextToDateTimeDataTransformer());
+            ->add('illustrations', TextType::class)
+            ->add('date',DateTimeType::class, array(
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'required' => 'false',
+                'format' => 'YYYY-MM-dd HH:mm',
+                'attr' => array('data-date-format' => 'YYYY-MM-DD HH:mm')
+            ));
     }
 
     /**
