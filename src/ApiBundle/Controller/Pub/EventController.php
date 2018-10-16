@@ -18,7 +18,6 @@ use FOS\RestBundle\Request\ParamFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-
 class EventController extends FOSRestController
 {
     /**
@@ -148,7 +147,7 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneAction($id)
+    public function getAction($id)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();

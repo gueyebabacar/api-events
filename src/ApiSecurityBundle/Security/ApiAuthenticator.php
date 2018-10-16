@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -91,12 +92,7 @@ class ApiAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $data = array(
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-
-        );
-
-        return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+        throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid credentials');
     }
 
     /**
@@ -116,7 +112,6 @@ class ApiAuthenticator extends AbstractGuardAuthenticator
     {
         return false;
     }
-
 
     /**
      * @return \Doctrine\DBAL\Connection

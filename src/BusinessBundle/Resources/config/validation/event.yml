@@ -35,10 +35,10 @@ BusinessBundle\Entity\Event:
                 max: 255
                 maxMessage: "255 characters are permitted for website field"
 
-        location:
+        venue:
             - Length:
                 max: 255
-                maxMessage: "255 characters are permitted for location field"
+                maxMessage: "255 characters are permitted for venue field"
 
         nameOfOrganizer:
             - Length:
@@ -59,4 +59,5 @@ BusinessBundle\Entity\Event:
             - Regex:
                 pattern: '/.*\.pdf$/'
                 message: Only pdf file are permitted
+
 

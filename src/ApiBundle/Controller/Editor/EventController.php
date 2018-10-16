@@ -24,7 +24,8 @@ class EventController extends FOSRestController
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Return list of events"
+     *     description="Return list of events",
+     *     @SWG\Items(ref=@Model(type=Event::class, groups={"event"}))
      * ),
      * @SWG\Response(
      *     response=403,
@@ -144,7 +145,7 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneAction($id)
+    public function getAction($id)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();
@@ -194,7 +195,7 @@ class EventController extends FOSRestController
      *             type="string"
      *         ),
      *         @SWG\Property(
-     *             property="name",
+     *             property="title",
      *             type="string"
      *         ),
      *        @SWG\Property(
@@ -208,39 +209,54 @@ class EventController extends FOSRestController
      *         ),
      *         @SWG\Property(
      *             property="website",
-     *             type="string"
+     *             type="string",
+     *             example="http://www.google.fr/"
      *         ),
      *        @SWG\Property(
      *             property="country",
-     *             type="string"
+     *             type="string",
+     *             example="USA"
      *         ),
      *         @SWG\Property(
-     *             property="location",
+     *             property="venue",
      *             type="string"
      *         ),
      *        @SWG\Property(
      *             property="city",
      *             type="string"
-     *         ),
-     *         @SWG\Property(
-     *             property="typeOfEvent",
-     *             type="string"
-     *         ),
-     *         @SWG\Property(
-     *             property="industry",
-     *             type="string"
+     *        ),
+     *        @SWG\Property(
+     *             property="industries",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
      *         ),
      *        @SWG\Property(
-     *             property="thematicTag",
-     *             type="string"
-     *         ),
+     *             property="topic",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
+     *        ),
+     *        @SWG\Property(
+     *             property="typeOfEvent",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
+     *        ),
      *        @SWG\Property(
      *             property="nameOfOrganizer",
      *             type="string"
-     *         ),
+     *        ),
      *        @SWG\Property(
      *             property="attachment",
-     *             type="string"
+     *             type="string",
+     *             example="http://path/file.pdf"
      *        ),
      *        @SWG\Property(
      *             property="socialMediaSharing",
@@ -252,33 +268,31 @@ class EventController extends FOSRestController
      *       ),
      *       @SWG\Property(
      *           property="contactForm",
-     *           type="string"
+     *           type="string",
+     *           example="email@domain.com"
      *       ),
      *       @SWG\Property(
-     *          property="visuel",
-     *          type="array",
-     *          example={
-     *                "type": "type",
-     *                "uri": "uri"
-     *          },
-     *         @SWG\Items(
-     *           type="object",
-     *           @SWG\Property(property="key", type="string"),
-     *           @SWG\Property(property="value", type="string")
-     *         )
-     *       ),
-     *       @SWG\Property(
+     *             property="visuel",
+     *             type="array",
+     *             example={
+     *                 "type": "string",
+     *                 "uri": "string"
+     *             },
+     *            @SWG\Items(
+     *                 type="object",
+     *                 @SWG\Property(property="key", type="string"),
+     *                 @SWG\Property(property="value", type="string")
+     *             )
+     *        ),
+     *      @SWG\Property(
      *          property="illustrations",
      *          type="array",
-     *          example={
-     *                "type": "type",
-     *                "uri": "uri"
-     *          },
-     *          @SWG\Items(
-     *            type="object",
-     *            @SWG\Property(property="key", type="string"),
-     *            @SWG\Property(property="value", type="string")
-     *          )
+     *          collectionFormat="multi",
+     *        @SWG\Items(
+     *           type="object",
+     *           @SWG\Property(property="type", type="string"),
+     *           @SWG\Property(property="uri", type="string")
+     *         )
      *       )
      *    )
      * ),
@@ -313,6 +327,7 @@ class EventController extends FOSRestController
     public function createAction(Request $request)
     {
         $responseCode = Response::HTTP_OK;
+        $context = new Context();
         $logger = $this->get('ee.app.logger');
         $event = new Event();
         try {
@@ -328,7 +343,6 @@ class EventController extends FOSRestController
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        $context = new Context();
         $groups = ['event'];
         $context->setGroups($groups);
         $view = $this->view($event, $responseCode);

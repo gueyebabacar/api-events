@@ -21,7 +21,7 @@ class CustomerController extends  FOSRestController
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Return list of authorized customers"
+     *     description="Return list of authorized customers",
      * ),
      * @SWG\Response(
      *     response=403,
@@ -332,7 +332,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneAction(CustomerClient $customerClient)
+    public function getAction(CustomerClient $customerClient)
     {
         return $this->view($customerClient);
     }

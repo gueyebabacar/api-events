@@ -22,7 +22,8 @@ class AppController extends FOSRestController
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Return list of authorized apps"
+     *     description="Return list of authorized apps",
+     *     @SWG\Items(ref=@Model(type=AppClient::class, groups={"app"}))
      * ),
      * @SWG\Response(
      *     response=403,
@@ -347,7 +348,7 @@ class AppController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneAction(AppClient $appClient)
+    public function getAction(AppClient $appClient)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();

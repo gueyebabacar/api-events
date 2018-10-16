@@ -36,7 +36,6 @@ class AppClient implements UserInterface
     private $pwd;
 
     /**
-     * @JMS\Groups(groups={"app"})
      * @var string
      */
     private $salt;
