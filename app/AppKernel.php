@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new ApiBundle\ApiBundle(),
             new ApiSecurityBundle\ApiSecurityBundle(),
             new BusinessBundle\BusinessBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -39,31 +39,30 @@ class AppController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
@@ -71,7 +70,7 @@ class AppController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getAuthorizedAppsAction(ParamFetcher $paramFetcher)
+    public function listAction(ParamFetcher $paramFetcher)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -116,7 +115,6 @@ class AppController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
      *     name="body",
@@ -138,34 +136,34 @@ class AppController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function createAppAction(Request $request)
+    public function createAction(Request $request)
     {
         $passwordEncoder = $this->get('security.password_encoder');
         $responseCode = Response::HTTP_OK;
@@ -239,35 +237,35 @@ class AppController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @ParamConverter("appClient", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateAppAction(Request $request, AppClient $appClient)
+    public function updateAction(Request $request, AppClient $appClient)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -321,35 +319,35 @@ class AppController extends FOSRestController
      *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @ParamConverter("appClient", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneAppAction(AppClient $appClient)
+    public function getOneAction(AppClient $appClient)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();
@@ -381,7 +379,6 @@ class AppController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
      *     name="body",
@@ -395,34 +392,34 @@ class AppController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function enableAppAction(Request $request, AppClient $appClient)
+    public function enableAction(Request $request, AppClient $appClient)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -450,7 +447,6 @@ class AppController extends FOSRestController
         return $this->handleView($view);
     }
 
-
     /**
      * @SWG\Response(
      *     response=200,
@@ -485,34 +481,34 @@ class AppController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function disableAppAction(Request $request, AppClient $appClient)
+    public function disableAction(Request $request, AppClient $appClient)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');

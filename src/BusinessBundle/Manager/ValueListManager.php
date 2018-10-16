@@ -4,17 +4,14 @@ namespace BusinessBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use BusinessBundle\Manager\BaseManager as BaseManager;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class TagManager
+ * Class ValueListManager
  */
-class TagManager extends BaseManager
+class ValueListManager extends BaseManager
 {
     protected $defaultLimit;
     protected $defaultOffset;
-    protected $defaultPage;
 
     /**
      * @var Request
@@ -22,7 +19,7 @@ class TagManager extends BaseManager
     protected $request;
 
     /**
-     * OpportunityManager constructor.
+     * ValueListManager constructor.
      * @param EntityManagerInterface $em
      * @param string $className
      * @param int $defaultLimit
@@ -39,9 +36,9 @@ class TagManager extends BaseManager
      * @param $paramFetcher
      * @return mixed
      */
-    public function getTags($paramFetcher)
+    public function getValueLists($paramFetcher)
     {
-        $tags =  $this->repository->getTags([
+        $tags =  $this->repository->getValueLists([
             'offset'=>$paramFetcher->get('offset'),
             'limit'=>$paramFetcher->get('limit'),
             'domain'=>$paramFetcher->get('domain'),

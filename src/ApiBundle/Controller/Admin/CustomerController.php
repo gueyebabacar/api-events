@@ -41,28 +41,28 @@ class CustomerController extends  FOSRestController
      *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
@@ -70,7 +70,7 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getAuthorizedCustomersAction(ParamFetcher $paramFetcher)
+    public function listAction(ParamFetcher $paramFetcher)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -135,28 +135,28 @@ class CustomerController extends  FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @return \FOS\RestBundle\View\View
@@ -231,28 +231,28 @@ class CustomerController extends  FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @ParamConverter("customerClient", converter="doctrine.orm")
@@ -304,28 +304,28 @@ class CustomerController extends  FOSRestController
      *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @ParamConverter("customerClient", converter="doctrine.orm")
@@ -357,7 +357,6 @@ class CustomerController extends  FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
      *     name="body",
@@ -371,28 +370,28 @@ class CustomerController extends  FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @ParamConverter("customerClient", converter="doctrine.orm")
@@ -454,28 +453,28 @@ class CustomerController extends  FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Admin")
      * @ParamConverter("customerClient", converter="doctrine.orm")

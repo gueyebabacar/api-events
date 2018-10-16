@@ -1,12 +1,12 @@
 api.public.list_events:
     path: /events
     methods: GET
-    defaults: { _controller: ApiBundle:Pub\Event:getEvents }
+    defaults: { _controller: ApiBundle:Pub\Event:list }
 
 api.public.get_one_event:
     path: /events/{id}
     methods: GET
-    defaults: { _controller: ApiBundle:Pub\Event:getOneEvent }
+    defaults: { _controller: ApiBundle:Pub\Event:getOne }
     requirements:
         id: '\d+'
 

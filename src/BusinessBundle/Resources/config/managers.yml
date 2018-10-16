@@ -7,11 +7,11 @@ services:
             - %default_limit%
             - %default_offset%
 
-    api.tag_manager:
-        class: BusinessBundle\Manager\TagManager
+    api.value_list_manager:
+        class: BusinessBundle\Manager\ValueListManager
         arguments:
             - "@doctrine.orm.entity_manager"
-            - BusinessBundle\Entity\Tag
+            - BusinessBundle\Entity\ValueList
             - %default_limit%
             - %default_offset%
 

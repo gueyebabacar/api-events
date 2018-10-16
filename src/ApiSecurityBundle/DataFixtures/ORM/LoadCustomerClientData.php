@@ -16,7 +16,7 @@ class LoadCustomerClientData extends Fixture
 
         $customerClient1->setEnable(false);
         $customerClient1->setScopes(['ROLE_ADMIN']);
-        $customerClient1->setXCustomerRef('rbc');
+        $customerClient1->setXCustomerRef('admin_reader');
 
         $manager->persist($customerClient1);
 
@@ -24,7 +24,7 @@ class LoadCustomerClientData extends Fixture
 
         $customerClient2->setEnable(false);
         $customerClient2->setScopes(['ROLE_EDITOR']);
-        $customerClient2->setXCustomerRef('kbc');
+        $customerClient2->setXCustomerRef('editor_reader');
 
         $manager->persist($customerClient2);
 
@@ -32,7 +32,7 @@ class LoadCustomerClientData extends Fixture
 
         $customerClient3->setEnable(false);
         $customerClient3->setScopes(['ROLE_PUBLIC']);
-        $customerClient3->setXCustomerRef('santander');
+        $customerClient3->setXCustomerRef('public_reader');
 
         $manager->persist($customerClient3);
 

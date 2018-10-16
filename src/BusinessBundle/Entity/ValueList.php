@@ -3,9 +3,9 @@
 namespace BusinessBundle\Entity;
 
 /**
- * Tag
+ * ValueList
  */
-class Tag
+class ValueList
 {
     /**
      * @var int
@@ -21,6 +21,11 @@ class Tag
      * @var string
      */
     private $value;
+
+    /**
+     * @var string
+     */
+    private $key;
 
     /**
      * @var bool
@@ -42,7 +47,7 @@ class Tag
      *
      * @param string $domain
      *
-     * @return Tag
+     * @return $this
      */
     public function setDomain($domain)
     {
@@ -66,7 +71,7 @@ class Tag
      *
      * @param string $value
      *
-     * @return Tag
+     * @return $this
      */
     public function setValue($value)
     {
@@ -95,7 +100,7 @@ class Tag
 
     /**
      * @param bool $enable
-     * @return Tag
+     * @return $this
      */
     public function setEnable($enable)
     {
@@ -103,6 +108,23 @@ class Tag
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     * @return $this
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+        return $this;
+    }
 
 }
 

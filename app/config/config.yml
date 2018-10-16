@@ -61,8 +61,14 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        entity_managers:
+            default:
+                filters:
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                auto_mapping: true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -85,7 +91,7 @@ fos_rest:
     zone:
         - { path: ^/api/* }
     serializer:
-        serialize_null:  true
+        serialize_null:  false
     param_fetcher_listener: true
     view:
         view_response_listener: 'force'

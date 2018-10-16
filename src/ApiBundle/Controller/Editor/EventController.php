@@ -16,6 +16,7 @@ use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use FOS\RestBundle\Request\ParamFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class EventController extends FOSRestController
@@ -40,31 +41,30 @@ class EventController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @Rest\QueryParam(name="date", strict=false,  nullable=true)
      * @Rest\QueryParam(name="status", strict=false,  nullable=true)
@@ -115,44 +115,48 @@ class EventController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
-     * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getOneEventAction(Event $event)
+    public function getOneAction($id)
     {
         $responseCode = Response::HTTP_OK;
-
         $context = new Context();
         $groups = ['event'];
         $context->setGroups($groups);
+
+        $event = $this->get('api.event_manager')->getOneEvent($id);
+
+        if (null == $event){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Event not found or status is draft');
+        }
+
         $view = $this->view($event, $responseCode);
         $view->setContext($context);
 
@@ -195,8 +199,8 @@ class EventController extends FOSRestController
      *         ),
      *        @SWG\Property(
      *             property="date",
-     *             type="datetime",
-     *             example="12/12/2018"
+     *             type="string",
+     *             example="2018-10-11 16:03:09"
      *         ),
      *        @SWG\Property(
      *             property="detailedDescription",
@@ -254,8 +258,8 @@ class EventController extends FOSRestController
      *          property="visuel",
      *          type="array",
      *          example={
-     *                "type": "visuel type",
-     *                "uri": "visuel path"
+     *                "type": "type",
+     *                "uri": "uri"
      *          },
      *         @SWG\Items(
      *           type="object",
@@ -266,42 +270,47 @@ class EventController extends FOSRestController
      *       @SWG\Property(
      *          property="illustrations",
      *          type="array",
-     *          collectionFormat="multi",
+     *          example={
+     *                "type": "type",
+     *                "uri": "uri"
+     *          },
      *          @SWG\Items(
-     *              type="string",
+     *            type="object",
+     *            @SWG\Property(property="key", type="string"),
+     *            @SWG\Property(property="value", type="string")
      *          )
      *       )
      *    )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function createEventAction(Request $request)
+    public function createAction(Request $request)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -313,13 +322,19 @@ class EventController extends FOSRestController
             $event->setStatus("draft");
             $this->get('api.event_manager')->save($event);
 
-        } catch(FormBusinessException $ex) {
+        }catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
             $event = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($event, $responseCode);
+        $context = new Context();
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $view = $this->view($event, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -342,7 +357,6 @@ class EventController extends FOSRestController
      * @SWG\Response(
      *     response=500,
      *     description="Technical error",
-     *
      * ),
      * @SWG\Parameter(
      *     name="body",
@@ -359,8 +373,8 @@ class EventController extends FOSRestController
      *         ),
      *        @SWG\Property(
      *             property="date",
-     *             type="datetime",
-     *             example="12/12/2018"
+     *             type="string",
+     *             example="2018-10-11 16:03:09"
      *         ),
      *        @SWG\Property(
      *             property="detailedDescription",
@@ -421,35 +435,35 @@ class EventController extends FOSRestController
      *    )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateEventAction(Request $request, Event $event)
+    public function updateAction(Request $request, Event $event)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -491,35 +505,35 @@ class EventController extends FOSRestController
      *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function deleteEventAction(Event $event)
+    public function deleteAction(Event $event)
     {
         $this->get('api.event_manager')->remove($event);
 
@@ -560,34 +574,34 @@ class EventController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function publishRequestEventAction(Request $request, Event $event)
+    public function publishRequestAction(Request $request, Event $event)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -640,34 +654,34 @@ class EventController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function publishEventAction(Request $request, Event $event)
+    public function publishAction(Request $request, Event $event)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -726,34 +740,34 @@ class EventController extends FOSRestController
      *     )
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function archiveEventAction(Request $request, Event $event)
+    public function archiveAction(Request $request, Event $event)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -801,35 +815,35 @@ class EventController extends FOSRestController
      *
      * ),
      * @SWG\Parameter(
-     *  name="X-CUSTOMER-REF",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="X-SCOPE",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="login",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * ),
      * @SWG\Parameter(
-     *  name="password",
-     *  in="header",
-     *  type="string",
-     *  required=true,
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
      * )
      * @SWG\Tag(name="Editor")
      * @ParamConverter("registerRequest", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function registrationEventAction(RegisterRequest $registerRequest)
+    public function registrationAction(RegisterRequest $registerRequest)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();

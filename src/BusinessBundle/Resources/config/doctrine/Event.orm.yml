@@ -9,7 +9,15 @@ BusinessBundle\Entity\Event:
             generator:
                 strategy: AUTO
 
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+            hard_delete: true
     fields:
+        deletedAt:
+            type: date
+            nullable: true
         customerRef:
             type: string
             length: 255
@@ -19,7 +27,7 @@ BusinessBundle\Entity\Event:
             length: 255
             unique: true
         date:
-            type: string
+            type: datetime
             nullable: true
         detailedDescription:
             type: string
