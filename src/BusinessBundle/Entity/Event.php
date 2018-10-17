@@ -2,8 +2,10 @@
 
 namespace BusinessBundle\Entity;
 
+use BusinessBundle\ValueObject\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as JMS;
+
 
 /**
  * Event
@@ -28,7 +30,7 @@ class Event
      * @JMS\Groups(groups={"event"})
      * @var string
      */
-    private $name;
+    private $title;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -58,7 +60,7 @@ class Event
      * @JMS\Groups(groups={"event"})
      * @var string
      */
-    private $location;
+    private $venue;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -68,21 +70,21 @@ class Event
 
     /**
      * @JMS\Groups(groups={"event"})
-     * @var string
+     * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
     private $typeOfEvent;
 
     /**
      * @JMS\Groups(groups={"event"})
-     * @var string
+     * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
-    private $industry;
+    private $industries;
 
     /**
      * @JMS\Groups(groups={"event"})
-     * @var string
+     * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
-    private $thematicTag;
+    private $topic;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -119,16 +121,11 @@ class Event
      */
     private $requestRegisters;
 
-    /**
-     * @JMS\Groups(groups={"event"})
-     * @JMS\Type("array<string>")
-     * @var string
-     */
+
     private $visuel;
 
     /**
-     * @JMS\Groups(groups={"event"})
-     * @JMS\Type("array<string>")
+     * @JMS\Type("array< BusinessBundle\ValueObject\Media>")
      */
     private $illustrations;
 
@@ -165,7 +162,6 @@ class Event
         $this->deletedAt = $deletedAt;
         return $this;
     }
-
 
     /**
      * Set customerRef
@@ -281,7 +277,6 @@ class Event
         return $this;
     }
 
-
     /**
      * Set country
      *
@@ -304,30 +299,6 @@ class Event
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * Set location
-     *
-     * @param string $location
-     *
-     * @return Event
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return string
-     */
-    public function getLocation()
-    {
-        return $this->location;
     }
 
     /**
@@ -379,51 +350,21 @@ class Event
     }
 
     /**
-     * Set industry
-     *
-     * @param string $industry
-     *
+     * @return mixed
+     */
+    public function getIndustries()
+    {
+        return $this->industries;
+    }
+
+    /**
+     * @param mixed $industries
      * @return Event
      */
-    public function setIndustry($industry)
+    public function setIndustries($industries)
     {
-        $this->industry = $industry;
-
+        $this->industries = $industries;
         return $this;
-    }
-
-    /**
-     * Get industry
-     *
-     * @return string
-     */
-    public function getIndustry()
-    {
-        return $this->industry;
-    }
-
-    /**
-     * Set thematicTag
-     *
-     * @param string $thematicTag
-     *
-     * @return Event
-     */
-    public function setThematicTag($thematicTag)
-    {
-        $this->thematicTag = $thematicTag;
-
-        return $this;
-    }
-
-    /**
-     * Get thematicTag
-     *
-     * @return string
-     */
-    public function getThematicTag()
-    {
-        return $this->thematicTag;
     }
 
     /**
@@ -569,16 +510,22 @@ class Event
      */
     public function getVisuel()
     {
-        return $this->visuel;
+        if (null == $this->visuel){
+            return null;
+        }
+
+        return new Media(json_decode($this->visuel, true));
     }
 
     /**
-     * @param string $visuel
-     * @return Event
+     * @param Media $media
+     * @return $this
      */
-    public function setVisuel($visuel)
+    public function setVisuel(Media $media)
     {
-        $this->visuel = $visuel;
+
+        $this->visuel =  str_replace('\\', '',(str_replace('\\', '', json_encode($media->toArray()))));
+
         return $this;
     }
 
@@ -587,17 +534,101 @@ class Event
      */
     public function getIllustrations()
     {
-        return $this->illustrations;
+        if (null == $this->illustrations){
+            return null;
+        }
+
+        return new Media(json_decode($this->illustrations, true));
     }
 
     /**
-     * @param string $illustrations
-     * @return Event
+     * @param Media $media
+     * @return $this
      */
     public function setIllustrations($illustrations)
     {
-        $this->illustrations = $illustrations;
+        $this->illustrations = str_replace('\\', '', json_encode($illustrations));
+
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return Event
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVenue()
+    {
+        return $this->venue;
+    }
+
+    /**
+     * @param string $venue
+     * @return Event
+     */
+    public function setVenue($venue)
+    {
+        $this->venue = $venue;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTopic()
+    {
+        return $this->topic;
+    }
+
+    /**
+     * @param string $topic
+     * @return Event
+     */
+    public function setTopic($topic)
+    {
+        $this->topic = $topic;
+        return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("visuel")
+     * @JMS\Groups(groups={"event"})
+     *
+     * @return string|null
+     */
+    public function getVirtuelVisuel()
+    {
+        return $this->visuel;
+    }
+
+    /**
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("illustrations")
+     * @JMS\Groups(groups={"event"})
+     *
+     * @return string|null
+     */
+    public function getIllustrationsVirtuel()
+    {
+        return $this->illustrations;
+    }
+
 }
 

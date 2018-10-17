@@ -2,6 +2,8 @@
 
 namespace ApiBundle\Form;
 
+use BusinessBundle\Entity\ValueList;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,29 +20,36 @@ class EventType extends AbstractType
     {
         $builder
             ->add('customerRef', TextType::class)
-            ->add('name', TextType::class)
+            ->add('title', TextType::class)
             ->add('detailedDescription', TextType::class)
             ->add('website', TextType::class)
             ->add('country', TextType::class)
-            ->add('location', TextType::class)
+            ->add('venue', TextType::class)
             ->add('city', TextType::class)
-            ->add('typeOfEvent', TextType::class)
-            ->add('industry', TextType::class)
-            ->add('thematicTag', TextType::class)
             ->add('nameOfOrganizer', TextType::class)
             ->add('contactForm', TextType::class)
             ->add('attachment', TextType::class)
             ->add('socialMediaSharing', TextType::class)
             ->add('status', TextType::class)
-            ->add('visuel', TextType::class)
+            ->add('visuel', MediaType::class)
             ->add('illustrations', TextType::class)
-            ->add('date',DateTimeType::class, array(
+            ->add('industries',  EntityType::class, [
+                'class' => ValueList::class,
+                'multiple' => true
+            ])->add('topic',  EntityType::class, [
+                'class' => ValueList::class,
+                'multiple' => true
+            ])->add('typeOfEvent',  EntityType::class, [
+                'class' => ValueList::class,
+                'multiple' => true
+            ])
+            ->add('date',DateTimeType::class,[
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'required' => 'false',
                 'format' => 'YYYY-MM-dd HH:mm',
                 'attr' => array('data-date-format' => 'YYYY-MM-DD HH:mm')
-            ));
+            ]);
     }
 
     /**

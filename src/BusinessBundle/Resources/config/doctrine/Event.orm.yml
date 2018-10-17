@@ -22,7 +22,7 @@ BusinessBundle\Entity\Event:
             type: string
             length: 255
             unique: true
-        name:
+        title:
             type: string
             length: 255
             unique: true
@@ -38,19 +38,10 @@ BusinessBundle\Entity\Event:
         country:
             type: string
             length: '3'
-        location:
+        venue:
             type: string
             length: 255
         city:
-            type: string
-            length: 255
-        typeOfEvent:
-            type: string
-            length: 255
-        industry:
-            type: string
-            length: 255
-        thematicTag:
             type: string
             length: 255
         nameOfOrganizer:
@@ -70,7 +61,8 @@ BusinessBundle\Entity\Event:
         visuel:
             type: json_array
         illustrations:
-            type: array
+            type: json_array
+            nullable: true
 
     oneToMany:
         requestRegisters:
@@ -78,4 +70,24 @@ BusinessBundle\Entity\Event:
             mappedBy: event
             cascade: [remove]
 
+    manyToMany:
+        industries:
+            targetEntity: ValueList
+            cascade: [persist]
+            joinTable:
+                name: event_industry
+
+        topic:
+            targetEntity: ValueList
+            cascade: [persist]
+            joinTable:
+                name: event_topic
+
+        typeOfEvent:
+            targetEntity: ValueList
+            cascade: [persist]
+            joinTable:
+                name: event_type
+
     lifecycleCallbacks: {  }
+

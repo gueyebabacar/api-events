@@ -20,7 +20,7 @@ api.admin.update_app:
 api.admin.get_one_app:
     path:  /apps/{id}
     methods: GET
-    defaults: { _controller: ApiBundle:Admin\App:getOne }
+    defaults: { _controller: ApiBundle:Admin\App:get }
     requirements:
         id: '\d+'
 
@@ -60,7 +60,7 @@ api.admin.update_customer:
 api.admin.get_one_customer:
     path:  /customers/{id}
     methods: GET
-    defaults: { _controller: ApiBundle:Admin\Customer:getOne }
+    defaults: { _controller: ApiBundle:Admin\Customer:get }
     requirements:
         id: '\d+'
 

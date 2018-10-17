@@ -2,6 +2,9 @@
 
 namespace BusinessBundle\Entity;
 
+use JMS\Serializer\Annotation as JMS;
+
+
 /**
  * ValueList
  */
@@ -13,21 +16,25 @@ class ValueList
     private $id;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $domain;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $value;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var string
      */
     private $key;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var bool
      */
     private $enable;

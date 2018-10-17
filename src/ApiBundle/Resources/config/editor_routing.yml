@@ -8,7 +8,7 @@ api.editor.list_events:
 api.editor.get_one_event:
     path: /events/{id}
     methods: GET
-    defaults: { _controller: ApiBundle:Editor\Event:getOne }
+    defaults: { _controller: ApiBundle:Editor\Event:get }
     requirements:
         id: '\d+'
 
@@ -59,7 +59,7 @@ api.editor.registration_events:
     requirements:
         id: '\d+'
 
-##---------------------- Tag ----------------------##
+##---------------------- Value List ----------------------##
 
 api.editor.list_tags:
     path: /value-lists

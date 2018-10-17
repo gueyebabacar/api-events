@@ -6,7 +6,7 @@ api.public.list_events:
 api.public.get_one_event:
     path: /events/{id}
     methods: GET
-    defaults: { _controller: ApiBundle:Pub\Event:getOne }
+    defaults: { _controller: ApiBundle:Pub\Event:get }
     requirements:
         id: '\d+'
 
