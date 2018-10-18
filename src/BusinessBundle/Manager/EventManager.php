@@ -28,30 +28,30 @@ class EventManager extends BaseManager
     }
 
     /**
-     * @param $paramFetcher
+     * @param $filterParams
+     * @param $customerRef
      * @return mixed
      */
-    public function getEvents($paramFetcher)
+    public function getEvents($filterParams, $customerRef)
     {
-        $events =  $this->repository->getEvents([
-            'offset'=>$paramFetcher->get('offset'),
-            'limit'=>$paramFetcher->get('limit'),
-            'defaultOffset'=>$this->defaultOffset,
-            'defaultLimit'=>$this->defaultLimit
-        ]);
+        $events =  $this->repository->getEvents($filterParams, $customerRef);
 
         return $events;
     }
 
+    /**
+     * @return int|int
+     */
+    public function getDefaultLimit()
+    {
+        return $this->defaultLimit;
+    }
 
     /**
-     * @param $id
-     * @return mixed
+     * @return int|int
      */
-    public function getOneEvent($id)
+    public function getDefaultOffset()
     {
-        $event =  $this->repository->getOneEvent($id);
-
-        return $event;
+        return $this->defaultOffset;
     }
 }

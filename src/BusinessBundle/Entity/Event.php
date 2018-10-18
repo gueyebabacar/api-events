@@ -34,7 +34,7 @@ class Event
 
     /**
      * @JMS\Groups(groups={"event"})
-     * @var string
+     * @var \DateTime
      */
     private $date;
 
@@ -72,7 +72,7 @@ class Event
      * @JMS\Groups(groups={"event"})
      * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
-    private $typeOfEvent;
+    private $eventType;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -84,7 +84,7 @@ class Event
      * @JMS\Groups(groups={"event"})
      * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
-    private $topic;
+    private $eventTopic;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -155,7 +155,7 @@ class Event
 
     /**
      * @param mixed $deletedAt
-     * @return Event
+     * @return $this
      */
     public function setDeletedAt($deletedAt)
     {
@@ -168,7 +168,7 @@ class Event
      *
      * @param string $customerRef
      *
-     * @return Event
+     * @return $this
      */
     public function setCustomerRef($customerRef)
     {
@@ -192,7 +192,7 @@ class Event
      *
      * @param string $name
      *
-     * @return Event
+     * @return $this
      */
     public function setName($name)
     {
@@ -216,7 +216,7 @@ class Event
      *
      * @param \DateTime $date
      *
-     * @return Event
+     * @return $this
      */
     public function setDate($date)
     {
@@ -240,7 +240,7 @@ class Event
      *
      * @param string $detailedDescription
      *
-     * @return Event
+     * @return $this
      */
     public function setDetailedDescription($detailedDescription)
     {
@@ -269,7 +269,7 @@ class Event
 
     /**
      * @param string $website
-     * @return Event
+     * @return $this
      */
     public function setWebsite($website)
     {
@@ -282,7 +282,7 @@ class Event
      *
      * @param string $country
      *
-     * @return Event
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -306,7 +306,7 @@ class Event
      *
      * @param string $city
      *
-     * @return Event
+     * @return $this
      */
     public function setCity($city)
     {
@@ -326,30 +326,6 @@ class Event
     }
 
     /**
-     * Set typeOfEvent
-     *
-     * @param string $typeOfEvent
-     *
-     * @return Event
-     */
-    public function setTypeOfEvent($typeOfEvent)
-    {
-        $this->typeOfEvent = $typeOfEvent;
-
-        return $this;
-    }
-
-    /**
-     * Get typeOfEvent
-     *
-     * @return string
-     */
-    public function getTypeOfEvent()
-    {
-        return $this->typeOfEvent;
-    }
-
-    /**
      * @return mixed
      */
     public function getIndustries()
@@ -359,7 +335,7 @@ class Event
 
     /**
      * @param mixed $industries
-     * @return Event
+     * @return $this
      */
     public function setIndustries($industries)
     {
@@ -368,11 +344,47 @@ class Event
     }
 
     /**
+     * @return mixed
+     */
+    public function getEventType()
+    {
+        return $this->eventType;
+    }
+
+    /**
+     * @param mixed $eventType
+     * @return $this
+     */
+    public function setEventType($eventType)
+    {
+        $this->eventType = $eventType;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventTopic()
+    {
+        return $this->eventTopic;
+    }
+
+    /**
+     * @param mixed $eventTopic
+     * @return $this
+     */
+    public function setEventTopic($eventTopic)
+    {
+        $this->eventTopic = $eventTopic;
+        return $this;
+    }
+
+    /**
      * Set nameOfOrganizer
      *
      * @param string $nameOfOrganizer
      *
-     * @return Event
+     * @return $this
      */
     public function setNameOfOrganizer($nameOfOrganizer)
     {
@@ -396,7 +408,7 @@ class Event
      *
      * @param string $contactForm
      *
-     * @return Event
+     * @return $this
      */
     public function setContactForm($contactForm)
     {
@@ -420,7 +432,7 @@ class Event
      *
      * @param string $attachment
      *
-     * @return Event
+     * @return $this
      */
     public function setAttachment($attachment)
     {
@@ -444,7 +456,7 @@ class Event
      *
      * @param array $socialMediaSharing
      *
-     * @return Event
+     * @return $this
      */
     public function setSocialMediaSharing($socialMediaSharing)
     {
@@ -468,7 +480,7 @@ class Event
      *
      * @param string $status
      *
-     * @return Event
+     * @return $this
      */
     public function setStatus($status)
     {
@@ -497,7 +509,7 @@ class Event
 
     /**
      * @param ArrayCollection $requestRegisters
-     * @return Event
+     * @return $this
      */
     public function setRequestRegisters($requestRegisters)
     {
@@ -562,7 +574,7 @@ class Event
 
     /**
      * @param string $title
-     * @return Event
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -580,29 +592,11 @@ class Event
 
     /**
      * @param string $venue
-     * @return Event
+     * @return $this
      */
     public function setVenue($venue)
     {
         $this->venue = $venue;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTopic()
-    {
-        return $this->topic;
-    }
-
-    /**
-     * @param string $topic
-     * @return Event
-     */
-    public function setTopic($topic)
-    {
-        $this->topic = $topic;
         return $this;
     }
 

@@ -13,34 +13,78 @@ use BusinessBundle\Entity\Event;
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @param array $params
+     * @param $filterParams
+     * @param $customerRef
      * @return array
      */
-    public function getEvents(array $params)
+    public function getEvents($filterParams, $customerRef)
     {
-        $offset = !empty($params['offset']) ? $params['offset'] : $params['defaultOffset'];
-        $limit = !empty($params['limit']) ? $params['limit'] : $params['defaultLimit'];
+        $industries = (array_key_exists('industries', $filterParams)) ? explode(",", $filterParams['industries']) : [];
+        $eventType = (array_key_exists('eventType', $filterParams)) ? explode(",", $filterParams['eventType']) : [];
+        $eventTopic = (array_key_exists('eventTopic', $filterParams)) ? explode(",", $filterParams['eventTopic']) : [];
+        $venue = (array_key_exists('venue', $filterParams)) ? explode(",", $filterParams['venue']) : [];
+
         $qb = $this->createQueryBuilder('e')
-            ->where('e.status !=:status')
-            ->setParameter('status', Event::DELETE_STATUS)
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
+            ->leftJoin('e.industries', 'i')
+            ->leftJoin('e.eventType', 'type')
+            ->leftJoin('e.eventTopic', 'topic')
+            ->where('e.status !=:status AND e.customerRef =:customerRef')
+            ->setParameters(['status' => Event::DELETE_STATUS, 'customerRef' => $customerRef]);
 
-        return $qb->getQuery()->getResult();
-    }
+        foreach ($filterParams as $key => $value) {
+            switch ($key) {
+                case "eventDateFrom":
+                    if(!array_key_exists('eventDateTo', $filterParams)){
+                        $qb->andWhere('e.date >= :eventDateFrom')
+                            ->setParameter('eventDateFrom', $value);
+                    }
+                    break;
+                case "eventDateTo":
+                    if(!array_key_exists('eventDateFrom', $filterParams)){
+                        $qb->andWhere('e.date <= :eventDateTo')
+                            ->setParameter('eventDateTo', $value);
+                    }
+                    break;
+            }
+        }
 
-    /**
-     * @param $id
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getOneEvent($id)
-    {
-        $qb = $this->createQueryBuilder('e')
-            ->where('e.id =:id')
-            ->andWhere('e.status !=:status')
-            ->setParameters(['id' => $id, 'status' => Event::DELETE_STATUS]);
+        if (!empty($industries)) {
+            $qb
+                ->andWhere('i.id IN (:industries)')
+                ->setParameter('industries', $industries);
+        }
 
-        return $qb->getQuery()->getOneOrNullResult();
+        if (!empty($eventType)) {
+            $qb
+                ->andWhere('type.id IN (:eventType)')
+                ->setParameter('eventType', $eventType);
+        }
+
+        if (!empty($eventTopic)) {
+            $qb
+                ->andWhere('topic.id IN (:eventTopic)')
+                ->setParameter('eventTopic', $eventTopic);
+        }
+
+        if (!empty($venue)) {
+            $qb
+                ->andWhere('e.venue IN (:venue)')
+                ->setParameter('venue', $venue);
+        }
+
+        if (array_key_exists('eventDateFrom', $filterParams) && array_key_exists('eventDateTo', $filterParams)) {
+            $qb
+                ->andWhere('e.date >= :eventDateFrom AND e.date <= :eventDateTo')
+                ->setParameter( 'eventDateFrom', $filterParams['eventDateFrom'])
+                ->setParameter( 'eventDateTo', $filterParams['eventDateTo']);
+        }
+
+        //add sort
+        if (isset($filterParams['sortBy'])) {
+            $qb->add('orderBy', 'e.'.$filterParams['sortBy'].' ' . $filterParams['sortDir']);
+
+        }
+
+        return $qb->getQuery();
     }
 }

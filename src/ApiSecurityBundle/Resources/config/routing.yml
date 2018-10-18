@@ -1,3 +1,0 @@
-api_security_homepage:
-    path:     /
-    defaults: { _controller: ApiSecurityBundle:Default:index }
