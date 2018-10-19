@@ -113,6 +113,7 @@ class EventController extends FOSRestController
      */
     public function listAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $currentRoute =  $request->get('_route');
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
@@ -129,7 +130,7 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
             $customerRef = $request->headers->get('x-customer-ref');
-            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef);
+            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, $currentRoute);
             $groups = ['event'];
             $context->setGroups($groups);
             $paginator  = $this->get('knp_paginator');
@@ -206,20 +207,23 @@ class EventController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Editor")
+     * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getAction($id)
+    public function getAction(Event $event = null, Request $request)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();
         $groups = ['event'];
         $context->setGroups($groups);
 
-        $event = $this->get('api.event_manager')->getOneEvent($id);
-
         if (null == $event){
-            throw new HttpException(Response::HTTP_NOT_FOUND, 'Event not found or status is draft');
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
+
+        if(!in_array($event->getStatus(), Event::EDITOR_EVENT_STATUS_DISPLAY) || $event->getCustomerRef() != $request->headers->get('x-customer-ref')){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
         }
 
         $view = $this->view($event, $responseCode);

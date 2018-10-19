@@ -15,9 +15,10 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @param $filterParams
      * @param $customerRef
-     * @return array
+     * @param $currentRoute
+     * @return \Doctrine\ORM\Query
      */
-    public function getEvents($filterParams, $customerRef)
+    public function getEvents($filterParams, $customerRef, $currentRoute)
     {
         $industries = (array_key_exists('industries', $filterParams)) ? explode(",", $filterParams['industries']) : [];
         $eventType = (array_key_exists('eventType', $filterParams)) ? explode(",", $filterParams['eventType']) : [];
@@ -28,8 +29,16 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('e.industries', 'i')
             ->leftJoin('e.eventType', 'type')
             ->leftJoin('e.eventTopic', 'topic')
-            ->where('e.status !=:status AND e.customerRef =:customerRef')
-            ->setParameters(['status' => Event::DELETE_STATUS, 'customerRef' => $customerRef]);
+            ->where('e.status IN (:status) AND e.customerRef =:customerRef');
+        if ($currentRoute === "api.editor.list_events") {
+            $qb
+                ->setParameters(['status' => Event::EDITOR_EVENT_STATUS_DISPLAY, 'customerRef' => $customerRef]);
+        }
+
+        if ($currentRoute === "api.public.list_events") {
+            $qb
+                ->setParameters(['status' => Event::PUBLIC_EVENT_STATUS_DISPLAY, 'customerRef' => $customerRef]);
+        }
 
         foreach ($filterParams as $key => $value) {
             switch ($key) {

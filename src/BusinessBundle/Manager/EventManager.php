@@ -30,11 +30,12 @@ class EventManager extends BaseManager
     /**
      * @param $filterParams
      * @param $customerRef
+     * @param null $currentRoute
      * @return mixed
      */
-    public function getEvents($filterParams, $customerRef)
+    public function getEvents($filterParams, $customerRef, $currentRoute = null)
     {
-        $events =  $this->repository->getEvents($filterParams, $customerRef);
+        $events =  $this->repository->getEvents($filterParams, $customerRef, $currentRoute);
 
         return $events;
     }
