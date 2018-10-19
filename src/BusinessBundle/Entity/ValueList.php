@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as JMS;
 class ValueList
 {
     /**
+     * @JMS\Groups(groups={"event"})
      * @var int
      */
     private $id;

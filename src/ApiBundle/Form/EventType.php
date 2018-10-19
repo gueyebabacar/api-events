@@ -36,10 +36,10 @@ class EventType extends AbstractType
             ->add('industries',  EntityType::class, [
                 'class' => ValueList::class,
                 'multiple' => true
-            ])->add('topic',  EntityType::class, [
+            ])->add('eventTopic',  EntityType::class, [
                 'class' => ValueList::class,
                 'multiple' => true
-            ])->add('typeOfEvent',  EntityType::class, [
+            ])->add('eventType',  EntityType::class, [
                 'class' => ValueList::class,
                 'multiple' => true
             ])

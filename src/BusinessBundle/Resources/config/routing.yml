@@ -1,3 +1,0 @@
-business_homepage:
-    path:     /
-    defaults: { _controller: BusinessBundle:Default:index }

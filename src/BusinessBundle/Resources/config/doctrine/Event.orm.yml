@@ -21,7 +21,6 @@ BusinessBundle\Entity\Event:
         customerRef:
             type: string
             length: 255
-            unique: true
         title:
             type: string
             length: 255
@@ -77,13 +76,13 @@ BusinessBundle\Entity\Event:
             joinTable:
                 name: event_industry
 
-        topic:
+        eventTopic:
             targetEntity: ValueList
             cascade: [persist]
             joinTable:
                 name: event_topic
 
-        typeOfEvent:
+        eventType:
             targetEntity: ValueList
             cascade: [persist]
             joinTable:

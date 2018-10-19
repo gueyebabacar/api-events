@@ -2,9 +2,11 @@
 
 namespace ApiBundle\Controller\Editor;
 
+use ApiBundle\Form\EventParametersType;
 use ApiBundle\Form\EventType;
 use BusinessBundle\Entity\Event;
 use BusinessBundle\Entity\RegisterRequest;
+use BusinessBundle\ValueObject\EventParameters;
 use Ee\EeCommonBundle\Exception\BusinessException;
 use Ee\EeCommonBundle\Service\Validation\Form\FormBusinessException;
 use FOS\RestBundle\Context\Context;
@@ -66,34 +68,96 @@ class EventController extends FOSRestController
      *      in="header",
      *      type="string",
      *      required=true,
-     * )
-     * @Rest\QueryParam(name="date", strict=false,  nullable=true)
-     * @Rest\QueryParam(name="status", strict=false,  nullable=true)
+     * ),
+     * @SWG\Parameter(
+     *      name="industries",
+     *      in="query",
+     *      type="array",
+     *  @SWG\Items(
+     *      type="integer"
+     *  )
+     * ),
+     * @SWG\Parameter(
+     *      name="eventTopic",
+     *      in="query",
+     *      type="array",
+     *  @SWG\Items(
+     *      type="integer"
+     *  )
+     * ),
+     * @SWG\Parameter(
+     *      name="eventType",
+     *      in="query",
+     *      type="array",
+     *  @SWG\Items(
+     *      type="integer"
+     *  )
+     * ),
+     * @SWG\Parameter(
+     *      name="venue",
+     *      in="query",
+     *      type="array",
+     *  @SWG\Items(
+     *      type="string"
+     *  )
+     * ),
+     * @Rest\QueryParam(name="eventDateFrom", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="eventDateTo", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="date", description="Sort field")
+     * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false, default="desc", description="Sort direction")
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
-     * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
+     * @Rest\QueryParam(name="offset", strict=false, nullable=true)
      * @SWG\Tag(name="Editor")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function listAction(ParamFetcher $paramFetcher)
+    public function listAction(Request $request, ParamFetcher $paramFetcher)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
-        try {
-            $data = $this->get('api.event_manager')->getEvents($paramFetcher);
-
-        } catch(BusinessException $ex) {
-            $logger->logError($ex->getMessage(), $ex);
-            $data = $ex->getPayload();
-            $responseCode = Response::HTTP_BAD_REQUEST;
-        }
         $context = new Context();
-        $groups = ['event'];
-        $context->setGroups($groups);
-        $view = $this->view($data, $responseCode);
-        $view->setContext($context);
 
-        return $this->handleView($view);
+        try {
+            $defaultLimit = $this->get('api.event_manager')->getDefaultLimit();
+            $defaultOffset = $this->get('api.event_manager')->getDefaultOffset();
+            $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
+            $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
+
+            $eventParameters =  new EventParameters();
+            $form = $this->createForm(EventParametersType::class, $eventParameters, ['method' => $request->getMethod()]);
+            $form->handleRequest($request);
+            $this->get('ee.form.validator')->validate($form);
+            $filterParams = $eventParameters->toArray();
+            $customerRef = $request->headers->get('x-customer-ref');
+            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef);
+            $groups = ['event'];
+            $context->setGroups($groups);
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query,
+                (int)($offset / $limit) + 1,
+                $limit
+            );
+
+            $events = $pagination->getItems();
+
+            $response =[
+                "totalItems" => $pagination->getTotalItemCount(),
+                "items" => $events
+            ];
+
+            $view = $this->view($response, $responseCode);
+            $view->setContext($context);
+
+            return $this->handleView($view);
+
+        } catch(FormBusinessException $ex) {
+            $logger->logError($ex->getMessage(), $ex);
+            $events = $ex->getPayload();
+            $responseCode = Response::HTTP_NOT_ACCEPTABLE;
+        }
+
+        return $this->view($events, $responseCode);
     }
 
     /**
@@ -191,10 +255,6 @@ class EventController extends FOSRestController
      *     in="body",
      *     @SWG\Schema(
      *         @SWG\Property(
-     *             property="customerRef",
-     *             type="string"
-     *         ),
-     *         @SWG\Property(
      *             property="title",
      *             type="string"
      *         ),
@@ -234,7 +294,7 @@ class EventController extends FOSRestController
      *            )
      *         ),
      *        @SWG\Property(
-     *             property="topic",
+     *             property="eventTopic",
      *             type="array",
      *             collectionFormat="multi",
      *             @SWG\Items(
@@ -242,7 +302,7 @@ class EventController extends FOSRestController
      *            )
      *        ),
      *        @SWG\Property(
-     *             property="typeOfEvent",
+     *             property="eventType",
      *             type="array",
      *             collectionFormat="multi",
      *             @SWG\Items(
@@ -335,6 +395,7 @@ class EventController extends FOSRestController
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $event->setStatus("draft");
+            $event->setCustomerRef($request->headers->get('x-customer-ref'));
             $this->get('api.event_manager')->save($event);
 
         }catch(FormBusinessException $ex) {
@@ -547,11 +608,24 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function deleteAction(Event $event)
+    public function deleteAction(Event $event = null)
     {
-        $this->get('api.event_manager')->remove($event);
+        $responseCode = Response::HTTP_NO_CONTENT;
+        $context = new Context();
 
-        return $this->view($event, Response::HTTP_NO_CONTENT);
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
+        if ($event->getStatus() != Event::DELETE_STATUS){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource\'s status is not draft');
+        }
+        $this->get('api.event_manager')->remove($event);
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $view = $this->view($event, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
