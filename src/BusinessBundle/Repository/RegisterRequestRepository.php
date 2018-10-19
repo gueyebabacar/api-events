@@ -10,4 +10,21 @@ namespace BusinessBundle\Repository;
  */
 class RegisterRequestRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $limit
+     * @param $offset
+     * @param $userId
+     * @return array
+     */
+    public function getUserEvents($limit, $offset, $userId)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->where("r.userId =:userId")
+            ->setParameter('userId', $userId);
+
+        $qb  ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
 }

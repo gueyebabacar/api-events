@@ -14,6 +14,18 @@ class Event
 {
     const DELETE_STATUS = "draft";
 
+    const PUBLIC_EVENT_STATUS_DISPLAY = [
+        'published',
+        'archived'
+    ];
+
+    const EDITOR_EVENT_STATUS_DISPLAY = [
+        'draft',
+        'published',
+        'depublished',
+        'archived'
+    ];
+
     /**
      * @JMS\Groups(groups={"event"})
      * @var int

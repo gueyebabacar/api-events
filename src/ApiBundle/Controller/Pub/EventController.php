@@ -112,6 +112,7 @@ class EventController extends FOSRestController
      */
     public function listAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $currentRoute =  $request->get('_route');
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
@@ -128,7 +129,7 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
             $customerRef = $request->headers->get('x-customer-ref');
-            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef);
+            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, $currentRoute);
 
             $groups = ['event'];
             $context->setGroups($groups);
@@ -158,6 +159,82 @@ class EventController extends FOSRestController
         }
 
         return $this->view($events, $responseCode);
+    }
+
+
+    /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return list of user event",
+     *     @SWG\Items(ref=@Model(type=RegisterRequest::class, groups={"request_register"}))
+     * ),
+     * @SWG\Response(
+     *     response=403,
+     *     description="Forbidden",
+     *     examples={
+     *          "invalid username/password":{
+     *              "message": "Invalid credentials."
+     *          },
+     *          "Invalid customer ref/scope":{
+     *              "message": "Access Denied"
+     *          },
+     *     }
+     * )
+     * @SWG\Response(
+     *     response=500,
+     *     description="Technical error",
+     *
+     * ),
+     * @SWG\Parameter(
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * )
+     * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
+     * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
+     * @SWG\Tag(name="Public")
+     * @return \FOS\RestBundle\View\View
+     * @throws \Exception
+     */
+    public function userEventAction(ParamFetcher $paramFetcher, $user_id)
+    {
+        $responseCode = Response::HTTP_OK;
+        $logger = $this->get('ee.app.logger');
+        try {
+            $events = $this->get('api.user_event_manager')->getUserEvents($paramFetcher, $user_id);
+
+        } catch(BusinessException $ex) {
+            $logger->logError($ex->getMessage(), $ex);
+            $events = $ex->getPayload();
+            $responseCode = Response::HTTP_BAD_REQUEST;
+        }
+
+        $context = new Context();
+        $groups = ['request_register'];
+        $context->setGroups($groups);
+        $view = $this->view($events, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -210,16 +287,18 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getAction(Event $event = null)
+    public function getAction(Event $event = null, Request $request)
     {
         $responseCode = Response::HTTP_OK;
         $context = new Context();
         $groups = ['event'];
         $context->setGroups($groups);
 
-        $event = $this->get('api.event_manager')->getOneEvent($event);
-
         if (null == $event){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
+
+        if(!in_array($event->getStatus(), Event::PUBLIC_EVENT_STATUS_DISPLAY) || $event->getCustomerRef() != $request->headers->get('x-customer-ref')){
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
         }
 
@@ -257,6 +336,10 @@ class EventController extends FOSRestController
      *     @SWG\Schema(
      *         @SWG\Property(
      *             property="name",
+     *             type="string"
+     *         ),
+     *        @SWG\Property(
+     *             property="userId",
      *             type="string"
      *         ),
      *         @SWG\Property(

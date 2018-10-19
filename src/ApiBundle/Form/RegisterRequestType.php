@@ -19,6 +19,7 @@ class RegisterRequestType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('userId', TextType::class)
             ->add('compagnyName', TextType::class)
             ->add('email', TextType::class)
             ->add('phoneNumber', TextType::class)

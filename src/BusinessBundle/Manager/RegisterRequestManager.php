@@ -6,9 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use ApiSecurityBundle\Manager\BaseManager as BaseManager;
 
 /**
- * Class EventManager
+ * Class RegisterRequestManager
  */
-class EventManager extends BaseManager
+class RegisterRequestManager extends BaseManager
 {
     protected $defaultLimit;
     protected $defaultOffset;
@@ -28,14 +28,17 @@ class EventManager extends BaseManager
     }
 
     /**
-     * @param $filterParams
-     * @param $customerRef
-     * @param null $currentRoute
+     * @param $paramFetcher
+     * @param $userId
      * @return mixed
      */
-    public function getEvents($filterParams, $customerRef, $currentRoute = null)
+    public function getUserEvents($paramFetcher, $userId)
     {
-        $events =  $this->repository->getEvents($filterParams, $customerRef, $currentRoute);
+        $defaultLimit = $this->getDefaultLimit();
+        $defaultOffset = $this->getDefaultOffset();
+        $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
+        $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
+        $events =  $this->repository->getUserEvents($limit, $offset, $userId);
 
         return $events;
     }

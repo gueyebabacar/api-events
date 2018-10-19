@@ -55,9 +55,4 @@ BusinessBundle\Entity\Event:
                 pattern: '/^[\w.-]+@[\w.-]+\.[a-z]{2,6}$/'
                 message: This email is not valid
 
-        attachment:
-            - Regex:
-                pattern: '/.*\.pdf$/'
-                message: Only pdf file are permitted
-
 
