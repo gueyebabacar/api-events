@@ -12,6 +12,9 @@ BusinessBundle\Entity\RegisterRequest:
         name:
             type: string
             length: 255
+        userId:
+            type: string
+            length: 255
         compagnyName:
             type: string
             length: 255

@@ -36,6 +36,23 @@ class LoadCustomerClientData extends Fixture
 
         $manager->persist($customerClient3);
 
+        $customerClient4 = new CustomerClient();
+
+        $customerClient4->setEnable(false);
+        $customerClient4->setScopes(['ROLE_PUBLIC','ROLE_EDITOR']);
+        $customerClient4->setXCustomerRef('bank1');
+
+        $manager->persist($customerClient4);
+
+
+        $customerClient5 = new CustomerClient();
+
+        $customerClient5->setEnable(false);
+        $customerClient5->setScopes(['ROLE_PUBLIC','ROLE_EDITOR']);
+        $customerClient5->setXCustomerRef('bank2');
+
+        $manager->persist($customerClient5);
+
 
         $manager->flush();
     }

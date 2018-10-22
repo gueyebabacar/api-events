@@ -16,3 +16,8 @@ api.public.inscription_to_event:
     defaults: { _controller: ApiBundle:Pub\Event:inscriptionRequest }
     requirements:
         id: '\d+'
+
+api.user.event_inscription:
+    path: /user/{user_id}/events/registered‐event
+    methods: GET
+    defaults: { _controller: ApiBundle:Pub\Event:userEvent }

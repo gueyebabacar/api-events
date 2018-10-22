@@ -21,6 +21,12 @@ class RegisterRequest
      */
     private $name;
 
+
+    /**
+     * @var string
+     */
+    private $userId;
+
     /**
      * @JMS\Groups(groups={"request_register"})
      * @var string
@@ -281,6 +287,24 @@ class RegisterRequest
     public function setEvent($event)
     {
         $this->event = $event;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param string $userId
+     * @return Event
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
         return $this;
     }
 }
