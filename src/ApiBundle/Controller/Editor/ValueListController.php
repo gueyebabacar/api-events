@@ -255,6 +255,7 @@ class ValueListController extends FOSRestController
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.tag_manager')->save($valueList);
+            $this->get('app_logger')->logInfo('Value list update', ['Domain' => $valueList->setDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
@@ -338,6 +339,7 @@ class ValueListController extends FOSRestController
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.tag_manager')->save($valueList);
+            $this->get('app_logger')->logInfo('Value list enable', ['Domain' => $valueList->setDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
@@ -421,6 +423,7 @@ class ValueListController extends FOSRestController
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.tag_manager')->save($valueList);
+            $this->get('app_logger')->logInfo('Value list disable', ['Domain' => $valueList->setDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
