@@ -22,6 +22,8 @@ services:
     ApiSecurityBundle\:
         resource: '../../src/ApiSecurityBundle/*'
 
-
     ApiSecurityBundle\DataFixtures\ORM\:
         resource: '../../src/ApiSecurityBundle/DataFixtures/ORM'
+
+    BusinessBundle\DataFixtures\ORM\:
+        resource: '../../src/BusinessBundle/DataFixtures/ORM'
