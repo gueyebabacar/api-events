@@ -1,0 +1,244 @@
+-
+    Domain: Industries
+    Key: valueList.hs2002.section1
+    Value: 'Live animals; animal products'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section2
+    Value: 'Vegetable products'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section3
+    Value: 'Animal or vegetable fats and oils and their cleavage products; prepared edible fats; animal or vegetable waxes'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section4
+    Value: 'Prepared foodstuffs; beverages, spirits and vinegar; tobacco and manufactured tobacco substitutes'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section5
+    Value: 'Mineral products'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section6
+    Value: 'Products of the chemical or allied industries'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section7
+    Value: 'Plastics and articles thereof; rubber and articles thereof'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section8
+    Value: 'Raw hides and skins, leather, furskins and articles thereof; saddlery and harness; travel goods, handbags and similar containers; articles of animal gut (other than silkworm gut)'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section9
+    Value: 'Wood and articles of wood; wood charcoal; cork and articles of cork; manufactures of straw, of esparto or of other plaiting materials; basketware and wickerwork'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section10
+    Value: 'pulp of wood or of other fibrous cellulosic material; recovered (waste and scrap) paper or paperboard; paper and paperboard and articles thereof'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section11
+    Value: 'Textiles and textile articles'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section12
+    Value: 'Footwear, headgear, umbrellas, sun umbrellas, walking-sticks, seat-sticks, whips, riding-crops and parts thereof; prepared feathers and articles made therewith; artificial flowers; articles of human hair'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section13
+    Value: 'Articles of stone, plaster, cement, asbestos, mica or similar materials; ceramic products; glass and glassware'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section14
+    Value: 'Natural or cultured pearls, precious or semi-precious stones, precious metals, metals clad with precious metal, and articles thereof; imitation jewellery; coin'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section15
+    Value: 'Base metals and articles of base metal'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section16
+    Value: 'Machinery and mechanical appliances; electrical equipment; parts thereof; sound recorders and reproducers, television image and sound recorders and reproducers, and parts and accessories of such articles'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section17
+    Value: 'Vehicles, aircraft, vessels and associated transport equipment'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section18
+    Value: 'Optical, photographic, cinematographic, measuring, checking, precision, medical or surgical instruments and apparatus; clocks and watches; musical instruments; parts and accessories thereof'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section19
+    Value: 'Arms and ammunition; parts and accessories thereof'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section20
+    Value: 'Miscellaneous manufactured articles'
+-
+    Domain: Industries
+    Key: valueList.hs2002.section21
+    Value: 'Works of art, collectors'' pieces and antiques'
+-
+    Domain: Industries
+    Key: valueList.services.section22
+    Value: Services
+-
+    Domain: Domain
+    Key: Key
+    Value: Value
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.agent
+    Value: Agent
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.buyer
+    Value: Buyer
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.distributor
+    Value: Distributor
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.exporter
+    Value: Exporter
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.franchisees
+    Value: 'Franchisees '
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.importer
+    Value: Importer
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.manufacturer
+    Value: Manufacturer
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.partner
+    Value: Partner
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.subcontractor
+    Value: Subcontractor
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.supplier
+    Value: Supplier
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.serviceProvider
+    Value: 'Service Provider'
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.trader
+    Value: Trader
+-
+    Domain: Counterparts
+    Key: valueList.counterparts.wholesaler
+    Value: Wholesaler
+
+    Domain: Domain
+    Key: Key
+    Value: Value
+-
+    Domain: EventType
+    Key: valueList.eventType.conference
+    Value: Conference
+-
+    Domain: EventType
+    Key: valueList.eventType.tradeConvention
+    Value: 'Trade convention'
+-
+    Domain: EventType
+    Key: valueList.eventType.tradeshow
+    Value: Tradeshow
+-
+    Domain: EventType
+    Key: valueList.eventType.seminar
+    Value: Seminar
+-
+    Domain: EventType
+    Key: valueList.eventType.training
+    Value: Training
+-
+    Domain: EventType
+    Key: valueList.eventType.workshop
+    Value: Workshop
+
+    Domain: Domain
+    Key: Key
+    Value: Value
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.accounting
+    Value: Accounting
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.B2B
+    Value: B2B
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.businessManagement
+    Value: 'Business Management'
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.consulting
+    Value: Consulting
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.education
+    Value: Education
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.Entrepreneurship
+    Value: Entrepreneurship
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.export
+    Value: Export
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.finance
+    Value: Finance
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.humanResources
+    Value: 'Human Resources'
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.Investment
+    Value: Investment
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.legal
+    Value: Legal
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.management
+    Value: Management
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.marketingCommunication
+    Value: 'Marketing and Communication'
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.networking
+    Value: Networking
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.sourcing
+    Value: Sourcing
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.tax
+    Value: 'Tax '
+-
+    Domain: EventTopic
+    Key: valueList.eventTopic.transportationLogistics
+    Value: 'Transportation and logistics'

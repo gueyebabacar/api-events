@@ -113,7 +113,6 @@ class EventController extends FOSRestController
      */
     public function listAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $currentRoute =  $request->get('_route');
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
@@ -130,7 +129,7 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
             $customerRef = $request->headers->get('x-customer-ref');
-            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, $currentRoute);
+            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
             $groups = ['event'];
             $context->setGroups($groups);
             $paginator  = $this->get('knp_paginator');
@@ -400,6 +399,7 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $event->setStatus("draft");
             $event->setCustomerRef($request->headers->get('x-customer-ref'));
+            $this->get('app_logger')->logInfo('Event creation', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'Event date' => $event->getDate()]);
             $this->get('api.event_manager')->save($event);
 
         }catch(FormBusinessException $ex) {
@@ -542,14 +542,20 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateAction(Request $request, Event $event)
+    public function updateAction(Request $request, Event $event = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
+
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
+            $this->get('app_logger')->logInfo('Event update', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
             $this->get('api.event_manager')->save($event);
 
         } catch(FormBusinessException $ex) {
@@ -624,6 +630,8 @@ class EventController extends FOSRestController
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource\'s status is not draft');
         }
         $this->get('api.event_manager')->remove($event);
+        $this->get('app_logger')->logInfo('Event delete', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'deleted at' => $event->getDeletedAt()]);
+
         $groups = ['event'];
         $context->setGroups($groups);
         $view = $this->view($event, $responseCode);
@@ -690,18 +698,25 @@ class EventController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Editor")
+     * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function publishRequestAction(Request $request, Event $event)
+    public function publishRequestAction(Request $request, Event $event = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+        $context = new Context();
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
+
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);
+            $this->get('app_logger')->logInfo('Event publish request', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
 
         } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
@@ -709,7 +724,12 @@ class EventController extends FOSRestController
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($event, $responseCode);
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $view = $this->view($event, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -770,18 +790,25 @@ class EventController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Editor")
+     * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function publishAction(Request $request, Event $event)
+    public function publishAction(Request $request, Event $event = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
+
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);
+            $this->get('app_logger')->logInfo('Event published', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
 
         } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
@@ -856,18 +883,24 @@ class EventController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Editor")
+     * @ParamConverter("event", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function archiveAction(Request $request, Event $event)
+    public function archiveAction(Request $request, Event $event = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);
+            $this->get('app_logger')->logInfo('Event archived', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
 
         } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
@@ -935,8 +968,11 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function registrationAction(RegisterRequest $registerRequest)
+    public function registrationAction(RegisterRequest $registerRequest = null)
     {
+        if (empty($registerRequest)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
         $responseCode = Response::HTTP_OK;
         $context = new Context();
         $groups = ['event'];

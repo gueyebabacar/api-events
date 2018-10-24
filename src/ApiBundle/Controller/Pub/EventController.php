@@ -112,7 +112,6 @@ class EventController extends FOSRestController
      */
     public function listAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $currentRoute =  $request->get('_route');
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
@@ -129,7 +128,7 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
             $customerRef = $request->headers->get('x-customer-ref');
-            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, $currentRoute);
+            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::PUBLIC_EVENT_STATUS_DISPLAY);
 
             $groups = ['event'];
             $context->setGroups($groups);
@@ -409,6 +408,7 @@ class EventController extends FOSRestController
             $registerRequest->setEvent($event);
             $registerRequest->setStatus("request");
             $this->get('api.event_manager')->save($registerRequest);
+            $this->get('app_logger')->logInfo('Event register request', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'Event date' => $event->getDate()]);
 
         } catch(FormBusinessException $ex) {
             foreach ($ex->getPayload() as $value){
