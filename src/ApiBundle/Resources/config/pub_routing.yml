@@ -21,3 +21,37 @@ api.user.event_inscription:
     path: /user/{user_id}/events/registered‐event
     methods: GET
     defaults: { _controller: ApiBundle:Pub\Event:userEvent }
+
+
+##---------------------- Value List ----------------------##
+
+api.public.list_value_list:
+    path: /value-lists
+    methods: GET
+    defaults: { _controller: ApiBundle:Pub\ValueList:list }
+
+api.public.create_value_list:
+    path: /value-lists
+    methods: POST
+    defaults: { _controller: ApiBundle:Pub\ValueList:create }
+
+api.public.update_value_list:
+    path: /value-lists/{id}
+    methods: PUT
+    defaults: { _controller: ApiBundle:Pub\ValueList:update }
+    requirements:
+        id: '\d+'
+
+api.public.enable_value_list:
+    path: /value-lists/{id}/enable
+    methods: PATCH
+    defaults: { _controller: ApiBundle:Pub\ValueList:enable }
+    requirements:
+        id: '\d+'
+
+api.public.disable_value_list:
+    path: /value-lists/{id}/disable
+    methods: PATCH
+    defaults: { _controller: ApiBundle:Pub\ValueList:disable }
+    requirements:
+        id: '\d+'

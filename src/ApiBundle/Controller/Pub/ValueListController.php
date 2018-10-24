@@ -1,6 +1,6 @@
 <?php
 
-namespace ApiBundle\Controller\Editor;
+namespace ApiBundle\Controller\Pub;
 
 use ApiBundle\Form\ValueListType;
 use BusinessBundle\Entity\ValueList;
@@ -67,7 +67,7 @@ class ValueListController extends FOSRestController
      * @Rest\QueryParam(name="domain", strict=false,  nullable=true)
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
-     * @SWG\Tag(name="Editor")
+     * @SWG\Tag(name="Public")
      * @param ParamFetcher $paramFetcher
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
@@ -149,7 +149,7 @@ class ValueListController extends FOSRestController
      *      type="string",
      *      required=true,
      * )
-     * @SWG\Tag(name="Editor")
+     * @SWG\Tag(name="Public")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
@@ -240,7 +240,7 @@ class ValueListController extends FOSRestController
      *      type="string",
      *      required=true,
      * )
-     * @SWG\Tag(name="Editor")
+     * @SWG\Tag(name="Public")
      * @ParamConverter("valueList", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
@@ -328,7 +328,7 @@ class ValueListController extends FOSRestController
      *      type="string",
      *      required=true,
      * )
-     * @SWG\Tag(name="Editor")
+     * @SWG\Tag(name="Public")
      * @ParamConverter("valueList", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
@@ -416,7 +416,7 @@ class ValueListController extends FOSRestController
      *      type="string",
      *      required=true,
      * )
-     * @SWG\Tag(name="Editor")
+     * @SWG\Tag(name="Public")
      * @ParamConverter("valueList", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
