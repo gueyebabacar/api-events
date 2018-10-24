@@ -61,31 +61,31 @@ api.editor.registration_events:
 
 ##---------------------- Value List ----------------------##
 
-api.editor.list_tags:
+api.editor.list_value_list:
     path: /value-lists
     methods: GET
     defaults: { _controller: ApiBundle:Editor\ValueList:list }
 
-api.editor.create_tag:
+api.editor.create_value_list:
     path: /value-lists
     methods: POST
     defaults: { _controller: ApiBundle:Editor\ValueList:create }
 
-api.editor.update_tag:
+api.editor.update_value_list:
     path: /value-lists/{id}
     methods: PUT
     defaults: { _controller: ApiBundle:Editor\ValueList:update }
     requirements:
         id: '\d+'
 
-api.editor.enable_tag:
+api.editor.enable_value_list:
     path: /value-lists/{id}/enable
     methods: PATCH
     defaults: { _controller: ApiBundle:Editor\ValueList:enable }
     requirements:
         id: '\d+'
 
-api.editor.disable_tag:
+api.editor.disable_value_list:
     path: /value-lists/{id}/disable
     methods: PATCH
     defaults: { _controller: ApiBundle:Editor\ValueList:disable }
