@@ -250,6 +250,10 @@ class ValueListController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (empty($valueList)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
         try {
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -334,6 +338,10 @@ class ValueListController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (empty($valueList)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
         try {
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -410,7 +418,7 @@ class ValueListController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Editor")
-     * @ParamConverter("tag", converter="doctrine.orm")
+     * @ParamConverter("valueList", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
@@ -418,6 +426,10 @@ class ValueListController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (empty($valueList)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
         try {
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);

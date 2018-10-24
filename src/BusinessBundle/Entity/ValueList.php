@@ -133,6 +133,5 @@ class ValueList
         $this->key = $key;
         return $this;
     }
-
 }
 
