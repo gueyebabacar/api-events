@@ -79,9 +79,6 @@ class AppController extends FOSRestController
             $data = $this->get('api.app_manager')->getApps($paramFetcher);
 
         } catch(BusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $data = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -179,9 +176,6 @@ class AppController extends FOSRestController
             $this->get('api.app_manager')->save($appClient);
 
         }catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $appClient = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -280,9 +274,6 @@ class AppController extends FOSRestController
             $this->get('api.app_manager')->save($appClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $appClient = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -350,6 +341,9 @@ class AppController extends FOSRestController
      */
     public function getAction(AppClient $appClient)
     {
+        if (null == $appClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
         $responseCode = Response::HTTP_OK;
         $context = new Context();
         $groups = ['app'];
@@ -417,13 +411,18 @@ class AppController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Admin")
+     * @ParamConverter("appClient", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function enableAction(Request $request, AppClient $appClient)
+    public function enableAction(Request $request, AppClient $appClient = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (null == $appClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
         try {
             $form = $this->createForm(AppClientType::class, $appClient, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -431,9 +430,6 @@ class AppController extends FOSRestController
             $this->get('api.app_manager')->save($appClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $appClient = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -506,6 +502,7 @@ class AppController extends FOSRestController
      *      required=true,
      * )
      * @SWG\Tag(name="Admin")
+     * @ParamConverter("appClient", converter="doctrine.orm")
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
@@ -513,6 +510,10 @@ class AppController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (null == $appClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
         try {
             $form = $this->createForm(AppClientType::class, $appClient, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -520,9 +521,6 @@ class AppController extends FOSRestController
             $this->get('api.app_manager')->save($appClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $appClient = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;

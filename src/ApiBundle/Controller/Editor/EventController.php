@@ -550,7 +550,6 @@ class EventController extends FOSRestController
         if (empty($event)){
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
-
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -707,10 +706,10 @@ class EventController extends FOSRestController
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
+
         if (empty($event)){
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
-
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -802,7 +801,6 @@ class EventController extends FOSRestController
         if (empty($event)){
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
-
         try {
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);

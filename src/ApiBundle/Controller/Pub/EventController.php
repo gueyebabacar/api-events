@@ -401,6 +401,10 @@ class EventController extends FOSRestController
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $registerRequest = new RegisterRequest();
+
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
         try {
             $form = $this->createForm(RegisterRequestType::class, $registerRequest, ['method' => $request->getMethod()]);
             $form->handleRequest($request);

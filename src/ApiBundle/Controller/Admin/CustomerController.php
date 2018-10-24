@@ -78,9 +78,6 @@ class CustomerController extends  FOSRestController
             $data = $this->get('api.customer_manager')->getCustomers($paramFetcher);
 
         } catch(BusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $data = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -174,9 +171,6 @@ class CustomerController extends  FOSRestController
             $this->get('api.customer_manager')->save($customerClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $customerClient = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -259,10 +253,14 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateAction(Request $request, CustomerClient $customerClient)
+    public function updateAction(Request $request, CustomerClient $customerClient = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (null == $customerClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
         try {
             $form = $this->createForm(CustomerClientType::class, $customerClient, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -270,9 +268,6 @@ class CustomerController extends  FOSRestController
             $this->get('api.customer_manager')->save($customerClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $customerClient = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -332,8 +327,12 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function getAction(CustomerClient $customerClient)
+    public function getAction(CustomerClient $customerClient = null)
     {
+        if (null == $customerClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
+
         return $this->view($customerClient);
     }
 
@@ -398,10 +397,14 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function enableAction(Request $request, CustomerClient $customerClient)
+    public function enableAction(Request $request, CustomerClient $customerClient = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (null == $customerClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
         try {
             $form = $this->createForm(CustomerClientType::class, $customerClient, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -409,9 +412,6 @@ class CustomerController extends  FOSRestController
             $this->get('api.customer_manager')->save($customerClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $customerClient = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -481,10 +481,14 @@ class CustomerController extends  FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function disableAction(Request $request, CustomerClient $customerClient)
+    public function disableAction(Request $request, CustomerClient $customerClient = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+
+        if (null == $customerClient){
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
+        }
         try {
             $form = $this->createForm(CustomerClientType::class, $customerClient, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
@@ -492,9 +496,6 @@ class CustomerController extends  FOSRestController
             $this->get('api.customer_manager')->save($customerClient);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $customerClient = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
