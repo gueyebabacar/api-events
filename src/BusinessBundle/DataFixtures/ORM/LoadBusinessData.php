@@ -38,8 +38,10 @@ class LoadBusinessData extends Fixture implements ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
+        $batchSize = 20;
         $businessData = $this->getBusinessData();
         foreach ($businessData as $key => $value){
+
             $valueList = new ValueList();
 
             $valueList->setDomain($value['Domain']);
@@ -48,9 +50,14 @@ class LoadBusinessData extends Fixture implements ContainerAwareInterface
             $valueList->setEnable(false);
 
             $manager->persist($valueList);
-        }
 
-        $manager->flush();
+            if ((($key + 1) % $batchSize) === 0) {
+                $manager->flush();
+                $manager->clear(); // Detaches all objects from Doctrine!
+            }
+        }
+        $manager->flush(); //Persist objects that did not make up an entire batch
+        $manager->clear();
     }
 
     /**
