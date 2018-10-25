@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 
 class ConstraintsEventStatus  extends Constraint
 {
-    public $message = 'Event\'s status not valid: draft, published, depublished, publishrequest, archived are permitted';
+    public $message = 'Event\'s status not valid: draft, published, cancelled, publishrequest, archived are permitted';
 
     public function validatedBy()
     {

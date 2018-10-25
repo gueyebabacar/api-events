@@ -22,8 +22,8 @@ class Event
     const EDITOR_EVENT_STATUS_DISPLAY = [
         'draft',
         'published',
-        'depublished',
-        'archived'
+        'archived',
+        'cancelled'
     ];
 
     /**
@@ -49,6 +49,12 @@ class Event
      * @var \DateTime
      */
     private $date;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @var integer
+     */
+    private $availableSeat;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -636,5 +642,22 @@ class Event
         return $this->illustrations;
     }
 
+    /**
+     * @return int
+     */
+    public function getAvailableSeat()
+    {
+        return $this->availableSeat;
+    }
+
+    /**
+     * @param int $availableSeat
+     * @return Event
+     */
+    public function setAvailableSeat($availableSeat)
+    {
+        $this->availableSeat = $availableSeat;
+        return $this;
+    }
 }
 

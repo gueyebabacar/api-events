@@ -45,10 +45,10 @@ api.editor.publish_event:
     requirements:
         id: '\d+'
 
-api.editor.depublish_event:
-    path: /events/{id}/status/de-publish
+api.editor.cancelled_event:
+    path: /events/{id}/status/cancel
     methods: PATCH
-    defaults: { _controller: ApiBundle:Editor\Event:dePublish }
+    defaults: { _controller: ApiBundle:Editor\Event:cancelled }
     requirements:
         id: '\d+'
 

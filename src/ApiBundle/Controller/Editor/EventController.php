@@ -887,7 +887,7 @@ class EventController extends FOSRestController
      *         @SWG\Property(
      *             property="status",
      *             type="string",
-     *             example="depublished"
+     *             example="cancelled"
      *         )
      *     )
      * ),
@@ -920,7 +920,7 @@ class EventController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function dePublishAction(Request $request, Event $event = null)
+    public function cancelledAction(Request $request, Event $event = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
