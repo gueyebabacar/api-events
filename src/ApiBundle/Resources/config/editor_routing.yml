@@ -45,6 +45,13 @@ api.editor.publish_event:
     requirements:
         id: '\d+'
 
+api.editor.depublish_event:
+    path: /events/{id}/status/de-publish
+    methods: PATCH
+    defaults: { _controller: ApiBundle:Editor\Event:dePublish }
+    requirements:
+        id: '\d+'
+
 api.editor.archive_event:
     path: /events/{id}/status/archive
     methods: PATCH
