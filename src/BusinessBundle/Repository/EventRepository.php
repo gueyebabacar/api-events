@@ -36,13 +36,13 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             switch ($key) {
                 case "eventDateFrom":
                     if(!array_key_exists('eventDateTo', $filterParams)){
-                        $qb->andWhere('e.date >= :eventDateFrom')
+                        $qb->andWhere('e.startDate >= :eventDateFrom')
                             ->setParameter('eventDateFrom', $value);
                     }
                     break;
                 case "eventDateTo":
                     if(!array_key_exists('eventDateFrom', $filterParams)){
-                        $qb->andWhere('e.date <= :eventDateTo')
+                        $qb->andWhere('e.startDate <= :eventDateTo')
                             ->setParameter('eventDateTo', $value);
                     }
                     break;
@@ -75,7 +75,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
 
         if (array_key_exists('eventDateFrom', $filterParams) && array_key_exists('eventDateTo', $filterParams)) {
             $qb
-                ->andWhere('e.date >= :eventDateFrom AND e.date <= :eventDateTo')
+                ->andWhere('e.startDate >= :eventDateFrom AND e.startDate <= :eventDateTo')
                 ->setParameter( 'eventDateFrom', $filterParams['eventDateFrom'])
                 ->setParameter( 'eventDateTo', $filterParams['eventDateTo']);
         }

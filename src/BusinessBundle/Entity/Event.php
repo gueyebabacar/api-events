@@ -22,8 +22,8 @@ class Event
     const EDITOR_EVENT_STATUS_DISPLAY = [
         'draft',
         'published',
-        'depublished',
-        'archived'
+        'archived',
+        'cancelled'
     ];
 
     /**
@@ -46,15 +46,43 @@ class Event
 
     /**
      * @JMS\Groups(groups={"event"})
+     * @JMS\Type("DateTime<'d-m-Y'>")
      * @var \DateTime
      */
-    private $date;
+    private $startDate;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("DateTime<'d-m-Y'>")
+     * @var \DateTime
+     */
+    private $endDate;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("DateTime<'H:i:s'>")
+     * @var \DateTime
+     */
+    private $startHour;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("DateTime<'H:i:s'>")
+     * @var \DateTime
+     */
+    private $endHour;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @var integer
+     */
+    private $availableSeat;
 
     /**
      * @JMS\Groups(groups={"event"})
      * @var string
      */
-    private $detailedDescription;
+    private $description;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -102,13 +130,13 @@ class Event
      * @JMS\Groups(groups={"event"})
      * @var string
      */
-    private $nameOfOrganizer;
+    private $organizer;
 
     /**
      * @JMS\Groups(groups={"event"})
      * @var string
      */
-    private $contactForm;
+    private $contactEmail;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -224,51 +252,27 @@ class Event
     }
 
     /**
-     * Set date
+     * Set description
      *
-     * @param \DateTime $date
+     * @param string $description
      *
      * @return $this
      */
-    public function setDate($date)
+    public function setDescription($description)
     {
-        $this->date = $date;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set detailedDescription
-     *
-     * @param string $detailedDescription
-     *
-     * @return $this
-     */
-    public function setDetailedDescription($detailedDescription)
-    {
-        $this->detailedDescription = $detailedDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get detailedDescription
+     * Get description
      *
      * @return string
      */
-    public function getDetailedDescription()
+    public function getDescription()
     {
-        return $this->detailedDescription;
+        return $this->description;
     }
 
     /**
@@ -392,51 +396,27 @@ class Event
     }
 
     /**
-     * Set nameOfOrganizer
+     * Set organizer
      *
-     * @param string $nameOfOrganizer
+     * @param string $organizer
      *
      * @return $this
      */
-    public function setNameOfOrganizer($nameOfOrganizer)
+    public function setOrganizer($organizer)
     {
-        $this->nameOfOrganizer = $nameOfOrganizer;
+        $this->organizer = $organizer;
 
         return $this;
     }
 
     /**
-     * Get nameOfOrganizer
+     * Get organizer
      *
      * @return string
      */
-    public function getNameOfOrganizer()
+    public function getOrganizer()
     {
-        return $this->nameOfOrganizer;
-    }
-
-    /**
-     * Set contactForm
-     *
-     * @param string $contactForm
-     *
-     * @return $this
-     */
-    public function setContactForm($contactForm)
-    {
-        $this->contactForm = $contactForm;
-
-        return $this;
-    }
-
-    /**
-     * Get contactForm
-     *
-     * @return string
-     */
-    public function getContactForm()
-    {
-        return $this->contactForm;
+        return $this->organizer;
     }
 
     /**
@@ -613,6 +593,93 @@ class Event
     }
 
     /**
+     * @return int
+     */
+    public function getAvailableSeat()
+    {
+        return $this->availableSeat;
+    }
+
+    /**
+     * @param int $availableSeat
+     * @return $this
+     */
+    public function setAvailableSeat($availableSeat)
+    {
+        $this->availableSeat = $availableSeat;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param \DateTime $startDate
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param \DateTime $endDate
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartHour()
+    {
+        return $this->startHour;
+    }
+
+    /**
+     * @param \DateTime $startHour
+     * @return $this
+     */
+    public function setStartHour($startHour)
+    {
+        $this->startHour = $startHour;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndHour()
+    {
+        return $this->endHour;
+    }
+
+    /**
+     * @param \DateTime $endHour
+     * @return $this
+     */
+    public function setEndHour($endHour)
+    {
+        $this->endHour = $endHour;
+        return $this;
+    }
+
+
+    /**
      * @JMS\VirtualProperty()
      * @JMS\SerializedName("visuel")
      * @JMS\Groups(groups={"event"})
@@ -634,6 +701,24 @@ class Event
     public function getIllustrationsVirtuel()
     {
         return $this->illustrations;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactEmail()
+    {
+        return $this->contactEmail;
+    }
+
+    /**
+     * @param string $contactEmail
+     * @return Event
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->contactEmail = $contactEmail;
+        return $this;
     }
 
 }

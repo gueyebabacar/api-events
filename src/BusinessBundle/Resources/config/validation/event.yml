@@ -4,6 +4,7 @@ BusinessBundle\Entity\Event:
             - BusinessBundle\Validator\Constraints\ConstraintsEventStatus: ~
 
         country:
+            - NotBlank: { message: 'country is required' }
             - Regex:
                 pattern: '/^[A-Z]|[a-z]/'
                 message: "Only string are permitted"
@@ -20,6 +21,7 @@ BusinessBundle\Entity\Event:
                 maxMessage: "255 characters are permitted for customerRef field"
 
         city:
+            - NotBlank: { message: 'city is required' }
             - Regex:
                 pattern: '/^[A-Z]|[a-z]/'
                 message: "Only string are permitted"
@@ -36,23 +38,57 @@ BusinessBundle\Entity\Event:
                 maxMessage: "255 characters are permitted for website field"
 
         venue:
+            - NotBlank: { message: 'venue is required' }
             - Length:
                 max: 255
                 maxMessage: "255 characters are permitted for venue field"
 
-        nameOfOrganizer:
+        organizer:
+            - NotBlank: { message: 'organizer is required' }
             - Length:
                 max: 255
                 maxMessage: "255 characters are permitted for location field"
 
-        detailedDescription:
+        description:
+            - NotBlank: { message: 'description is required' }
             - Length:
                 max: 1000
                 maxMessage: "1000 characters are permitted for detailed description field"
 
-        contactForm:
+        contactEmail:
             - Regex:
                 pattern: '/^[\w.-]+@[\w.-]+\.[a-z]{2,6}$/'
                 message: This email is not valid
+
+
+        startDate:
+            - NotBlank: { message: 'startDate is required' }
+
+        endDate:
+            - NotBlank: { message: 'endDate is required' }
+
+        startHour:
+            - NotBlank: { message: 'startHour is required' }
+
+        endHour:
+            - NotBlank: { message: 'endHour is required' }
+
+        title:
+            - NotBlank: { message: 'title is required' }
+
+        industries:
+            - NotBlank: { message: 'industries is required' }
+
+        eventTopic:
+            - NotBlank: { message: 'eventTopic is required' }
+
+        eventType:
+            - NotBlank: { message: 'eventType is required' }
+
+        illustrations:
+            - NotBlank: { message: 'illustrations is required' }
+
+        visuel:
+            - NotBlank: { message: 'visuel is required' }
 
 

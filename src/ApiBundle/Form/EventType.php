@@ -5,11 +5,13 @@ namespace ApiBundle\Form;
 use BusinessBundle\Entity\ValueList;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use ApiBundle\Form\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class EventType extends AbstractType
 {
@@ -21,13 +23,14 @@ class EventType extends AbstractType
         $builder
             ->add('customerRef', TextType::class)
             ->add('title', TextType::class)
-            ->add('detailedDescription', TextType::class)
+            ->add('availableSeat', IntegerType::class)
+            ->add('description', TextType::class)
             ->add('website', TextType::class)
             ->add('country', TextType::class)
             ->add('venue', TextType::class)
             ->add('city', TextType::class)
-            ->add('nameOfOrganizer', TextType::class)
-            ->add('contactForm', TextType::class)
+            ->add('organizer', TextType::class)
+            ->add('contactEmail', TextType::class)
             ->add('attachment', TextType::class)
             ->add('socialMediaSharing', TextType::class)
             ->add('status', TextType::class)
@@ -43,12 +46,29 @@ class EventType extends AbstractType
                 'class' => ValueList::class,
                 'multiple' => true
             ])
-            ->add('date',DateTimeType::class,[
+            ->add('startDate',DateType::class,[
                 'widget' => 'single_text',
-                'input' => 'datetime',
                 'required' => 'false',
-                'format' => 'YYYY-MM-dd HH:mm',
-                'attr' => array('data-date-format' => 'YYYY-MM-DD HH:mm')
+                'format' => 'YYYY-MM-dd',
+                'attr' => array('data-date-format' => 'YYYY-MM-DD')
+            ])
+            ->add('endDate',DateType::class,[
+                'widget' => 'single_text',
+                'required' => 'false',
+                'format' => 'YYYY-MM-dd',
+                'attr' => array('data-date-format' => 'YYYY-MM-DD')
+            ])
+            ->add('startHour',TimeType::class,[
+                'input'  => 'datetime',
+                'widget' => 'single_text',
+                'with_minutes' => true,
+                'with_seconds' => false
+            ])
+            ->add('endHour',TimeType::class, [
+                'input'  => 'datetime',
+                'widget' => 'single_text',
+                'with_minutes' => true,
+                'with_seconds' => false
             ]);
     }
 

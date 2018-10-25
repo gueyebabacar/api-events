@@ -87,10 +87,6 @@
     Key: valueList.services.section22
     Value: Services
 -
-    Domain: Domain
-    Key: Key
-    Value: Value
--
     Domain: Counterparts
     Key: valueList.counterparts.agent
     Value: Agent
