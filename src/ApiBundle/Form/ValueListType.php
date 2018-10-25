@@ -17,6 +17,7 @@ class ValueListType extends AbstractType
     {
         $builder
             ->add('domain', TextType::class)
+            ->add('key', TextType::class)
             ->add('value', TextType::class)
             ->add('enable', BooleanType::class, array(
                     'true_values' => array(1, '1', true, 'true', 'on', 'yes'),

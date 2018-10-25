@@ -669,6 +669,7 @@ class EventController extends FOSRestController
      *         @SWG\Property(
      *             property="status",
      *             type="string",
+     *             example="publishRequest"
      *         )
      *     )
      * ),
@@ -761,6 +762,7 @@ class EventController extends FOSRestController
      *         @SWG\Property(
      *             property="status",
      *             type="string",
+     *             example="published"
      *         )
      *     )
      * ),
@@ -853,6 +855,7 @@ class EventController extends FOSRestController
      *         @SWG\Property(
      *             property="status",
      *             type="string",
+     *             example="archived"
      *         )
      *     )
      * ),
