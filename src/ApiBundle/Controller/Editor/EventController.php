@@ -103,7 +103,7 @@ class EventController extends FOSRestController
      * ),
      * @Rest\QueryParam(name="eventDateFrom", strict=false,   nullable=true)
      * @Rest\QueryParam(name="eventDateTo", strict=false,   nullable=true)
-     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="date", description="Sort field")
+     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="startDate", description="Sort field")
      * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false, default="desc", description="Sort direction")
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false, nullable=true)
@@ -261,13 +261,32 @@ class EventController extends FOSRestController
      *             property="title",
      *             type="string"
      *         ),
-     *        @SWG\Property(
-     *             property="date",
-     *             type="string",
-     *             example="2018-10-11 16:03:09"
+     *         @SWG\Property(
+     *             property="availableSeat",
+     *             type="integer"
      *         ),
      *        @SWG\Property(
-     *             property="detailedDescription",
+     *             property="startDate",
+     *             type="string",
+     *             example="2019-01-01"
+     *         ),
+     *         @SWG\Property(
+     *             property="endDate",
+     *             type="string",
+     *             example="2019-02-01"
+     *         ),
+     *        @SWG\Property(
+     *             property="startHour",
+     *             type="string",
+     *             example="10:30"
+     *         ),
+     *         @SWG\Property(
+     *             property="endHour",
+     *             type="string",
+     *             example="12:30"
+     *         ),
+     *        @SWG\Property(
+     *             property="description",
      *             type="string"
      *         ),
      *         @SWG\Property(
@@ -313,7 +332,7 @@ class EventController extends FOSRestController
      *            )
      *        ),
      *        @SWG\Property(
-     *             property="nameOfOrganizer",
+     *             property="organizer",
      *             type="string"
      *        ),
      *        @SWG\Property(
@@ -330,7 +349,7 @@ class EventController extends FOSRestController
      *            )
      *       ),
      *       @SWG\Property(
-     *           property="contactForm",
+     *           property="contactEmail",
      *           type="string",
      *           example="email@domain.com"
      *       ),
@@ -399,7 +418,7 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $event->setStatus("draft");
             $event->setCustomerRef($request->headers->get('x-customer-ref'));
-            $this->get('app_logger')->logInfo('Event creation', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'Event date' => $event->getDate()]);
+            $this->get('app_logger')->logInfo('Event creation', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'Start date' => $event->getStartDate(), 'End date' => $event->getEndDate()]);
             $this->get('api.event_manager')->save($event);
 
         }catch(FormBusinessException $ex) {
@@ -447,12 +466,27 @@ class EventController extends FOSRestController
      *             type="string"
      *         ),
      *        @SWG\Property(
-     *             property="date",
+     *             property="startDate",
      *             type="string",
-     *             example="2018-10-11 16:03:09"
+     *             example="2019-03-10"
+     *         ),
+     *         @SWG\Property(
+     *             property="endDate",
+     *             type="string",
+     *             example="2019-04-10"
      *         ),
      *        @SWG\Property(
-     *             property="detailedDescription",
+     *             property="startHour",
+     *             type="string",
+     *             example="10:30:00"
+     *         ),
+     *         @SWG\Property(
+     *             property="endHour",
+     *             type="string",
+     *             example="12:30"
+     *         ),
+     *        @SWG\Property(
+     *             property="description",
      *             type="string"
      *         ),
      *         @SWG\Property(
@@ -498,7 +532,7 @@ class EventController extends FOSRestController
      *            )
      *        ),
      *        @SWG\Property(
-     *             property="nameOfOrganizer",
+     *             property="organizer",
      *             type="string"
      *        ),
      *        @SWG\Property(
@@ -515,7 +549,7 @@ class EventController extends FOSRestController
      *            )
      *       ),
      *       @SWG\Property(
-     *           property="contactForm",
+     *           property="contactEmail",
      *           type="string",
      *           example="email@domain.com"
      *       ),

@@ -24,11 +24,19 @@ BusinessBundle\Entity\Event:
         title:
             type: string
             length: 255
-            unique: true
-        date:
-            type: datetime
+        startDate:
+            type: date
             nullable: true
-        detailedDescription:
+        endDate:
+            type: date
+            nullable: true
+        startHour:
+            type: time
+            nullable: true
+        endHour:
+            type: time
+            nullable: true
+        description:
             type: string
             length: '1000'
         website:
@@ -43,10 +51,10 @@ BusinessBundle\Entity\Event:
         city:
             type: string
             length: 255
-        nameOfOrganizer:
+        organizer:
             type: string
             length: 255
-        contactForm:
+        contactEmail:
             type: string
             length: 255
         attachment:
@@ -61,6 +69,9 @@ BusinessBundle\Entity\Event:
             type: json_array
         illustrations:
             type: json_array
+            nullable: true
+        availableSeat:
+            type: integer
             nullable: true
 
     oneToMany:

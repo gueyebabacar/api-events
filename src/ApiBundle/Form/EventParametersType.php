@@ -3,7 +3,7 @@
 namespace ApiBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,19 +23,17 @@ class EventParametersType extends AbstractType
             ->add('venue', TextType::class)
             ->add('sortBy', TextType::class)
             ->add('sortDir', TextType::class)
-            ->add('eventDateFrom', DateTimeType::class, array(
+            ->add('eventDateFrom', DateType::class, array(
                 'widget' => 'single_text',
-                'input' => 'datetime',
                 'required' => 'false',
-                'format' => 'YYYY-MM-dd HH:mm',
-                'attr' => array('data-date-format' => 'YYYY-MM-DD HH:mm')
+                'format' => 'YYYY-MM-dd',
+                'attr' => array('data-date-format' => 'YYYY-MM-DD')
             ))
-            ->add('eventDateTo', DateTimeType::class, array(
+            ->add('eventDateTo', DateType::class, array(
                 'widget' => 'single_text',
-                'input' => 'datetime',
                 'required' => 'false',
-                'format' => 'YYYY-MM-dd HH:mm',
-                'attr' => array('data-date-format' => 'YYYY-MM-DD HH:mm')
+                'format' => 'YYYY-MM-dd',
+                'attr' => array('data-date-format' => 'YYYY-MM-DD')
             ))
             ->add('limit', IntegerType::class, ['mapped' => false])
             ->add('offset', IntegerType::class, ['mapped' => false]);
