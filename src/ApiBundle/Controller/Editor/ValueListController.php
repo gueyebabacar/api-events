@@ -14,6 +14,7 @@ use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use FOS\RestBundle\Request\ParamFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class ValueListController extends FOSRestController
@@ -245,7 +246,7 @@ class ValueListController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function updateAction(Request $request, ValueList $valueList)
+    public function updateAction(Request $request, ValueList $valueList = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -333,7 +334,7 @@ class ValueListController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function enableAction(Request $request, ValueList $valueList)
+    public function enableAction(Request $request, ValueList $valueList = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
@@ -388,7 +389,8 @@ class ValueListController extends FOSRestController
      *     @SWG\Schema(
      *         @SWG\Property(
      *             property="enable",
-     *             type="boolean"
+     *             type="boolean",
+     *             example="false"
      *         )
      *     )
      * ),
@@ -421,7 +423,7 @@ class ValueListController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function disableAction(Request $request, ValueList $valueList)
+    public function disableAction(Request $request, ValueList $valueList = null)
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');

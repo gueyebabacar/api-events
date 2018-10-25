@@ -474,6 +474,7 @@ class AppController extends FOSRestController
      *         @SWG\Property(
      *             property="enable",
      *             type="boolean",
+     *             example="false"
      *         )
      *     )
      * ),
