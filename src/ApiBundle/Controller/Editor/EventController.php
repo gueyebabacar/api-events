@@ -443,11 +443,7 @@ class EventController extends FOSRestController
      *     in="body",
      *     @SWG\Schema(
      *         @SWG\Property(
-     *             property="customerRef",
-     *             type="string"
-     *         ),
-     *         @SWG\Property(
-     *             property="name",
+     *             property="title",
      *             type="string"
      *         ),
      *        @SWG\Property(
@@ -461,39 +457,54 @@ class EventController extends FOSRestController
      *         ),
      *         @SWG\Property(
      *             property="website",
-     *             type="string"
+     *             type="string",
+     *             example="http://www.google.fr/"
      *         ),
      *        @SWG\Property(
      *             property="country",
-     *             type="string"
+     *             type="string",
+     *             example="USA"
      *         ),
      *         @SWG\Property(
-     *             property="location",
+     *             property="venue",
      *             type="string"
      *         ),
      *        @SWG\Property(
      *             property="city",
      *             type="string"
-     *         ),
-     *         @SWG\Property(
-     *             property="typeOfEvent",
-     *             type="string"
-     *         ),
-     *         @SWG\Property(
-     *             property="industry",
-     *             type="string"
+     *        ),
+     *        @SWG\Property(
+     *             property="industries",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
      *         ),
      *        @SWG\Property(
-     *             property="thematicTag",
-     *             type="string"
-     *         ),
+     *             property="eventTopic",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
+     *        ),
+     *        @SWG\Property(
+     *             property="eventType",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
+     *        ),
      *        @SWG\Property(
      *             property="nameOfOrganizer",
      *             type="string"
-     *         ),
+     *        ),
      *        @SWG\Property(
      *             property="attachment",
-     *             type="string"
+     *             type="string",
+     *             example="http://path/file.pdf"
      *        ),
      *        @SWG\Property(
      *             property="socialMediaSharing",
@@ -505,12 +516,32 @@ class EventController extends FOSRestController
      *       ),
      *       @SWG\Property(
      *           property="contactForm",
-     *           type="string"
+     *           type="string",
+     *           example="email@domain.com"
      *       ),
      *       @SWG\Property(
-     *           property="status",
-     *           type="string"
-     *      )
+     *             property="visuel",
+     *             type="array",
+     *             example={
+     *                 "type": "string",
+     *                 "uri": "string"
+     *             },
+     *            @SWG\Items(
+     *                 type="object",
+     *                 @SWG\Property(property="key", type="string"),
+     *                 @SWG\Property(property="value", type="string")
+     *             )
+     *        ),
+     *      @SWG\Property(
+     *          property="illustrations",
+     *          type="array",
+     *          collectionFormat="multi",
+     *        @SWG\Items(
+     *           type="object",
+     *           @SWG\Property(property="type", type="string"),
+     *           @SWG\Property(property="uri", type="string")
+     *         )
+     *       )
      *    )
      * ),
      * @SWG\Parameter(
@@ -669,7 +700,7 @@ class EventController extends FOSRestController
      *         @SWG\Property(
      *             property="status",
      *             type="string",
-     *             example="publishRequest"
+     *             example="publishrequest"
      *         )
      *     )
      * ),
@@ -809,6 +840,100 @@ class EventController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);
             $this->get('app_logger')->logInfo('Event published', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
+
+        } catch(FormBusinessException $ex) {
+            $logger->logError($ex->getMessage(), $ex);
+            $event = $ex->getPayload();
+            $responseCode = Response::HTTP_NOT_ACCEPTABLE;
+        }
+
+        $context = new Context();
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $view = $this->view($event, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
+    }
+
+
+    /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Publish an Event"
+     * ),
+     * @SWG\Response(
+     *     response=403,
+     *     description="Forbidden",
+     *     examples={
+     *          "invalid username/password":{
+     *              "message": "Invalid credentials."
+     *          },
+     *          "Invalid customer ref/scope":{
+     *              "message": "Access Denied"
+     *          },
+     *     }
+     * )
+     * @SWG\Response(
+     *     response=500,
+     *     description="Technical error",
+     *
+     * ),
+     * @SWG\Parameter(
+     *     name="body",
+     *     description="....",
+     *     in="body",
+     *     @SWG\Schema(
+     *         @SWG\Property(
+     *             property="status",
+     *             type="string",
+     *             example="depublished"
+     *         )
+     *     )
+     * ),
+     * @SWG\Parameter(
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * )
+     * @SWG\Tag(name="Editor")
+     * @ParamConverter("event", converter="doctrine.orm")
+     * @return \FOS\RestBundle\View\View
+     * @throws \Exception
+     */
+    public function dePublishAction(Request $request, Event $event = null)
+    {
+        $responseCode = Response::HTTP_OK;
+        $logger = $this->get('ee.app.logger');
+
+        if (empty($event)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
+        try {
+            $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
+            $form->handleRequest($request);
+            $this->get('ee.form.validator')->validate($form);
+            $this->get('api.event_manager')->save($event);
+            $this->get('app_logger')->logInfo('Event dePublished', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
 
         } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
