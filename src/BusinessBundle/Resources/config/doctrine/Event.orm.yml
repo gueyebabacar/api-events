@@ -18,6 +18,12 @@ BusinessBundle\Entity\Event:
         deletedAt:
             type: date
             nullable: true
+        createdAt:
+            type: datetime
+            nullable: true
+        updatedAt:
+            type: datetime
+            nullable: true
         customerRef:
             type: string
             length: 255
@@ -99,5 +105,7 @@ BusinessBundle\Entity\Event:
             joinTable:
                 name: event_type
 
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+         prePersist: [setCreatedAt]
+         preUpdate: [setUpdatedAt]
 

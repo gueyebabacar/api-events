@@ -100,9 +100,14 @@ class EventController extends FOSRestController
      *      type="string"
      *  )
      * ),
+     * @Rest\QueryParam(name="title", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="organizer", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="status", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="createdAtFrom", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="createdAtTo", strict=false,   nullable=true)
      * @Rest\QueryParam(name="eventDateFrom", strict=false,  nullable=true)
      * @Rest\QueryParam(name="eventDateTo", strict=false,  nullable=true)
-     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="date", description="Sort field")
+     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="startDate", description="Sort field")
      * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false, default="desc", description="Sort direction")
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false,  nullable=true)

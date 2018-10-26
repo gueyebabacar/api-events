@@ -46,14 +46,14 @@ class Event
 
     /**
      * @JMS\Groups(groups={"event"})
-     * @JMS\Type("DateTime<'d-m-Y'>")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      * @var \DateTime
      */
     private $startDate;
 
     /**
      * @JMS\Groups(groups={"event"})
-     * @JMS\Type("DateTime<'d-m-Y'>")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      * @var \DateTime
      */
     private $endDate;
@@ -170,6 +170,20 @@ class Event
     private $illustrations;
 
     private $deletedAt;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @var \DateTime
+     * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    private $createdAt;
+
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @var \DateTime
+     * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    private $updatedAt;
 
     public function __construct() {
         $this->requestRegisters = new ArrayCollection();
@@ -713,7 +727,7 @@ class Event
 
     /**
      * @param string $contactEmail
-     * @return Event
+     * @return $this
      */
     public function setContactEmail($contactEmail)
     {
@@ -721,5 +735,38 @@ class Event
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime();
+        return $this;
+    }
 }
 
