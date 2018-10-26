@@ -19,10 +19,21 @@ class EventParameters
     /** @var string */
     protected $venue;
 
+    /** @var string */
+    protected $title;
+
+    /** @var string */
+    protected $organizer;
+
+    /** @var string */
+    protected $status;
+
     protected $sortBy;
     protected $sortDir;
     protected $eventDateFrom;
     protected $eventDateTo;
+    protected $createdAtFrom;
+    protected $createdAtTo;
 
     /**
      * @return array
@@ -197,6 +208,96 @@ class EventParameters
     public function setVenue($venue)
     {
         $this->venue = $venue;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return EventParameters
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganizer()
+    {
+        return $this->organizer;
+    }
+
+    /**
+     * @param string $organizer
+     * @return EventParameters
+     */
+    public function setOrganizer($organizer)
+    {
+        $this->organizer = $organizer;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @return EventParameters
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAtFrom()
+    {
+        return $this->createdAtFrom;
+    }
+
+    /**
+     * @param mixed $createdAtFrom
+     * @return EventParameters
+     */
+    public function setCreatedAtFrom($createdAtFrom)
+    {
+        $this->createdAtFrom = $createdAtFrom;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAtTo()
+    {
+        return $this->createdAtTo;
+    }
+
+    /**
+     * @param mixed $createdAtTo
+     * @return EventParameters
+     */
+    public function setCreatedAtTo($createdAtTo)
+    {
+        $this->createdAtTo = $createdAtTo;
         return $this;
     }
 

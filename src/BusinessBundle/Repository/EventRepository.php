@@ -34,9 +34,33 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
 
         foreach ($filterParams as $key => $value) {
             switch ($key) {
+                case "title":
+                    $qb->andWhere('e.title LIKE :title')
+                        ->setParameter('title', $value);
+                    break;
+                case "organizer":
+                    $qb->andWhere('e.organizer LIKE :organizer')
+                        ->setParameter('organizer', $value);
+                    break;
+                case "status":
+                    $qb->andWhere('e.status LIKE :status')
+                        ->setParameter('status', $value);
+                    break;
+                case "createdAtFrom":
+                    if(!array_key_exists('createdAtTo', $filterParams)){
+                        $qb->andWhere('e.createdAt >= :createdAtFrom')
+                            ->setParameter('createdAtFrom', $value);
+                    }
+                    break;
+                case "createdAtTo":
+                    if(!array_key_exists('createdAtFrom', $filterParams)){
+                        $qb->andWhere('e.createdAt <= :createdAtTo')
+                            ->setParameter('createdAtTo', $value);
+                    }
+                    break;
                 case "eventDateFrom":
                     if(!array_key_exists('eventDateTo', $filterParams)){
-                        $qb->andWhere('e.startDate >= :eventDateFrom')
+                        $qb->andWhere('e.startDate >=:eventDateFrom')
                             ->setParameter('eventDateFrom', $value);
                     }
                     break;
@@ -78,6 +102,13 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('e.startDate >= :eventDateFrom AND e.startDate <= :eventDateTo')
                 ->setParameter( 'eventDateFrom', $filterParams['eventDateFrom'])
                 ->setParameter( 'eventDateTo', $filterParams['eventDateTo']);
+        }
+
+        if (array_key_exists('createdAtFrom', $filterParams) && array_key_exists('createdAtTo', $filterParams)) {
+            $qb
+                ->andWhere('e.createdAt >=:createdAtFrom AND e.createdAt <=:createdAtTo')
+                ->setParameter( 'createdAtFrom', $filterParams['createdAtFrom'])
+                ->setParameter( 'createdAtTo', $filterParams['createdAtTo']);
         }
 
         //add sort
