@@ -23,7 +23,7 @@ class EventType extends AbstractType
         $builder
             ->add('customerRef', TextType::class)
             ->add('title', TextType::class)
-            ->add('availableSeat', IntegerType::class)
+            ->add('availableSeats', IntegerType::class)
             ->add('description', TextType::class)
             ->add('website', TextType::class)
             ->add('country', TextType::class)
@@ -58,13 +58,13 @@ class EventType extends AbstractType
                 'format' => 'YYYY-MM-dd',
                 'attr' => array('data-date-format' => 'YYYY-MM-DD')
             ])
-            ->add('startHour',TimeType::class,[
+            ->add('startTime',TimeType::class,[
                 'input'  => 'datetime',
                 'widget' => 'single_text',
                 'with_minutes' => true,
                 'with_seconds' => false
             ])
-            ->add('endHour',TimeType::class, [
+            ->add('endTime',TimeType::class, [
                 'input'  => 'datetime',
                 'widget' => 'single_text',
                 'with_minutes' => true,

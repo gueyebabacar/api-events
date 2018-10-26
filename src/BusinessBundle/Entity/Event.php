@@ -63,20 +63,20 @@ class Event
      * @JMS\Type("DateTime<'H:i:s'>")
      * @var \DateTime
      */
-    private $startHour;
+    private $startTime;
 
     /**
      * @JMS\Groups(groups={"event"})
      * @JMS\Type("DateTime<'H:i:s'>")
      * @var \DateTime
      */
-    private $endHour;
+    private $endTime;
 
     /**
      * @JMS\Groups(groups={"event"})
      * @var integer
      */
-    private $availableSeat;
+    private $availableSeats;
 
     /**
      * @JMS\Groups(groups={"event"})
@@ -609,18 +609,18 @@ class Event
     /**
      * @return int
      */
-    public function getAvailableSeat()
+    public function getAvailableSeats()
     {
-        return $this->availableSeat;
+        return $this->availableSeats;
     }
 
     /**
-     * @param int $availableSeat
+     * @param int $availableSeats
      * @return $this
      */
-    public function setAvailableSeat($availableSeat)
+    public function setAvailableSeats($availableSeats)
     {
-        $this->availableSeat = $availableSeat;
+        $this->availableSeats = $availableSeats;
         return $this;
     }
 
@@ -659,36 +659,36 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getStartHour()
+    public function getStartTime()
     {
-        return $this->startHour;
+        return $this->startTime;
     }
 
     /**
-     * @param \DateTime $startHour
+     * @param \DateTime $startTime
      * @return $this
      */
-    public function setStartHour($startHour)
+    public function setStartTime($startTime)
     {
-        $this->startHour = $startHour;
+        $this->startTime = $startTime;
         return $this;
     }
 
     /**
      * @return \DateTime
      */
-    public function getEndHour()
+    public function getEndTime()
     {
-        return $this->endHour;
+        return $this->endTime;
     }
 
     /**
-     * @param \DateTime $endHour
+     * @param \DateTime $endTime
      * @return $this
      */
-    public function setEndHour($endHour)
+    public function setEndTime($endTime)
     {
-        $this->endHour = $endHour;
+        $this->endTime = $endTime;
         return $this;
     }
 
