@@ -768,5 +768,6 @@ class Event
         $this->updatedAt = new \DateTime();
         return $this;
     }
+
 }
 

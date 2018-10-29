@@ -32,6 +32,7 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "ee/ee-common": "^1.4",
+        "friendsofsymfony/elastica-bundle": "^5.0",
         "friendsofsymfony/rest-bundle": "^2.4",
         "fsevestre/boolean-form-type": "^1.0",
         "incenteev/composer-parameter-handler": "^2.0",
