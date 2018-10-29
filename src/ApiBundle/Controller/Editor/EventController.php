@@ -267,7 +267,7 @@ class EventController extends FOSRestController
      *             type="string"
      *         ),
      *         @SWG\Property(
-     *             property="availableSeat",
+     *             property="availableSeats",
      *             type="integer"
      *         ),
      *        @SWG\Property(
@@ -281,12 +281,12 @@ class EventController extends FOSRestController
      *             example="2019-02-01"
      *         ),
      *        @SWG\Property(
-     *             property="startHour",
+     *             property="startTime",
      *             type="string",
      *             example="10:30"
      *         ),
      *         @SWG\Property(
-     *             property="endHour",
+     *             property="endTime",
      *             type="string",
      *             example="12:30"
      *         ),
@@ -470,6 +470,10 @@ class EventController extends FOSRestController
      *             property="title",
      *             type="string"
      *         ),
+     *         @SWG\Property(
+     *             property="availableSeats",
+     *             type="integer"
+     *         ),
      *        @SWG\Property(
      *             property="startDate",
      *             type="string",
@@ -481,12 +485,12 @@ class EventController extends FOSRestController
      *             example="2019-04-10"
      *         ),
      *        @SWG\Property(
-     *             property="startHour",
+     *             property="startTime",
      *             type="string",
      *             example="10:30:00"
      *         ),
      *         @SWG\Property(
-     *             property="endHour",
+     *             property="endTime",
      *             type="string",
      *             example="12:30"
      *         ),

@@ -36,10 +36,10 @@ BusinessBundle\Entity\Event:
         endDate:
             type: date
             nullable: true
-        startHour:
+        startTime:
             type: time
             nullable: true
-        endHour:
+        endTime:
             type: time
             nullable: true
         description:
@@ -76,7 +76,7 @@ BusinessBundle\Entity\Event:
         illustrations:
             type: json_array
             nullable: true
-        availableSeat:
+        availableSeats:
             type: integer
             nullable: true
 
