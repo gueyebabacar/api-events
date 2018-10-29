@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: elastica_config.yml }
     - { resource: "@ApiBundle/Resources/config/services.yml" }
     - { resource: "@ApiSecurityBundle/Resources/config/services.yml" }
     - { resource: "@ApiSecurityBundle/Resources/config/managers.yml" }

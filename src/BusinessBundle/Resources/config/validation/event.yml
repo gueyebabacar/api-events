@@ -67,11 +67,11 @@ BusinessBundle\Entity\Event:
         endDate:
             - NotBlank: { message: 'endDate is required' }
 
-        startHour:
-            - NotBlank: { message: 'startHour is required' }
+        startTime:
+            - NotBlank: { message: 'startTime is required' }
 
-        endHour:
-            - NotBlank: { message: 'endHour is required' }
+        endTime:
+            - NotBlank: { message: 'endTime is required' }
 
         title:
             - NotBlank: { message: 'title is required' }

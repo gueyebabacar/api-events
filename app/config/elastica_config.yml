@@ -1,0 +1,38 @@
+fos_elastica:
+    clients:
+        default: { host: elasticsearch, port: 9200 }
+    serializer:
+        callback_class: FOS\ElasticaBundle\Serializer\Callback
+        serializer: jms_serializer
+    indexes:
+        api_event:
+            types:
+                event:
+                    properties:
+                        id: ~
+                        title: ~
+                        description: ~
+                        availableSeats: ~
+                        status: ~
+                        customerRef: ~
+                        country: ~
+                        city: ~
+                        venue: ~
+                        contactEmail: ~
+                        organizer: ~
+                        startDate: ~
+                        endDate: ~
+                        startTime: ~
+                        endTime: ~
+                        endTime: ~
+                        website: ~
+
+                    persistence:
+                    # the driver can be orm, mongodb or phpcr
+                        driver: orm
+                        model: BusinessBundle\Entity\Event
+                        listener:
+                            insert: true
+                            update: true
+                    serializer:
+                        groups: ['event']
