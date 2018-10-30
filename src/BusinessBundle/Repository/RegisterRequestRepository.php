@@ -27,4 +27,24 @@ class RegisterRequestRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param array $params
+     * @param $id
+     * @return array
+     */
+    public function getRegistrations(array $params, $id)
+    {
+        $offset = !empty($params['offset']) ? $params['offset'] : $params['defaultOffset'];
+        $limit = !empty($params['limit']) ? $params['limit'] : $params['defaultLimit'];
+        $qb = $this->createQueryBuilder('r')
+            ->addSelect('ev')
+            ->leftJoin('r.event', 'ev')
+            ->where('ev.id  =:id')
+            ->setParameter( 'id', $id)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
 }

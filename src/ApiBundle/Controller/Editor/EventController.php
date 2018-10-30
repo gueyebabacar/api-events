@@ -1132,21 +1132,28 @@ class EventController extends FOSRestController
      *      type="string",
      *      required=true,
      * )
+     * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
+     * @Rest\QueryParam(name="offset", strict=false,  nullable=true)
      * @SWG\Tag(name="Editor")
-     * @ParamConverter("registerRequest", converter="doctrine.orm")
+     * @param ParamFetcher $paramFetcher
      * @return \FOS\RestBundle\View\View
      * @throws \Exception
      */
-    public function registrationAction(RegisterRequest $registerRequest = null)
+    public function registrationAction(ParamFetcher $paramFetcher, $id)
     {
-        if (empty($registerRequest)){
-            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
-        }
         $responseCode = Response::HTTP_OK;
+        $logger = $this->get('ee.app.logger');
+        try{
+            $registrations= $this->get('api.user_event_manager')->getRegistrations($paramFetcher, $id);
+        }catch (BusinessException $ex){
+            $logger->logError($ex->getMessage(), $ex);
+            $registrations = $ex->getPayload();
+            $responseCode = Response::HTTP_BAD_REQUEST;
+        }
         $context = new Context();
-        $groups = ['event'];
+        $groups = ['request_register'];
         $context->setGroups($groups);
-        $view = $this->view($registerRequest, $responseCode);
+        $view = $this->view($registrations, $responseCode);
         $view->setContext($context);
 
         return $this->handleView($view);
