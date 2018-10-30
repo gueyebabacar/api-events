@@ -28,17 +28,12 @@ class RegisterRequestManager extends BaseManager
     }
 
     /**
-     * @param $paramFetcher
      * @param $userId
      * @return mixed
      */
-    public function getUserEvents($paramFetcher, $userId)
+    public function getUserEvents($userId)
     {
-        $defaultLimit = $this->getDefaultLimit();
-        $defaultOffset = $this->getDefaultOffset();
-        $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
-        $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
-        $events =  $this->repository->getUserEvents($limit, $offset, $userId);
+        $events =  $this->repository->getUserEvents($userId);
 
         return $events;
     }

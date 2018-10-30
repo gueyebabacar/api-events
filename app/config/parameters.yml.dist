@@ -20,6 +20,6 @@ parameters:
     default_limit: 12
     default_offset: 0
     mandrill_api_key: null
-    default_limit: 10
-    default_offset: 0
     business_data_path: '%kernel.root_dir%/BusinessData/business_data.yml'
+    elastic_host: elasticsearch
+    elastic_port: 9200

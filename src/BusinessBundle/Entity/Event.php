@@ -27,131 +27,131 @@ class Event
     ];
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var int
      */
     private $id;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event","request_register"})
      * @var string
      */
     private $customerRef;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $title;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("DateTime<'Y-m-d'>")
      * @var \DateTime
      */
     private $startDate;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("DateTime<'Y-m-d'>")
      * @var \DateTime
      */
     private $endDate;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("DateTime<'H:i:s'>")
      * @var \DateTime
      */
     private $startTime;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("DateTime<'H:i:s'>")
      * @var \DateTime
      */
     private $endTime;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var integer
      */
     private $availableSeats;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $description;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $website;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $country;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $venue;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $city;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
     private $eventType;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
     private $industries;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("array<BusinessBundle\Entity\ValueList>")
      */
     private $eventTopic;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $organizer;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $contactEmail;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $attachment;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("array<string>")
      */
     private $socialMediaSharing;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $status;
@@ -179,14 +179,14 @@ class Event
     private $createdAt;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var \DateTime
      * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $updatedAt;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
      * @var \DateTime
      */
@@ -703,7 +703,7 @@ class Event
     /**
      * @JMS\VirtualProperty()
      * @JMS\SerializedName("visuel")
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      *
      * @return string|null
      */
@@ -715,7 +715,7 @@ class Event
     /**
      * @JMS\VirtualProperty()
      * @JMS\SerializedName("illustrations")
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      *
      * @return string|null
      */

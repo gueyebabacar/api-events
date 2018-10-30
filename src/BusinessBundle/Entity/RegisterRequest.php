@@ -74,6 +74,9 @@ class RegisterRequest
      */
     private $status;
 
+    /**
+     * @JMS\Groups(groups={"request_register"})
+     */
     private $event;
 
     /**
