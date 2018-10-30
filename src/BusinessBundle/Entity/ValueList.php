@@ -11,31 +11,31 @@ use JMS\Serializer\Annotation as JMS;
 class ValueList
 {
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var int
      */
     private $id;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $domain;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $value;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var string
      */
     private $key;
 
     /**
-     * @JMS\Groups(groups={"event"})
+     * @JMS\Groups(groups={"event", "request_register"})
      * @var bool
      */
     private $enable;

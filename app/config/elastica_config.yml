@@ -1,6 +1,6 @@
 fos_elastica:
     clients:
-        default: { host: elasticsearch, port: 9200 }
+        default: { host: %elastic_host%, port: %elastic_port% }
     serializer:
         callback_class: FOS\ElasticaBundle\Serializer\Callback
         serializer: jms_serializer
@@ -8,24 +8,6 @@ fos_elastica:
         api_event:
             types:
                 event:
-                    properties:
-                        id: ~
-                        title: ~
-                        description: ~
-                        availableSeats: ~
-                        status: ~
-                        customerRef: ~
-                        country: ~
-                        city: ~
-                        venue: ~
-                        contactEmail: ~
-                        organizer: ~
-                        startDate: ~
-                        endDate: ~
-                        startTime: ~
-                        endTime: ~
-                        website: ~
-
                     persistence:
                     # the driver can be orm, mongodb or phpcr
                         driver: orm

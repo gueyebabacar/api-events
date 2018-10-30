@@ -156,10 +156,10 @@ class EventController extends FOSRestController
 
             return $this->handleView($view);
 
-        } catch(FormBusinessException $ex) {
+        } catch(BusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
             $events = $ex->getPayload();
-            $responseCode = Response::HTTP_NOT_ACCEPTABLE;
+            $responseCode = Response::HTTP_BAD_REQUEST;
         }
 
         return $this->view($events, $responseCode);
@@ -223,22 +223,41 @@ class EventController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+        $context = new Context();
         try {
-            $events = $this->get('api.user_event_manager')->getUserEvents($paramFetcher, $user_id);
+            $defaultLimit = $this->get('api.user_event_manager')->getDefaultLimit();
+            $defaultOffset = $this->get('api.user_event_manager')->getDefaultOffset();
+            $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
+            $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
+            $query = $this->get('api.user_event_manager')->getUserEvents($user_id);
+            $groups = ['request_register'];
+            $context->setGroups($groups);
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query,
+                (int)($offset / $limit) + 1,
+                $limit
+            );
 
-        } catch(BusinessException $ex) {
+            $registrations = $pagination->getItems();
+
+            $response =[
+                "totalItems" => $pagination->getTotalItemCount(),
+                "items" => $registrations
+            ];
+
+            $view = $this->view($response, $responseCode);
+            $view->setContext($context);
+
+            return $this->handleView($view);
+        } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
-            $events = $ex->getPayload();
-            $responseCode = Response::HTTP_BAD_REQUEST;
+            $registrations = $ex->getPayload();
+            $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        $context = new Context();
-        $groups = ['request_register'];
-        $context->setGroups($groups);
-        $view = $this->view($events, $responseCode);
-        $view->setContext($context);
+        return $this->view($registrations, $responseCode);
 
-        return $this->handleView($view);
     }
 
     /**
