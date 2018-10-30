@@ -487,7 +487,7 @@ class EventController extends FOSRestController
      *        @SWG\Property(
      *             property="startTime",
      *             type="string",
-     *             example="10:30:00"
+     *             example="10:30"
      *         ),
      *         @SWG\Property(
      *             property="endTime",
@@ -637,7 +637,13 @@ class EventController extends FOSRestController
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
         }
 
-        return $this->view($event, $responseCode);
+        $context = new Context();
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $view = $this->view($event, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -881,6 +887,7 @@ class EventController extends FOSRestController
             $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
+            $event->setPublishedAt(new \DateTime());
             $this->get('api.event_manager')->save($event);
             $this->get('app_logger')->logInfo('Event published', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef()]);
 
