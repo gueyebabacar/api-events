@@ -21,8 +21,14 @@ class RegisterRequest
      */
     private $name;
 
+    /**
+     * @JMS\Groups(groups={"request_register"})
+     * @var integer
+     */
+    private $numberOfSeats;
 
     /**
+     * @JMS\Groups(groups={"request_register"})
      * @var string
      */
     private $userId;
@@ -61,7 +67,7 @@ class RegisterRequest
      * @JMS\Groups(groups={"request_register"})
      * @var string
      */
-    private $reasonForAttending;
+    private $comments;
 
     /**
      * @var string
@@ -225,30 +231,6 @@ class RegisterRequest
     }
 
     /**
-     * Set reasonForAttending
-     *
-     * @param string $reasonForAttending
-     *
-     * @return RegisterRequest
-     */
-    public function setReasonForAttending($reasonForAttending)
-    {
-        $this->reasonForAttending = $reasonForAttending;
-
-        return $this;
-    }
-
-    /**
-     * Get reasonForAttending
-     *
-     * @return string
-     */
-    public function getReasonForAttending()
-    {
-        return $this->reasonForAttending;
-    }
-
-    /**
      * Set status
      *
      * @param string $status
@@ -307,5 +289,42 @@ class RegisterRequest
         $this->userId = $userId;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param string $comments
+     * @return RegisterRequest
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfSeats()
+    {
+        return $this->numberOfSeats;
+    }
+
+    /**
+     * @param int $numberOfSeats
+     * @return RegisterRequest
+     */
+    public function setNumberOfSeats($numberOfSeats)
+    {
+        $this->numberOfSeats = $numberOfSeats;
+        return $this;
+    }
+
 }
 

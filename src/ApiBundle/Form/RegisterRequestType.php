@@ -4,6 +4,7 @@ namespace ApiBundle\Form;
 
 use BusinessBundle\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,13 +20,14 @@ class RegisterRequestType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('numberOfSeats', IntegerType::class)
             ->add('userId', TextType::class)
             ->add('compagnyName', TextType::class)
             ->add('email', TextType::class)
             ->add('phoneNumber', TextType::class)
             ->add('city', TextType::class)
             ->add('country', TextType::class)
-            ->add('reasonForAttending', TextType::class)
+            ->add('comments', TextType::class)
             ->add('status', TextType::class)
             ->add('event', EntityType::class, array(
                 'class' => Event::class

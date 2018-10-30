@@ -166,9 +166,6 @@ class ValueListController extends FOSRestController
             $this->get('api.value_list_manager')->save($valueList);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -262,9 +259,6 @@ class ValueListController extends FOSRestController
             $this->get('app_logger')->logInfo('Value list update', ['Domain' => $valueList->getDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -350,9 +344,6 @@ class ValueListController extends FOSRestController
             $this->get('app_logger')->logInfo('Value list enable', ['Domain' => $valueList->getDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
@@ -439,9 +430,6 @@ class ValueListController extends FOSRestController
             $this->get('app_logger')->logInfo('Value list disable', ['Domain' => $valueList->getDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $valueList = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;

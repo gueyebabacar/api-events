@@ -24,7 +24,6 @@ fos_elastica:
                         endDate: ~
                         startTime: ~
                         endTime: ~
-                        endTime: ~
                         website: ~
 
                     persistence:

@@ -30,12 +30,14 @@ BusinessBundle\Entity\RegisterRequest:
         country:
             type: string
             length: 255
-        reasonForAttending:
+        comments:
             type: string
             length: '1000'
         status:
             type: string
             length: '30'
+        numberOfSeats:
+            type: integer
     manyToOne:
         event:
             targetEntity: Event

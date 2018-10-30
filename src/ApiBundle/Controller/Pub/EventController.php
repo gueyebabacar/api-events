@@ -338,15 +338,19 @@ class EventController extends FOSRestController
      *     description="....",
      *     in="body",
      *     @SWG\Schema(
-     *         @SWG\Property(
+     *        @SWG\Property(
      *             property="name",
      *             type="string"
+     *         ),
+     *        @SWG\Property(
+     *             property="numberOfSeats",
+     *             type="integer"
      *         ),
      *        @SWG\Property(
      *             property="userId",
      *             type="string"
      *         ),
-     *         @SWG\Property(
+     *        @SWG\Property(
      *             property="compagnyName",
      *             type="string",
      *         ),
@@ -354,7 +358,7 @@ class EventController extends FOSRestController
      *             property="email",
      *             type="string"
      *         ),
-     *         @SWG\Property(
+     *        @SWG\Property(
      *             property="phoneNumber",
      *             type="string"
      *         ),
@@ -362,12 +366,12 @@ class EventController extends FOSRestController
      *             property="city",
      *             type="string"
      *         ),
-     *         @SWG\Property(
+     *        @SWG\Property(
      *             property="country",
      *             type="string"
      *         ),
      *        @SWG\Property(
-     *             property="reasonForAttending",
+     *             property="comments",
      *             type="string"
      *         )
      *     )
@@ -417,12 +421,9 @@ class EventController extends FOSRestController
             $registerRequest->setEvent($event);
             $registerRequest->setStatus("request");
             $this->get('api.event_manager')->save($registerRequest);
-            $this->get('app_logger')->logInfo('Event register request', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'Event date' => $event->getDate()]);
+            $this->get('app_logger')->logInfo('Event register request', ['Title' => $event->getTitle(), 'Customer reference' => $event->getCustomerRef(), 'Start date' => $event->getStartDate(), 'End date' => $event->getEndDate()]);
 
         } catch(FormBusinessException $ex) {
-            foreach ($ex->getPayload() as $value){
-                $logger->logInfo($value[0]->getMessage());
-            }
             $logger->logError($ex->getMessage(), $ex);
             $registerRequest = $ex->getPayload();
             $responseCode = Response::HTTP_NOT_ACCEPTABLE;
