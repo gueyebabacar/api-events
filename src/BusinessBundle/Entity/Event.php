@@ -185,6 +185,13 @@ class Event
      */
     private $updatedAt;
 
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
+     * @var \DateTime
+     */
+    private $publishedAt;
+
     public function __construct() {
         $this->requestRegisters = new ArrayCollection();
     }
@@ -767,6 +774,36 @@ class Event
     {
         $this->updatedAt = new \DateTime();
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param \DateTime $publishedAt
+     * @return $this
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+        return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("totalRegistration")
+     * @JMS\Groups(groups={"event"})
+     *
+     * @return string|null
+     */
+    public function getTotalRegistration()
+    {
+        return count($this->requestRegisters);
     }
 }
 

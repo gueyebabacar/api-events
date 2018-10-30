@@ -24,6 +24,9 @@ BusinessBundle\Entity\Event:
         updatedAt:
             type: datetime
             nullable: true
+        publishedAt:
+            type: datetime
+            nullable: true
         customerRef:
             type: string
             length: 255
