@@ -16,55 +16,55 @@ class RegisterRequest
     private $id;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $name;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var integer
      */
     private $numberOfSeats;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $userId;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $compagnyName;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $email;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $phoneNumber;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $city;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $country;
 
     /**
-     * @JMS\Groups(groups={"request_register"})
+     * @JMS\Groups(groups={"request_register","event"})
      * @var string
      */
     private $comments;

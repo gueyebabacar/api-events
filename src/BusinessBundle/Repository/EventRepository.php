@@ -3,6 +3,7 @@
 namespace BusinessBundle\Repository;
 
 use BusinessBundle\Entity\Event;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * EventRepository
@@ -28,45 +29,60 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('e')
             ->leftJoin('e.industries', 'i')
             ->leftJoin('e.eventType', 'type')
-            ->leftJoin('e.eventTopic', 'topic')
+            ->leftJoin('e.eventTopic', 'topic');
+        if(array_key_exists('connectedUser', $filterParams)){
+            $qb
+                ->addSelect('req')
+                ->leftJoin('e.requestRegisters', 'req', Join::WITH, $qb->expr()->eq('req.userId', ':userId'))
+                ->setParameter('userId', $filterParams['connectedUser']);
+        }
+        $qb
             ->where('e.status IN (:status) AND e.customerRef =:customerRef')
-            ->setParameters(['status' => $status, 'customerRef' => $customerRef]);
+            ->setParameter('status',$status)
+            ->setParameter('customerRef' ,$customerRef);
 
         foreach ($filterParams as $key => $value) {
             switch ($key) {
                 case "title":
-                    $qb->andWhere('e.title LIKE :title')
+                    $qb
+                        ->andWhere('e.title LIKE :title')
                         ->setParameter('title', $value);
                     break;
                 case "organizer":
-                    $qb->andWhere('e.organizer LIKE :organizer')
+                    $qb
+                        ->andWhere('e.organizer LIKE :organizer')
                         ->setParameter('organizer', $value);
                     break;
                 case "status":
-                    $qb->andWhere('e.status LIKE :status')
+                    $qb
+                        ->andWhere('e.status LIKE :status')
                         ->setParameter('status', $value);
                     break;
                 case "createdAtFrom":
                     if(!array_key_exists('createdAtTo', $filterParams)){
-                        $qb->andWhere('e.createdAt >= :createdAtFrom')
+                        $qb
+                            ->andWhere('e.createdAt >= :createdAtFrom')
                             ->setParameter('createdAtFrom', $value);
                     }
                     break;
                 case "createdAtTo":
                     if(!array_key_exists('createdAtFrom', $filterParams)){
-                        $qb->andWhere('e.createdAt <= :createdAtTo')
+                        $qb
+                            ->andWhere('e.createdAt <= :createdAtTo')
                             ->setParameter('createdAtTo', $value);
                     }
                     break;
                 case "eventDateFrom":
                     if(!array_key_exists('eventDateTo', $filterParams)){
-                        $qb->andWhere('e.startDate >=:eventDateFrom')
+                        $qb
+                            ->andWhere('e.startDate >=:eventDateFrom')
                             ->setParameter('eventDateFrom', $value);
                     }
                     break;
                 case "eventDateTo":
                     if(!array_key_exists('eventDateFrom', $filterParams)){
-                        $qb->andWhere('e.startDate <= :eventDateTo')
+                        $qb
+                            ->andWhere('e.startDate <= :eventDateTo')
                             ->setParameter('eventDateTo', $value);
                     }
                     break;
@@ -114,7 +130,6 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         //add sort
         if (isset($filterParams['sortBy'])) {
             $qb->add('orderBy', 'e.'.$filterParams['sortBy'].' ' . $filterParams['sortDir']);
-
         }
 
         return $qb->getQuery();

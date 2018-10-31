@@ -34,6 +34,7 @@ class EventParameters
     protected $eventDateTo;
     protected $createdAtFrom;
     protected $createdAtTo;
+    protected $connectedUser;
 
     /**
      * @return array
@@ -299,6 +300,22 @@ class EventParameters
     {
         $this->createdAtTo = $createdAtTo;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConnectedUser()
+    {
+        return $this->connectedUser;
+    }
+
+    /**
+     * @param mixed $connectedUser
+     */
+    public function setConnectedUser($connectedUser)
+    {
+        $this->connectedUser = $connectedUser;
     }
 
     /**
