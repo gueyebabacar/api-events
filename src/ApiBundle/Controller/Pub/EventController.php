@@ -103,6 +103,7 @@ class EventController extends FOSRestController
      * @Rest\QueryParam(name="title", strict=false,   nullable=true)
      * @Rest\QueryParam(name="organizer", strict=false,   nullable=true)
      * @Rest\QueryParam(name="status", strict=false,   nullable=true)
+     * @Rest\QueryParam(name="connectedUser", strict=false,   nullable=true)
      * @Rest\QueryParam(name="createdAtFrom", strict=false,   nullable=true)
      * @Rest\QueryParam(name="createdAtTo", strict=false,   nullable=true)
      * @Rest\QueryParam(name="eventDateFrom", strict=false,  nullable=true)

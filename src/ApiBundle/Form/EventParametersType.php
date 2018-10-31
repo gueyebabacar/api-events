@@ -27,6 +27,7 @@ class EventParametersType extends AbstractType
             ->add('venue', TextType::class)
             ->add('sortBy', TextType::class)
             ->add('sortDir', TextType::class)
+            ->add('connectedUser', TextType::class)
             ->add('createdAtFrom', DateTimeType::class, array(
                 'widget' => 'single_text',
                 'required' => 'false',

@@ -157,6 +157,7 @@ class Event
     private $status;
 
     /**
+     * @JMS\Groups(groups={"event"})
      * @var ArrayCollection
      */
     private $requestRegisters;
