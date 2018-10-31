@@ -55,18 +55,12 @@ class RegisterRequestManager extends BaseManager
     }
 
     /**
-     * @param $paramFetcher
      * @param $id
      * @return mixed
      */
-    public function getRegistrations($paramFetcher, $id)
+    public function getRegistrations($id)
     {
-        $registrations =  $this->repository->getRegistrations([
-            'offset'=>$paramFetcher->get('offset'),
-            'limit'=>$paramFetcher->get('limit'),
-            'defaultOffset'=>$this->defaultOffset,
-            'defaultLimit'=>$this->defaultLimit
-        ],$id);
+        $registrations =  $this->repository->getRegistrations($id);
 
         return $registrations;
     }

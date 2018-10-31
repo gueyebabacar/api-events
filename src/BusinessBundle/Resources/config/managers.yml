@@ -15,7 +15,7 @@ services:
             - %default_limit%
             - %default_offset%
 
-    api.user_event_manager:
+    api.register_request_manager:
         class: BusinessBundle\Manager\RegisterRequestManager
         arguments:
             - "@doctrine.orm.entity_manager"
