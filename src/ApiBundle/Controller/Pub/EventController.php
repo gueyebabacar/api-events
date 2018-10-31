@@ -230,7 +230,7 @@ class EventController extends FOSRestController
             $defaultOffset = $this->get('api.user_event_manager')->getDefaultOffset();
             $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
             $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
-            $query = $this->get('api.user_event_manager')->getUserEvents($user_id);
+            $query = $this->get('api.register_request_manager')->getUserEvents($user_id);
             $groups = ['request_register'];
             $context->setGroups($groups);
             $paginator  = $this->get('knp_paginator');

@@ -1151,19 +1151,41 @@ class EventController extends FOSRestController
     {
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
+        $context = new Context();
         try{
-            $registrations= $this->get('api.user_event_manager')->getRegistrations($paramFetcher, $id);
-        }catch (BusinessException $ex){
+            $defaultLimit = $this->get('api.register_request_manager')->getDefaultLimit();
+            $defaultOffset = $this->get('api.register_request_manager')->getDefaultOffset();
+            $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
+            $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
+
+            $query= $this->get('api.register_request_manager')->getRegistrations($id);
+            $groups = ['event'];
+            $context->setGroups($groups);
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query,
+                (int)($offset / $limit) + 1,
+                $limit
+            );
+
+            $registrations = $pagination->getItems();
+
+            $response =[
+                "totalItems" => $pagination->getTotalItemCount(),
+                "items" => $registrations
+            ];
+
+            $view = $this->view($response, $responseCode);
+            $view->setContext($context);
+
+            return $this->handleView($view);
+
+        } catch(BusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
             $registrations = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
         }
-        $context = new Context();
-        $groups = ['request_register'];
-        $context->setGroups($groups);
-        $view = $this->view($registrations, $responseCode);
-        $view->setContext($context);
 
-        return $this->handleView($view);
+        return $this->view($registrations, $responseCode);
     }
 }
