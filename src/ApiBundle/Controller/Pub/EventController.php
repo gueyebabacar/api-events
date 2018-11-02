@@ -226,8 +226,8 @@ class EventController extends FOSRestController
         $logger = $this->get('ee.app.logger');
         $context = new Context();
         try {
-            $defaultLimit = $this->get('api.user_event_manager')->getDefaultLimit();
-            $defaultOffset = $this->get('api.user_event_manager')->getDefaultOffset();
+            $defaultLimit = $this->get('api.register_request_manager')->getDefaultLimit();
+            $defaultOffset = $this->get('api.register_request_manager')->getDefaultOffset();
             $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
             $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
             $query = $this->get('api.register_request_manager')->getUserEvents($user_id);
