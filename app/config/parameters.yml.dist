@@ -21,5 +21,5 @@ parameters:
     default_offset: 0
     mandrill_api_key: null
     business_data_path: '%kernel.root_dir%/BusinessData/business_data.yml'
-    elastic_host: elasticsearch
+    elastic_host: 172.16.0.101
     elastic_port: 9200
