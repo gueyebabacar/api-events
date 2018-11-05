@@ -25,8 +25,6 @@ class EventParametersType extends AbstractType
             ->add('eventType', TextType::class)
             ->add('eventTopic', TextType::class)
             ->add('venue', TextType::class)
-            ->add('sortBy', TextType::class)
-            ->add('sortDir', TextType::class)
             ->add('connectedUser', TextType::class)
             ->add('country', TextType::class)
             ->add('city', TextType::class)

@@ -23,4 +23,11 @@ services:
             - %default_limit%
             - %default_offset%
 
+    api.elastic_manager:
+        class: BusinessBundle\Manager\ElasticManager
+        arguments:
+            - "@fos_elastica.finder.api_event.event"
+
+
+
 

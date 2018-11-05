@@ -24,3 +24,4 @@ parameters:
     elastic_host: 172.16.0.101
     elastic_port: 9200
     elastic_index: 'api_event'
+    icmp_packet_number: 2

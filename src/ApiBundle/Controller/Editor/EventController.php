@@ -112,8 +112,8 @@ class EventController extends FOSRestController
      * @Rest\QueryParam(name="eventDateFrom", strict=false,   nullable=true)
      * @Rest\QueryParam(name="eventDateTo", strict=false,   nullable=true)
      * @Rest\QueryParam(name="connectedUser", strict=false,   nullable=true)
-     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="startDate", description="Sort field")
-     * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false, default="desc", description="Sort direction")
+     * @Rest\QueryParam(name="sortBy", allowBlank=false,  description="Sort field")
+     * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false,  description="Sort direction")
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false, nullable=true)
      * @SWG\Tag(name="Editor")
@@ -125,23 +125,27 @@ class EventController extends FOSRestController
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $paginator  = $this->get('knp_paginator');
+        $defaultLimit = $this->get('api.event_manager')->getDefaultLimit();
+        $defaultOffset = $this->get('api.event_manager')->getDefaultOffset();
+        $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
+        $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
 
         try {
-            $defaultLimit = $this->get('api.event_manager')->getDefaultLimit();
-            $defaultOffset = $this->get('api.event_manager')->getDefaultOffset();
-            $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
-            $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
-
             $eventParameters =  new EventParameters();
+            $customerRef = $request->headers->get('x-customer-ref');
             $form = $this->createForm(EventParametersType::class, $eventParameters, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
-            $customerRef = $request->headers->get('x-customer-ref');
-            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
-            $groups = ['event'];
-            $context->setGroups($groups);
-            $paginator  = $this->get('knp_paginator');
+
+            if ($this->get('api.elastic_process')->ping()){
+                $query = $this->get('api.elastic_manager')->searchByElastic($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
+            }else{
+                $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
+            }
             $pagination = $paginator->paginate(
                 $query,
                 (int)($offset / $limit) + 1,
