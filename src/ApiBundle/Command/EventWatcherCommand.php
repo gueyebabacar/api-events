@@ -1,18 +1,18 @@
 <?php
 
-namespace BusinessBundle\Command;
+namespace ApiBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class EventWatchCommand extends ContainerAwareCommand
+class EventWatcherCommand extends ContainerAwareCommand
 
 {
     protected function configure()
     {
         $this
-            ->setName('api:event_watch')
+            ->setName('api:event_watcher')
             ->setDescription('Set event status to archived when end date is lower than date now.');
     }
 

@@ -1,4 +1,5 @@
 services:
-#    api.example:
-#        class: ApiBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    api.event_watcher:
+        class: ApiBundle\Service\Watcher\ArchivedEvent
+        arguments:
+            - "@doctrine.orm.entity_manager"
