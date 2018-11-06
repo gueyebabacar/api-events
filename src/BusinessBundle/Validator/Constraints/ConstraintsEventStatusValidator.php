@@ -11,7 +11,7 @@ class ConstraintsEventStatusValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        $status = ['draft', 'published', 'publishRequest', 'archived', 'cancelled'];
+        $status = ['draft', 'published', 'publishrequest', 'archived', 'cancelled'];
         if (null === $value || '' === $value) {
             return;
         }

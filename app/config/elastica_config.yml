@@ -5,7 +5,7 @@ fos_elastica:
         callback_class: FOS\ElasticaBundle\Serializer\Callback
         serializer: jms_serializer
     indexes:
-        api_event:
+        %elastic_index%:
             types:
                 event:
                     persistence:
