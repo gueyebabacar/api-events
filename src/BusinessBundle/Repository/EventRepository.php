@@ -48,6 +48,16 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
                         ->andWhere('e.title LIKE :title')
                         ->setParameter('title', $value);
                     break;
+                case "country":
+                    $qb
+                        ->andWhere('e.country LIKE :country')
+                        ->setParameter('country', $value);
+                    break;
+                case "city":
+                    $qb
+                        ->andWhere('e.city LIKE :city')
+                        ->setParameter('city', $value);
+                    break;
                 case "organizer":
                     $qb
                         ->andWhere('e.organizer LIKE :organizer')

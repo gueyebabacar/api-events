@@ -35,6 +35,8 @@ class EventParameters
     protected $createdAtFrom;
     protected $createdAtTo;
     protected $connectedUser;
+    protected $country;
+    protected $city;
 
     /**
      * @return array
@@ -316,6 +318,38 @@ class EventParameters
     public function setConnectedUser($connectedUser)
     {
         $this->connectedUser = $connectedUser;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
     /**
