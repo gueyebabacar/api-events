@@ -17,6 +17,13 @@ api.public.inscription_to_event:
     requirements:
         id: '\d+'
 
+api.public.delete-register:
+    path: /user/{user_id}/register/{id}
+    methods: DELETE
+    defaults: { _controller: ApiBundle:Pub\Event:deleteRegister }
+    requirements:
+        id: '\d+'
+
 api.user.event_inscription:
     path: /user/{user_id}/events/registered‐event
     methods: GET
