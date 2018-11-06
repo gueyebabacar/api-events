@@ -459,4 +459,77 @@ class EventController extends FOSRestController
 
         return $this->handleView($view);
     }
+
+    /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete a user registration"
+     * ),
+     * @SWG\Response(
+     *     response=403,
+     *     description="Forbidden",
+     *     examples={
+     *          "invalid username/password":{
+     *              "message": "Invalid credentials."
+     *          },
+     *          "Invalid customer ref/scope":{
+     *              "message": "Access Denied"
+     *          },
+     *     }
+     * )
+     * @SWG\Response(
+     *     response=500,
+     *     description="Technical error",
+     *
+     * ),
+     * @SWG\Parameter(
+     *      name="X-CUSTOMER-REF",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="X-SCOPE",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="login",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * ),
+     * @SWG\Parameter(
+     *      name="password",
+     *      in="header",
+     *      type="string",
+     *      required=true,
+     * )
+     * @SWG\Tag(name="Public")
+     * @ParamConverter("registerRequest", converter="doctrine.orm")
+     * @return \FOS\RestBundle\View\View
+     * @throws \Exception
+     */
+    public function deleteRegisterAction(RegisterRequest $registerRequest = null, $user_id)
+    {
+        $responseCode = Response::HTTP_NO_CONTENT;
+        $context = new Context();
+
+        if (empty($registerRequest)){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
+        }
+        if ($registerRequest->getUserId() != $user_id){
+            throw new HttpException(Response::HTTP_NOT_FOUND,'user not found');
+        }
+        $this->get('api.register_request_manager')->remove($registerRequest);
+
+        $groups = ['request_register'];
+        $context->setGroups($groups);
+        $view = $this->view($registerRequest, $responseCode);
+        $view->setContext($context);
+
+        return $this->handleView($view);
+    }
+
 }

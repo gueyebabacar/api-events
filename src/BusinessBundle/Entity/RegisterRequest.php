@@ -69,6 +69,8 @@ class RegisterRequest
      */
     private $comments;
 
+    private $deletedAt;
+
     /**
      * @var string
      */
@@ -329,5 +331,20 @@ class RegisterRequest
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
 }
 
