@@ -7,3 +7,33 @@ BusinessBundle\Entity\RegisterRequest:
 
         status:
             - BusinessBundle\Validator\Constraints\ConstraintsRegisterRequestStatus: ~
+
+        compagnyName:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for compagnyName field"
+
+        comments:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for comments field"
+
+        name:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for name field"
+
+        userId:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for userId field"
+
+        city:
+            - Length:
+                max: 255
+                maxMessage: "255 characters are permitted for city field"
+
+        country:
+            - Length:
+                max: 3
+                maxMessage: "3 characters are permitted for country field"

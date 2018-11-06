@@ -1,10 +1,10 @@
 <?php
 
-namespace BusinessBundle\Service;
+namespace ApiBundle\Service\Watcher;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class EventWatcherService
+class ArchivedEvent
 {
     /**
      * @var EntityManagerInterface
@@ -12,7 +12,7 @@ class EventWatcherService
     private $entityManager;
 
     /**
-     * EventWatcherService constructor.
+     * ArchivedEvent constructor.
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)

@@ -31,8 +31,3 @@ services:
             - '@monolog.logger.business'
             - '@ee.app.context'
             - '@request_stack'
-
-    api.event_watcher:
-        class: BusinessBundle\Service\EventWatcherService
-        arguments:
-            - "@doctrine.orm.entity_manager"
