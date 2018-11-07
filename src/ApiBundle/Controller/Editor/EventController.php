@@ -4,6 +4,7 @@ namespace ApiBundle\Controller\Editor;
 
 use ApiBundle\Form\EventParametersType;
 use ApiBundle\Form\EventType;
+use ApiBundle\Form\EventStatusType;
 use BusinessBundle\Entity\Event;
 use BusinessBundle\Entity\RegisterRequest;
 use BusinessBundle\ValueObject\EventParameters;
@@ -795,7 +796,7 @@ class EventController extends FOSRestController
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
         try {
-            $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
+            $form = $this->createForm(EventStatusType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);
@@ -887,7 +888,7 @@ class EventController extends FOSRestController
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
         try {
-            $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
+            $form = $this->createForm(EventStatusType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $event->setPublishedAt(new \DateTime());
@@ -982,7 +983,7 @@ class EventController extends FOSRestController
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
         try {
-            $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
+            $form = $this->createForm(EventStatusType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);
@@ -1075,7 +1076,7 @@ class EventController extends FOSRestController
             throw new HttpException(Response::HTTP_NOT_FOUND,'Resource not found');
         }
         try {
-            $form = $this->createForm(EventType::class, $event, ['method' => $request->getMethod()]);
+            $form = $this->createForm(EventStatusType::class, $event, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $this->get('api.event_manager')->save($event);

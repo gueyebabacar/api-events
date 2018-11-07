@@ -32,7 +32,6 @@ class EventType extends AbstractType
             ->add('contactEmail', TextType::class)
             ->add('attachment', TextType::class)
             ->add('socialMediaSharing', TextType::class)
-            ->add('status', TextType::class)
             ->add('visuel', MediaType::class)
             ->add('illustrations', TextType::class)
             ->add('industries',  EntityType::class, [
@@ -78,8 +77,7 @@ class EventType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'BusinessBundle\Entity\Event',
-            'csrf_protection' => false,
-            'method' => 'PATCH'
+            'csrf_protection' => false
         ));
     }
 
