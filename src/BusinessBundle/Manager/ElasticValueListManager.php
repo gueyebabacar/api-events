@@ -3,6 +3,7 @@
 namespace BusinessBundle\Manager;
 
 use FOS\ElasticaBundle\Finder\FinderInterface;
+use Elastica\Query;
 
 /**
  * Class ElasticValueListManager
@@ -42,18 +43,22 @@ class ElasticValueListManager
      * @param $filterParams
      * @return array
      */
-    public function searchByElastic($filterParams)
+    public function searchByElastic($filterParams, $limit, $offset)
     {
         $boolQuery = new \Elastica\Query\BoolQuery();
 
         foreach($filterParams as $key => $value) {
             $queryType = $this->mapping[$key];
-            $query = new $queryType();
-            $query->setFieldQuery($key, $value);
-            $boolQuery->addShould($query);
+            $searchQuery = new $queryType();
+            $searchQuery->setFieldQuery($key, $value);
+            $boolQuery->addShould($searchQuery);
         }
+        $query = new \Elastica\Query($boolQuery);
 
-        return  $this->finder->find($boolQuery);
+        $query->setSize($limit);
+        $query->setFrom($offset);
+
+        return  $this->finder->find($query);
     }
 
     /**
