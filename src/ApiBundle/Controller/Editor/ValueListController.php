@@ -97,7 +97,7 @@ class ValueListController extends FOSRestController
             if ($this->get('api.elastic_process')->ping()){
                 $query = $this->get('api.elastic.valueList_manager')->searchByElastic($filterParams);
             }else{
-                $query = $this->get('api.value_list_manager')->getValueLists($filterParams);
+                $query = $this->get('api.doctrine.valueList_manager')->getValueLists($filterParams);
             }
             $pagination = $paginator->paginate(
                 $query,
@@ -116,7 +116,7 @@ class ValueListController extends FOSRestController
             $view->setContext($context);
 
             return $this->handleView($view);
-        } catch(BusinessException $ex) {
+        } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
             $valueLists = $ex->getPayload();
             $responseCode = Response::HTTP_BAD_REQUEST;
@@ -199,7 +199,7 @@ class ValueListController extends FOSRestController
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.value_list_manager')->save($valueList);
+            $this->get('api.doctrine.valueList_manager')->save($valueList);
 
         } catch(FormBusinessException $ex) {
             $logger->logError($ex->getMessage(), $ex);
@@ -291,7 +291,7 @@ class ValueListController extends FOSRestController
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.value_list_manager')->save($valueList);
+            $this->get('api.doctrine.valueList_manager')->save($valueList);
             $this->get('app_logger')->logInfo('Value list update', ['Domain' => $valueList->getDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
@@ -376,7 +376,7 @@ class ValueListController extends FOSRestController
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.value_list_manager')->save($valueList);
+            $this->get('api.doctrine.valueList_manager')->save($valueList);
             $this->get('app_logger')->logInfo('Value list enable', ['Domain' => $valueList->getDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {
@@ -462,7 +462,7 @@ class ValueListController extends FOSRestController
             $form = $this->createForm(ValueListType::class, $valueList, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
-            $this->get('api.value_list_manager')->save($valueList);
+            $this->get('api.doctrine.valueList_manager')->save($valueList);
             $this->get('app_logger')->logInfo('Value list disable', ['Domain' => $valueList->getDomain(), 'Value' => $valueList->getValue(), 'Key' => $valueList->getKey()]);
 
         } catch(FormBusinessException $ex) {

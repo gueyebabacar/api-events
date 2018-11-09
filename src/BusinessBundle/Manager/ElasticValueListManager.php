@@ -5,13 +5,22 @@ namespace BusinessBundle\Manager;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 
 /**
- * Class ElasticManager
+ * Class ElasticValueListManager
  */
 class ElasticValueListManager
 {
+    /**
+     * @var int|int
+     */
     protected $defaultLimit;
+    /**
+     * @var int|int
+     */
     protected $defaultOffset;
 
+    /**
+     * @var array
+     */
     protected $mapping = [
         'domain' => '\Elastica\Query\Match'
     ];
@@ -37,10 +46,10 @@ class ElasticValueListManager
     {
         $boolQuery = new \Elastica\Query\BoolQuery();
 
-        if(!empty($filterParams['domain'])) {
-            $queryType = $this->mapping['domain'];
+        foreach($filterParams as $key => $value) {
+            $queryType = $this->mapping[$key];
             $query = new $queryType();
-            $query->setFieldQuery('domain', $filterParams['domain']);
+            $query->setFieldQuery($key, $value);
             $boolQuery->addShould($query);
         }
 
