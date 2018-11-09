@@ -7,7 +7,7 @@ services:
             - %default_limit%
             - %default_offset%
 
-    api.value_list_manager:
+    api.doctrine.valueList_manager:
         class: BusinessBundle\Manager\ValueListManager
         arguments:
             - "@doctrine.orm.entity_manager"
