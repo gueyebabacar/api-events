@@ -95,7 +95,7 @@ class ValueListController extends FOSRestController
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $valueListParameters->toArray();
             if ($this->get('api.elastic_process')->ping()){
-                $query = $this->get('api.elastic.valueList_manager')->searchByElastic($filterParams);
+                $query = $this->get('api.elastic.valueList_manager')->searchByElastic($filterParams, $limit, $offset);
             }else{
                 $query = $this->get('api.doctrine.valueList_manager')->getValueLists($filterParams);
             }
