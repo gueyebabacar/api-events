@@ -28,6 +28,8 @@ class EventParameters
     /** @var string */
     protected $status;
 
+    protected $sortBy;
+    protected $sortDir;
     protected $eventDateFrom;
     protected $eventDateTo;
     protected $createdAtFrom;
@@ -54,6 +56,37 @@ class EventParameters
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSortBy()
+    {
+        return $this->sortBy;
+    }
+
+    /**
+     * @param mixed $sortBy
+     */
+    public function setSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortDir()
+    {
+        return $this->sortDir;
+    }
+
+    /**
+     * @param mixed $sortDir
+     */
+    public function setSortDir($sortDir)
+    {
+        $this->sortDir = $sortDir;
+    }
 
     /**
      * @return mixed

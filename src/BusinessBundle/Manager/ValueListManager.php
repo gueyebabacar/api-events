@@ -33,19 +33,14 @@ class ValueListManager extends BaseManager
     }
 
     /**
-     * @param $paramFetcher
+     * @param $filterParams
      * @return mixed
      */
-    public function getValueLists($paramFetcher)
+    public function getValueLists($filterParams)
     {
-        $valueLists =  $this->repository->getValueLists([
-            'offset'=>$paramFetcher->get('offset'),
-            'limit'=>$paramFetcher->get('limit'),
-            'domain'=>$paramFetcher->get('domain'),
-            'defaultOffset'=>$this->defaultOffset,
-            'defaultLimit'=>$this->defaultLimit
-        ]);
+        $valueLists =  $this->repository->getValueLists($filterParams);
 
         return $valueLists;
     }
+
 }

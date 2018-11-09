@@ -112,8 +112,8 @@ class EventController extends FOSRestController
      * @Rest\QueryParam(name="eventDateFrom", strict=false,   nullable=true)
      * @Rest\QueryParam(name="eventDateTo", strict=false,   nullable=true)
      * @Rest\QueryParam(name="connectedUser", strict=false,   nullable=true)
-     * @Rest\QueryParam(name="sortBy", allowBlank=false,  description="Sort field")
-     * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false,  description="Sort direction")
+     * @Rest\QueryParam(name="sortBy", allowBlank=false, default="startDate", description="Sort field")
+     * @Rest\QueryParam(name="sortDir", requirements="(asc|desc)+", allowBlank=false, default="desc", description="Sort direction")
      * @Rest\QueryParam(name="limit", strict=false,  nullable=true)
      * @Rest\QueryParam(name="offset", strict=false, nullable=true)
      * @SWG\Tag(name="Editor")
@@ -140,12 +140,7 @@ class EventController extends FOSRestController
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
-
-            if ($this->get('api.elastic_process')->ping()){
-                $query = $this->get('api.elastic_manager')->searchByElastic($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
-            }else{
-                $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
-            }
+            $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
             $pagination = $paginator->paginate(
                 $query,
                 (int)($offset / $limit) + 1,
