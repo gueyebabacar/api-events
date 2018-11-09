@@ -17,3 +17,13 @@ fos_elastica:
                             update: true
                     serializer:
                         groups: ['event']
+
+                valueList:
+                    persistence:
+                        driver: orm
+                        model: BusinessBundle\Entity\ValueList
+                        listener:
+                            insert: true
+                            update: true
+                    serializer:
+                        groups: ['event','request_register']

@@ -30,7 +30,6 @@ class EventManager extends BaseManager
     /**
      * @param $filterParams
      * @param $customerRef
-     * @param null $currentRoute
      * @return mixed
      */
     public function getEvents($filterParams, $customerRef, $status)

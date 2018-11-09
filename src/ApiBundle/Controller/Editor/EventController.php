@@ -125,23 +125,22 @@ class EventController extends FOSRestController
         $responseCode = Response::HTTP_OK;
         $logger = $this->get('ee.app.logger');
         $context = new Context();
+        $groups = ['event'];
+        $context->setGroups($groups);
+        $paginator  = $this->get('knp_paginator');
+        $defaultLimit = $this->get('api.event_manager')->getDefaultLimit();
+        $defaultOffset = $this->get('api.event_manager')->getDefaultOffset();
+        $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
+        $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
 
         try {
-            $defaultLimit = $this->get('api.event_manager')->getDefaultLimit();
-            $defaultOffset = $this->get('api.event_manager')->getDefaultOffset();
-            $limit = (empty($paramFetcher->get('limit'))) ? $defaultLimit : $paramFetcher->get('limit');
-            $offset = (empty($paramFetcher->get('offset'))) ? $defaultOffset : $paramFetcher->get('offset');
-
             $eventParameters =  new EventParameters();
+            $customerRef = $request->headers->get('x-customer-ref');
             $form = $this->createForm(EventParametersType::class, $eventParameters, ['method' => $request->getMethod()]);
             $form->handleRequest($request);
             $this->get('ee.form.validator')->validate($form);
             $filterParams = $eventParameters->toArray();
-            $customerRef = $request->headers->get('x-customer-ref');
             $query = $this->get('api.event_manager')->getEvents($filterParams, $customerRef, Event::EDITOR_EVENT_STATUS_DISPLAY);
-            $groups = ['event'];
-            $context->setGroups($groups);
-            $paginator  = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
                 $query,
                 (int)($offset / $limit) + 1,

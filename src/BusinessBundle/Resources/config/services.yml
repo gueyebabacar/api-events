@@ -31,3 +31,10 @@ services:
             - '@monolog.logger.business'
             - '@ee.app.context'
             - '@request_stack'
+
+    api.elastic_process:
+        class: BusinessBundle\Service\Process\ICMPRequestProcess
+        arguments:
+            - %elastic_host%
+            - %icmp_packet_number%
+

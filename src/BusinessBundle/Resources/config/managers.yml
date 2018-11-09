@@ -23,4 +23,13 @@ services:
             - %default_limit%
             - %default_offset%
 
+    api.elastic.valueList_manager:
+        class: BusinessBundle\Manager\ElasticValueListManager
+        arguments:
+            - "@fos_elastica.finder.api_event.valueList"
+            - %default_limit%
+            - %default_offset%
+
+
+
 

@@ -63,7 +63,8 @@ class LoadBusinessData extends Fixture implements ContainerAwareInterface
     /**
      * @return mixed
      */
-    public function getBusinessData(){
+    public function getBusinessData()
+    {
         try{
             $datas = Yaml::parseFile($this->file);
         } catch (ParseException $exception){
