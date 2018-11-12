@@ -37,3 +37,8 @@ BusinessBundle\Entity\RegisterRequest:
             - Length:
                 max: 3
                 maxMessage: "3 characters are permitted for country field"
+
+        phoneNumber:
+            - Regex:
+                pattern: '/^([+][0-9]{1,3}[)]?)\s*[-\s\.]?[0-9]{1,3}([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})$/'
+                message: Phone number format is not valide

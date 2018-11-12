@@ -382,7 +382,8 @@ class EventController extends FOSRestController
      *         ),
      *        @SWG\Property(
      *             property="phoneNumber",
-     *             type="string"
+     *             type="string",
+     *             example="+33641226688"
      *         ),
      *        @SWG\Property(
      *             property="city",
