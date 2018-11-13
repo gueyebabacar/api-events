@@ -15,14 +15,12 @@ use FOS\RestBundle\Context\Context;
 use BusinessBundle\ValueObject\ValueListParameters;
 use ApiBundle\Form\ValueListParametersType;
 
-
 class ValueListController extends FOSRestController
 {
     /**
      * @SWG\Response(
      *     response=200,
      *     description="Return list of value list",
-     *     @SWG\Items(ref=@Model(type=ValueList::class, groups={"event"}))
      * ),
      * @SWG\Response(
      *     response=403,

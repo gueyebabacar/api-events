@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as JMS;
 class RegisterRequest
 {
     /**
+     * @JMS\Groups(groups={"request_register","event"})
      * @var int
      */
     private $id;
