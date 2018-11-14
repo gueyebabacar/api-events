@@ -20,27 +20,34 @@ BusinessBundle\Entity\RegisterRequest:
         name:
             type: string
             length: 255
+            nullable: true
         userId:
             type: string
             length: 255
+            nullable: true
         compagnyName:
             type: string
             length: 255
+            nullable: true
         email:
             type: string
             length: 255
+            nullable: true
         phoneNumber:
             type: string
             length: 255
+            nullable: true
         city:
             type: string
             length: 255
         country:
             type: string
             length: 255
+            nullable: true
         comments:
             type: string
             length: '1000'
+            nullable: true
         status:
             type: string
             length: '30'
