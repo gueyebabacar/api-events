@@ -30,6 +30,10 @@ services:
             - %default_limit%
             - %default_offset%
 
-
-
-
+    api.agenda_manager:
+        class: BusinessBundle\Manager\AgendaManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - BusinessBundle\Entity\Agenda
+            - %default_limit%
+            - %default_offset%

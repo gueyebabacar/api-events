@@ -22,6 +22,7 @@ class EventParametersType extends AbstractType
             ->add('organizer', TextType::class)
             ->add('status', TextType::class)
             ->add('industries', TextType::class)
+            ->add('agendas', TextType::class)
             ->add('eventType', TextType::class)
             ->add('eventTopic', TextType::class)
             ->add('venue', TextType::class)

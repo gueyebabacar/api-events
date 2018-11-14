@@ -25,11 +25,13 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         $eventType = (array_key_exists('eventType', $filterParams)) ? explode(",", $filterParams['eventType']) : [];
         $eventTopic = (array_key_exists('eventTopic', $filterParams)) ? explode(",", $filterParams['eventTopic']) : [];
         $venue = (array_key_exists('venue', $filterParams)) ? explode(",", $filterParams['venue']) : [];
+        $agendas = (array_key_exists('agendas', $filterParams)) ? explode(",", $filterParams['agendas']) : [];
 
         $qb = $this->createQueryBuilder('e')
             ->leftJoin('e.industries', 'i')
             ->leftJoin('e.eventType', 'type')
-            ->leftJoin('e.eventTopic', 'topic');
+            ->leftJoin('e.eventTopic', 'topic')
+            ->leftJoin('e.agendas', 'agenda');
         if(array_key_exists('connectedUser', $filterParams)){
             $qb
                 ->addSelect('req')
@@ -115,6 +117,12 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             $qb
                 ->andWhere('topic.id IN (:eventTopic)')
                 ->setParameter('eventTopic', $eventTopic);
+        }
+
+        if (!empty($agendas)) {
+            $qb
+                ->andWhere('agenda.id IN (:agendas)')
+                ->setParameter('agendas', $agendas);
         }
 
         if (!empty($venue)) {

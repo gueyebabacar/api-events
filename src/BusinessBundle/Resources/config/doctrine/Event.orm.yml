@@ -69,6 +69,7 @@ BusinessBundle\Entity\Event:
         attachment:
             type: string
             length: 255
+            nullable: true
         socialMediaSharing:
             type: array
         status:
@@ -107,7 +108,18 @@ BusinessBundle\Entity\Event:
             cascade: [persist]
             joinTable:
                 name: event_type
-
+        agendas:
+            targetEntity: BusinessBundle\Entity\Agenda
+            inversedBy: events
+            cascade: [persist]
+            joinTable:
+              name: events_agendas
+              joinColumns:
+                event_id:
+                  referencedColumnName: id
+              inverseJoinColumns:
+                agenda_id:
+                  referencedColumnName: id
     lifecycleCallbacks:
          prePersist: [setCreatedAt]
          preUpdate: [setUpdatedAt]

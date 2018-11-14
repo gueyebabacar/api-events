@@ -1,0 +1,44 @@
+BusinessBundle\Entity\Agenda:
+    type: entity
+    table: null
+    repositoryClass: BusinessBundle\Repository\AgendaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+            hard_delete: true
+    fields:
+        deletedAt:
+            type: date
+            nullable: true
+        createdAt:
+            type: datetime
+            nullable: true
+        updatedAt:
+            type: datetime
+            nullable: true
+        customerRef:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        users:
+            type: json_array
+            nullable: true
+    manyToMany:
+        events:
+            targetEntity: BusinessBundle\Entity\Event
+            cascade: [persist]
+            mappedBy: agendas
+    lifecycleCallbacks:
+         prePersist: [setCreatedAt]
+         preUpdate: [setUpdatedAt]
+

@@ -85,9 +85,6 @@ BusinessBundle\Entity\Event:
         eventType:
             - NotBlank: { message: 'eventType is required' }
 
-        illustrations:
-            - NotBlank: { message: 'illustrations is required' }
-
         visuel:
             - NotBlank: { message: 'visuel is required' }
 
