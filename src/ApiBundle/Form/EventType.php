@@ -2,6 +2,7 @@
 
 namespace ApiBundle\Form;
 
+use BusinessBundle\Entity\Agenda;
 use BusinessBundle\Entity\ValueList;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -42,6 +43,10 @@ class EventType extends AbstractType
                 'multiple' => true
             ])->add('eventType',  EntityType::class, [
                 'class' => ValueList::class,
+                'multiple' => true
+            ])
+            ->add('agendas',  EntityType::class, [
+                'class' => Agenda::class,
                 'multiple' => true
             ])
             ->add('startDate',DateType::class,[

@@ -11,6 +11,9 @@ class EventParameters
     protected $industries;
 
     /** @var array */
+    protected $agendas;
+
+    /** @var array */
     protected $eventType;
 
     /** @var array */
@@ -53,6 +56,23 @@ class EventParameters
     public function setIndustries($industries)
     {
         $this->industries = $industries;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgendas()
+    {
+        return $this->agendas;
+    }
+
+    /**
+     * @param array $agendas
+     */
+    public function setAgendas($agendas)
+    {
+        $this->agendas = $agendas;
         return $this;
     }
 

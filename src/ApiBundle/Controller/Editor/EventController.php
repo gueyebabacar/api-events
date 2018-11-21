@@ -102,6 +102,14 @@ class EventController extends FOSRestController
      *      type="string"
      *  )
      * ),
+     * @SWG\Parameter(
+     *      name="eventType",
+     *      in="query",
+     *      type="array",
+     *  @SWG\Items(
+     *      type="integer"
+     *  )
+     * ),
      * @Rest\QueryParam(name="title", strict=false,   nullable=true)
      * @Rest\QueryParam(name="organizer", strict=false,   nullable=true)
      * @Rest\QueryParam(name="country", strict=false,   nullable=true)
@@ -233,6 +241,8 @@ class EventController extends FOSRestController
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Resource not found');
         }
 
+        //dump($event->getIndustries());
+
         $view = $this->view($event, $responseCode);
         $view->setContext($context);
 
@@ -339,6 +349,14 @@ class EventController extends FOSRestController
      *                 type="integer",
      *            )
      *        ),
+     *        @SWG\Property(
+     *             property="agendas",
+     *             type="array",
+     *             collectionFormat="multi",
+     *             @SWG\Items(
+     *                 type="integer",
+     *            )
+     *         ),
      *        @SWG\Property(
      *             property="organizer",
      *             type="string"

@@ -99,3 +99,14 @@ api.editor.disable_value_list:
     requirements:
         id: '\d+'
 
+##--------------- Agenda ------------##
+api.editor.list_agenda:
+    path: /agendas
+    methods: GET
+    defaults: { _controller: ApiBundle:Editor\Agenda:list }
+
+api.editor.create_an_agenda:
+    path: /agendas
+    methods: POST
+    defaults: { _controller: ApiBundle:Editor\Agenda:create }
+

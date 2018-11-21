@@ -193,8 +193,15 @@ class Event
      */
     private $publishedAt;
 
+    /**
+     * @JMS\Groups(groups={"event"})
+     * @var ArrayCollection
+     */
+    private $agendas;
+
     public function __construct() {
         $this->requestRegisters = new ArrayCollection();
+        $this->agendas = new ArrayCollection();
     }
 
     /**
@@ -805,6 +812,22 @@ class Event
     public function getTotalRegistration()
     {
         return count($this->requestRegisters);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAgendas()
+    {
+        return $this->agendas;
+    }
+
+    /**
+     * @param ArrayCollection $agendas
+     */
+    public function setAgendas($agendas)
+    {
+        $this->agendas = $agendas;
     }
 }
 
