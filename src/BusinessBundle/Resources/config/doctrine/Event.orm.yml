@@ -48,35 +48,43 @@ BusinessBundle\Entity\Event:
         description:
             type: string
             length: '1000'
+            nullable: true
         website:
             type: string
             length: 255
+            nullable: true
         country:
             type: string
             length: '3'
+            nullable: true
         venue:
             type: string
             length: 255
+            nullable: true
         city:
             type: string
             length: 255
         organizer:
             type: string
             length: 255
+            nullable: true
         contactEmail:
             type: string
             length: 255
+            nullable: true
         attachment:
             type: string
             length: 255
             nullable: true
         socialMediaSharing:
             type: array
+            nullable: true
         status:
             type: string
             length: '30'
         visuel:
             type: json_array
+            nullable: true
         illustrations:
             type: json_array
             nullable: true
